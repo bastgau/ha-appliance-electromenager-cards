@@ -251,6 +251,16 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Rest mode",
     "ps_gaming": "Gaming",
+    "hue_sync": "Hue Sync Box",
+    "sync_video": "Video sync",
+    "sync_game": "Game sync",
+    "sync_music": "Music sync",
+    "intensity": "Intensity",
+    "input": "HDMI input",
+    "f_sync": "Light sync switch",
+    "f_intensity": "Intensity entity (select)",
+    "f_input": "HDMI input entity (select)",
+    "f_standby_threshold_hue": "On above (W)",
     "confirm_off_console": "Console on – click again to cut power",
     "confirm_off_always": "Click again to cut power",
     "f_confirm_always": "Always confirm before cutting power (plug on)",
@@ -566,6 +576,16 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Ruhemodus",
     "ps_gaming": "Im Spiel",
+    "hue_sync": "Hue Sync Box",
+    "sync_video": "Video-Sync",
+    "sync_game": "Spiel-Sync",
+    "sync_music": "Musik-Sync",
+    "intensity": "Intensität",
+    "input": "HDMI-Eingang",
+    "f_sync": "Schalter Lichtsynchronisation",
+    "f_intensity": "Intensitäts-Entität (Select)",
+    "f_input": "HDMI-Eingang-Entität (Select)",
+    "f_standby_threshold_hue": "Ein über (W)",
     "confirm_off_console": "Konsole an – erneut klicken zum Ausschalten",
     "confirm_off_always": "Erneut klicken zum Abschalten",
     "f_confirm_always": "Vor dem Abschalten immer bestätigen (Steckdose an)",
@@ -881,6 +901,16 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Mode repos",
     "ps_gaming": "En jeu",
+    "hue_sync": "Hue Sync Box",
+    "sync_video": "Synchro vidéo",
+    "sync_game": "Synchro jeu",
+    "sync_music": "Synchro musique",
+    "intensity": "Intensité",
+    "input": "Entrée HDMI",
+    "f_sync": "Interrupteur de synchro lumineuse",
+    "f_intensity": "Entité intensité (select)",
+    "f_input": "Entité entrée HDMI (select)",
+    "f_standby_threshold_hue": "Allumé au-dessus de (W)",
     "confirm_off_console": "Console allumée – cliquer encore pour couper",
     "confirm_off_always": "Cliquer encore pour couper",
     "f_confirm_always": "Toujours confirmer avant de couper (prise allumée)",
@@ -1196,6 +1226,16 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Modalità riposo",
     "ps_gaming": "In gioco",
+    "hue_sync": "Hue Sync Box",
+    "sync_video": "Sincronizzazione video",
+    "sync_game": "Sincronizzazione gioco",
+    "sync_music": "Sincronizzazione musica",
+    "intensity": "Intensità",
+    "input": "Ingresso HDMI",
+    "f_sync": "Interruttore sincronizzazione luci",
+    "f_intensity": "Entità intensità (select)",
+    "f_input": "Entità ingresso HDMI (select)",
+    "f_standby_threshold_hue": "Acceso sopra (W)",
     "confirm_off_console": "Console accesa – clicca di nuovo per togliere corrente",
     "confirm_off_always": "Clicca di nuovo per togliere corrente",
     "f_confirm_always": "Conferma sempre prima di togliere corrente (presa accesa)",
@@ -1338,6 +1378,16 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Hvilemodus",
     "ps_gaming": "Spiller",
+    "hue_sync": "Hue Sync Box",
+    "sync_video": "Videosynk",
+    "sync_game": "Spillsynk",
+    "sync_music": "Musikksynk",
+    "intensity": "Intensitet",
+    "input": "HDMI-inngang",
+    "f_sync": "Bryter for lyssynk",
+    "f_intensity": "Intensitetsentitet (select)",
+    "f_input": "HDMI-inngangsentitet (select)",
+    "f_standby_threshold_hue": "På over (W)",
     "confirm_off_console": "Konsollen er på – klikk igjen for å kutte strømmen",
     "confirm_off_always": "Klikk igjen for å kutte strømmen",
     "f_confirm_always": "Bekreft alltid før strømmen brytes (kontakt på)",
@@ -1826,6 +1876,16 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Rustmodus",
     "ps_gaming": "Aan het gamen",
+    "hue_sync": "Hue Sync Box",
+    "sync_video": "Videosynchronisatie",
+    "sync_game": "Gamesynchronisatie",
+    "sync_music": "Muzieksynchronisatie",
+    "intensity": "Intensiteit",
+    "input": "HDMI-ingang",
+    "f_sync": "Schakelaar lichtsynchronisatie",
+    "f_intensity": "Intensiteitsentiteit (select)",
+    "f_input": "HDMI-ingangsentiteit (select)",
+    "f_standby_threshold_hue": "Aan boven (W)",
     "confirm_off_console": "Console aan – klik nogmaals om uit te schakelen",
     "confirm_off_always": "Klik nogmaals om de stroom te onderbreken",
     "f_confirm_always": "Altijd bevestigen voor de stroom wordt onderbroken (stekker aan)",
@@ -2141,6 +2201,16 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Mod repaus",
     "ps_gaming": "În joc",
+    "hue_sync": "Hue Sync Box",
+    "sync_video": "Sincronizare video",
+    "sync_game": "Sincronizare joc",
+    "sync_music": "Sincronizare muzică",
+    "intensity": "Intensitate",
+    "input": "Intrare HDMI",
+    "f_sync": "Comutator sincronizare lumini",
+    "f_intensity": "Entitate intensitate (select)",
+    "f_input": "Entitate intrare HDMI (select)",
+    "f_standby_threshold_hue": "Pornit peste (W)",
     "confirm_off_console": "Consola pornită – apasă din nou pentru a opri",
     "confirm_off_always": "Apasă din nou pentru a tăia alimentarea",
     "f_confirm_always": "Confirmă întotdeauna înainte de a tăia alimentarea (priză pornită)",
@@ -2456,6 +2526,16 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Режим покоя",
     "ps_gaming": "Игра",
+    "hue_sync": "Hue Sync Box",
+    "sync_video": "Синхронизация: видео",
+    "sync_game": "Синхронизация: игра",
+    "sync_music": "Синхронизация: музыка",
+    "intensity": "Интенсивность",
+    "input": "Вход HDMI",
+    "f_sync": "Переключатель синхронизации света",
+    "f_intensity": "Сущность интенсивности (select)",
+    "f_input": "Сущность входа HDMI (select)",
+    "f_standby_threshold_hue": "Включено выше (Вт)",
     "confirm_off_console": "Консоль включена – нажмите ещё раз, чтобы отключить",
     "confirm_off_always": "Нажмите ещё раз, чтобы отключить питание",
     "f_confirm_always": "Всегда подтверждать отключение питания (розетка включена)",
@@ -2771,6 +2851,16 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Режим мировања",
     "ps_gaming": "Игре",
+    "hue_sync": "Hue Sync Box",
+    "sync_video": "Синхронизација: видео",
+    "sync_game": "Синхронизација: игра",
+    "sync_music": "Синхронизација: музика",
+    "intensity": "Интензитет",
+    "input": "HDMI улаз",
+    "f_sync": "Прекидач синхронизације светла",
+    "f_intensity": "Ентитет интензитета (select)",
+    "f_input": "Ентитет HDMI улаза (select)",
+    "f_standby_threshold_hue": "Укључено изнад (W)",
     "confirm_off_console": "Конзола је укључена – кликните поново за искључење струје",
     "confirm_off_always": "Кликните поново за искључење струје",
     "f_confirm_always": "Увек потврди пре искључења струје (утичница укључена)",
@@ -3086,6 +3176,16 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Režim mirovanja",
     "ps_gaming": "Igre",
+    "hue_sync": "Hue Sync Box",
+    "sync_video": "Sinhronizacija: video",
+    "sync_game": "Sinhronizacija: igra",
+    "sync_music": "Sinhronizacija: muzika",
+    "intensity": "Intenzitet",
+    "input": "HDMI ulaz",
+    "f_sync": "Prekidač sinhronizacije svetla",
+    "f_intensity": "Entitet intenziteta (select)",
+    "f_input": "Entitet HDMI ulaza (select)",
+    "f_standby_threshold_hue": "Uključeno iznad (W)",
     "confirm_off_console": "Konzola je uključena – kliknite ponovo za isključenje struje",
     "confirm_off_always": "Kliknite ponovo za isključenje struje",
     "f_confirm_always": "Uvek potvrdi pre isključenja struje (utičnica uključena)",
@@ -4126,6 +4226,48 @@ SVG.hob = () => `
   <rect x="37.5" y="75" width="5" height="3.4" rx="1.4" fill="#2b2f34"/></g>
   <g class="steam-pot"><path d="M34 72q-3-5 0-10t0-10"/><path d="M41 70q-3-5 0-10t0-10"/><path d="M48 72q-3-5 0-10t0-10"/></g>
 </g></g>`;
+
+/* Philips Hue Play HDMI Sync Box : boîtier noir plat posé devant une TV, quatre câbles HDMI d'entrée qui sortent
+   à gauche (celui de la source active est mis en évidence), un câble de sortie vers la TV, bandeau lumineux en façade
+   et halo multicolore autour de l'écran quand la synchronisation tourne. Silhouette seulement : aucun logo. */
+SVG.hue_sync = () => `
+<defs>${DEFS}
+<linearGradient id="ID-hstop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a4048"/><stop offset="1" stop-color="#14181c"/></linearGradient>
+<linearGradient id="ID-hsfront" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#23282e"/><stop offset="1" stop-color="#0b0d10"/></linearGradient>
+<linearGradient id="ID-hsside" x1="0" x2="1"><stop offset="0" stop-color="#171b1f"/><stop offset="1" stop-color="#07080a"/></linearGradient>
+<linearGradient id="ID-hspic" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b6fd8"/><stop offset=".55" stop-color="#b86ad6"/><stop offset="1" stop-color="#ff8a4c"/></linearGradient>
+<radialGradient id="ID-hsa"><stop offset="0" stop-color="#ff3d6e" stop-opacity=".85"/><stop offset="1" stop-color="#ff3d6e" stop-opacity="0"/></radialGradient>
+<radialGradient id="ID-hsb"><stop offset="0" stop-color="#2f8cff" stop-opacity=".85"/><stop offset="1" stop-color="#2f8cff" stop-opacity="0"/></radialGradient>
+<radialGradient id="ID-hsc"><stop offset="0" stop-color="#35e08a" stop-opacity=".8"/><stop offset="1" stop-color="#35e08a" stop-opacity="0"/></radialGradient></defs>
+<ellipse cx="60" cy="118" rx="54" ry="5" fill="url(#ID-shadow)"/>
+<g class="hs-glow">
+  <ellipse cx="20" cy="36" rx="30" ry="34" fill="url(#ID-hsa)"/>
+  <ellipse cx="100" cy="36" rx="30" ry="34" fill="url(#ID-hsb)"/>
+  <ellipse cx="60" cy="66" rx="48" ry="16" fill="url(#ID-hsc)"/>
+</g>
+<g class="hs-tv">
+  <path d="M52 63h16l3 8H49Z" fill="#14181c"/>
+  <rect x="49" y="70" width="22" height="2.4" rx="1.2" fill="#1d2228"/>
+  <rect x="12" y="8" width="96" height="56" rx="3" fill="#0a0c0f" stroke="#2a2f35" stroke-width=".8"/>
+  <rect class="hs-scr" x="15" y="11" width="90" height="50" rx="1.5" fill="#101418"/>
+  <rect class="hs-pic" x="15" y="11" width="90" height="50" rx="1.5" fill="url(#ID-hspic)"/>
+  <path d="M15 11h90v14C80 22 40 24 15 30Z" fill="#fff" fill-opacity=".05"/>
+</g>
+<g class="hs-cables" fill="none" stroke-linecap="round">
+  <path class="hs-in" d="M24 94C14 94 8 91 0 88" stroke-width="2.2"/>
+  <path class="hs-in" d="M24 98C14 98 8 97 0 97" stroke-width="2.2"/>
+  <path class="hs-in" d="M24 102C14 102 8 103 0 106" stroke-width="2.2"/>
+  <path class="hs-in" d="M24 105C14 106 8 110 0 115" stroke-width="2.2"/>
+  <path class="hs-out" d="M66 86C66 80 62 77 60 72" stroke-width="2.4"/>
+</g>
+<g class="hs-box">
+  <path d="M86 94L104 84V100L86 110Z" fill="url(#ID-hsside)" stroke="#000" stroke-width=".4"/>
+  <path d="M22 94L40 84H104L86 94Z" fill="url(#ID-hstop)" stroke="#4a525b" stroke-width=".4"/>
+  <path d="M22 94H86V110H22Z" fill="url(#ID-hsfront)" stroke="#000" stroke-width=".4"/>
+  <path d="M24 95.2H84" stroke="#5a636d" stroke-opacity=".55" stroke-width=".6"/>
+  <rect class="hs-strip" x="32" y="101" width="46" height="2.2" rx="1.1"/>
+  <circle class="hs-led" cx="27.4" cy="102" r="1.1"/>
+</g>`;
 
 SVG.kettle = () => `
 <defs>${DEFS}
@@ -5338,6 +5480,11 @@ const DEF = {
   thermomix: { accent: "heat", threshold: 15,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["thermomix", "tm6", "tm7", "tm5", "vorwerk", "robot_cuiseur", "robot_culinaire", "cookidoo"] },
+  // Philips Hue Play HDMI Sync Box : entity = media_player ou switch d'alimentation ; sync = interrupteur de la synchro lumineuse ;
+  // mode / intensity / input = entités select (mode vidéo-jeu-musique, intensité, entrée HDMI) ; prise (power) en repli
+  hue_sync: { accent: "active", threshold: 3,
+    fields: ["entity", "power", "energy", "cost", "sync", "mode", "intensity", "input", "switch"],
+    keys: ["hue_sync", "huesync", "sync_box", "syncbox", "hdmi_sync", "hue_play", "hue_hdmi"] },
   coffee_maker: { accent: "heat", threshold: 300,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["cafetiere", "coffee", "senseo", "nespresso", "dolce_gusto", "tassimo", "expresso", "espresso", "cafe"] },
@@ -5629,7 +5776,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "sync", "intensity", "input"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -5838,7 +5985,7 @@ class ApplianceCardBase extends HTMLElement {
       ftemp: S(c.freezer_temperature), fdoor: S(c.freezer_door), flex: S(c.flex_temperature),
       level: num(S(c.power_level)), pellets: num(S(c.pellet_level)),
       runtime: parseRemaining(S(c.runtime)), usage: parseRemaining(S(c.usage_time)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
-      tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity), cleanW: S(c.clean_water), dirtyW: S(c.dirty_water),
+      tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity), cleanW: S(c.clean_water), dirtyW: S(c.dirty_water), syncSw: S(c.sync), intensity: S(c.intensity), input: S(c.input),
       status: "idle", phase: null, alerts: [],
     };
     if (main && ["water_heater", "climate"].includes(domainOf(c.entity))) {
@@ -6114,6 +6261,23 @@ class ApplianceCardBase extends HTMLElement {
       else if (mpOk) m.status = playing ? "ps_gaming" : ["on", "idle", "paused", "buffering"].includes(ms) ? "screen_on" : "off";
       else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "screen_on" : base === "standby" ? "ps_rest" : "off";
       m.game = m.status === "ps_gaming" && playing ? main.attributes.media_title || null : null;
+    } else if (kind === "hue_sync") {
+      // Hue Play HDMI Sync Box : entity (media_player / switch) = boîtier allumé ; sync = synchro lumineuse ;
+      // mode (select) = vidéo / jeu / musique ; sans entité, la prise (puissance) décide : veille sous threshold, synchro au-dessus
+      const isMp = main && domainOf(c.entity) === "media_player", ms = main ? String(main.state).toLowerCase() : "";
+      const mainOk = main && !BAD.includes(ms), syncOk = m.syncSw && !BAD.includes(String(m.syncSw.state).toLowerCase());
+      let on = null;
+      if (mainOk) on = isMp ? ms !== "off" : ms === "on";
+      else if (syncOk) on = isOn(m.syncSw) ? true : null;
+      if (on === null && watts !== null) on = watts >= (c.standby_threshold ?? 0.5);
+      if (on === null && sw) on = isOn(sw);
+      if (on === null) on = base === "running" || base === "standby";
+      const syncing = on && (syncOk ? isOn(m.syncSw) : mainOk && isMp ? ms === "playing" : watts !== null ? watts > threshold : base === "running");
+      const md = m.mode && !BAD.includes(String(m.mode.state).toLowerCase()) ? String(m.mode.state).toLowerCase() : "";
+      if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
+      else if (!on) m.status = "off";
+      else if (!syncing) m.status = "standby";
+      else m.status = /game|jeu|gaming|spiel/.test(md) ? "sync_game" : /music|musi|audio|musik/.test(md) ? "sync_music" : "sync_video";
     } else if (kind === "desktop_pc" || kind === "laptop" || kind === "monitor") {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (explicitState) m.status = base === "running" ? "screen_on" : powered ? "standby" : "off";
@@ -6340,7 +6504,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo", "sync_video", "sync_game", "sync_music"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -6447,7 +6611,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo", "sync_video", "sync_game", "sync_music"].includes(m.status);
     this._fetchCycle(active);
     const hideWouldApply = this._applyHide(active, m.alerts.length > 0);
     $("wrap").className = [
@@ -6491,6 +6655,12 @@ class ApplianceCardBase extends HTMLElement {
         g.classList.toggle("on", i < lit);
         g.classList.toggle("next", st === "charging" && lv != null && i === lit);
       });
+    }
+    if (kind === "hue_sync") {
+      // entrée HDMI active : chiffre de l'état de l'entité `input` ou de l'attribut source du media_player (« HDMI 2 », « input2 »…)
+      const srcTxt = m.input && !BAD.includes(String(m.input.state).toLowerCase()) ? m.input.state : (m.main && m.main.attributes ? m.main.attributes.source : "");
+      const n = parseInt((String(srcTxt || "").match(/[1-4]/) || [0])[0], 10);
+      this.shadowRoot.querySelectorAll(".hs-in").forEach((p, i) => p.classList.toggle("on", m.status !== "off" && n === i + 1));
     }
     if (kind === "ps5") {
       // démarrage (éteinte / repos → allumée) : balayage bleu des bandeaux, puis blanc
@@ -6791,6 +6961,12 @@ class ApplianceCardBase extends HTMLElement {
       if (m.tank) tile(m.tankFull ? "mdi:cup-water" : "mdi:cup-outline", tr(hass, m.tankFull ? "tank_full_short" : "tank_ok"), lb("tank"), c.tank_full, m.tankFull ? "warn" : "");
       if (m.fanSpeed && !BAD.includes(String(m.fanSpeed.state).toLowerCase())) tile("mdi:fan", domainOf(c.fan_speed) === "fan" ? `${fmtNum(hass, Number(m.fanSpeed.attributes.percentage) || 0, 0)} %` : stateText(hass, m.fanSpeed), lb("fan_speed"), c.fan_speed);
       if (m.dhMode) tile("mdi:tune-variant", m.dhMode, lb("mode"), c.mode || c.entity);
+    } else if (kind === "hue_sync") {
+      const ok = (st) => st && !BAD.includes(String(st.state).toLowerCase());
+      const srcTxt = ok(m.input) ? stateText(hass, m.input) : (m.main && m.main.attributes && m.main.attributes.source) || "";
+      if (ok(m.mode)) tile("mdi:television-ambient-light", stateText(hass, m.mode), lb("mode"), c.mode);
+      if (ok(m.intensity)) tile("mdi:signal", stateText(hass, m.intensity), lb("intensity"), c.intensity);
+      if (srcTxt) tile("mdi:video-input-hdmi", String(srcTxt), lb("input"), c.input || c.entity);
     } else if (kind === "wet_vacuum") {
       if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0)} %`, lb("battery"), c.battery_level, m.battLow ? "warn" : "");
       const tank = (pct, alert, okKey, badKey) => (pct != null ? `${fmtNum(hass, pct, 0)} %` : tr(hass, alert ? badKey : okKey));
@@ -6934,6 +7110,9 @@ const SEL = {
   tank_full: { entity: { domain: ["binary_sensor", "input_boolean", "sensor"] } },
   clean_water: { entity: { domain: ["sensor", "binary_sensor", "number", "input_number"] } },
   dirty_water: { entity: { domain: ["sensor", "binary_sensor", "number", "input_number"] } },
+  sync: { entity: { domain: ["switch", "input_boolean", "binary_sensor"] } },
+  intensity: { entity: { domain: ["select", "input_select", "sensor"] } },
+  input: { entity: { domain: ["select", "input_select", "sensor"] } },
   fan_speed: { entity: { domain: ["select", "input_select", "sensor", "number", "input_number", "fan"] } },
 };
 function buildForm(kind) {
@@ -7019,6 +7198,9 @@ function buildForm(kind) {
           ...(kind === "tv" ? [
             { name: "style", selector: { select: { mode: "dropdown", options: [
               { value: "wall", label: "Murale / Wall-mounted" }, { value: "stand", label: "Pied central / Center stand" }, { value: "feet", label: "Deux pieds / Two feet" }] } } },
+          ] : []),
+          ...(kind === "hue_sync" ? [
+            { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
           ...(kind === "ps5" ? [
             { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
@@ -7109,7 +7291,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "hue_sync" && s.name === "standby_threshold" ? "f_standby_threshold_hue" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -7129,7 +7311,7 @@ function stubFor(kind, hass) {
   const cost = pick((i) => i.startsWith("sensor.") && /(cout|cost|prix)/.test(i) && /(jour|daily|today|day)/.test(i))
     || pick((i, st) => i.startsWith("sensor.") && dc(st) === "monetary");
   const sw = pick((i) => i.startsWith("switch.") && !/(child_lock|lock|led|indicator)/.test(i));
-  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : ["tv", "av_receiver", "ps5"].includes(kind) ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
+  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : ["tv", "av_receiver", "ps5", "hue_sync"].includes(kind) ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
   const temp = pick((i, st) => i.startsWith("sensor.") && dc(st) === "temperature");
   const flag = ["washer", "dryer", "dishwasher", "microwave"].includes(kind)
     ? pick((i) => /^(input_boolean|binary_sensor)\./.test(i) && /(running|en_cours|marche|cycle)/.test(i)) : null;
@@ -7138,11 +7320,22 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "hue_sync", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
   if (temp && ["kettle", "fridge", "water_heater", "oven", "air_fryer", "beer_tap", "pellet_stove", "pool_pump", "printer_3d", "chest_freezer", "drawer_freezer", "radiator", "towel_dryer", "server_rack", "wine_cooler"].includes(kind)) cfg.temperature = temp;
+  if (kind === "hue_sync") {
+    // entités du HACS huesyncbox (noms supposés) : synchro lumineuse, mode, intensité, entrée HDMI
+    const sy = pick((i) => /^(switch|input_boolean)\./.test(i) && /(light_sync|lightsync|sync)/.test(i));
+    const md = pick((i) => i.startsWith("select.") && /(sync_mode|syncmode|mode)/.test(i));
+    const it = pick((i) => i.startsWith("select.") && /intensity|intensite/.test(i));
+    const hd = pick((i) => i.startsWith("select.") && /(hdmi|input)/.test(i));
+    if (sy) cfg.sync = sy;
+    if (md) cfg.mode = md;
+    if (it) cfg.intensity = it;
+    if (hd) cfg.input = hd;
+  }
   if (kind === "dehumidifier") {
     const hum = pick((i, st) => i.startsWith("sensor.") && dc(st) === "humidity");
     const tank = pick((i) => i.startsWith("binary_sensor.") && /(tank|bac|reservoir|full|plein)/.test(i));
@@ -8463,6 +8656,34 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-thermomix.st-turbo .tmx-body { animation: tmx-turbo .09s linear infinite; }
 @keyframes tmx-rise { 0% { opacity: 0; transform: translateY(0) scale(.6); } 20% { opacity: .9; } 100% { opacity: 0; transform: translateY(-16px) scale(1.7); } }
 @keyframes tmx-turbo { 0%,100% { transform: translate(0,0) rotate(0); } 20% { transform: translate(-.7px,.35px) rotate(-.5deg); } 40% { transform: translate(.6px,-.4px) rotate(.4deg); } 60% { transform: translate(-.5px,-.25px) rotate(-.3deg); } 80% { transform: translate(.7px,.25px) rotate(.5deg); } }
+
+/* ---------- Philips Hue Play HDMI Sync Box ---------- */
+/* câbles : gris ; entrée active (source HDMI) en blanc ; sortie vers la TV qui prend la couleur de la synchro */
+.k-hue_sync .hs-in { stroke: #3a4048; transition: stroke .4s, filter .4s; }
+.k-hue_sync .hs-in.on { stroke: #cfd6de; filter: drop-shadow(0 0 1.4px #cfe6ff); }
+.k-hue_sync .hs-out { stroke: #2d3238; transition: stroke .4s; }
+.k-hue_sync.active .hs-out { stroke: #8fb4ff; filter: drop-shadow(0 0 1.6px #6c9cff); }
+/* bandeau de façade : éteint sombre, veille blanc doux, synchro arc-en-ciel qui défile */
+.k-hue_sync .hs-strip { fill: #1a1e22; transition: fill .4s; }
+.k-hue_sync.st-standby .hs-strip { fill: #e8edf2; opacity: .55; }
+.k-hue_sync.active .hs-strip { fill: #ff3d6e; filter: drop-shadow(0 0 2px #ff3d6e); animation: hs-hue 6s linear infinite; }
+.k-hue_sync.st-sync_game .hs-strip { animation-duration: 2.4s; }
+.k-hue_sync.st-sync_music .hs-strip { animation: hs-hue 4s linear infinite, hs-beat .9s ease-in-out infinite; }
+/* voyant : éteint, blanc en veille, vert en synchro */
+.k-hue_sync .hs-led { fill: #2a2f35; }
+.k-hue_sync.st-standby .hs-led { fill: #f2f8ff; }
+.k-hue_sync.active .hs-led { fill: #35e08a; filter: drop-shadow(0 0 1.6px #35e08a); }
+/* image de la TV : sombre éteint, colorée quand la synchro tourne */
+.k-hue_sync .hs-pic { opacity: 0; transition: opacity .8s; }
+.k-hue_sync.active .hs-pic { opacity: .5; animation: hs-hue 12s linear infinite; }
+.k-hue_sync.st-sync_game .hs-pic { animation-duration: 4s; }
+/* halo de couleurs autour de l'écran : vidéo = dérive lente, jeu = rapide, musique = pulsation */
+.k-hue_sync .hs-glow { opacity: 0; transition: opacity .8s; transform-box: fill-box; transform-origin: 50% 60%; }
+.k-hue_sync.active .hs-glow { opacity: .85; animation: hs-hue 12s linear infinite; }
+.k-hue_sync.st-sync_game .hs-glow { animation-duration: 4s; }
+.k-hue_sync.st-sync_music .hs-glow { animation: hs-hue 8s linear infinite, hs-beat .9s ease-in-out infinite; }
+@keyframes hs-hue { to { filter: hue-rotate(360deg); } }
+@keyframes hs-beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 `;
 
 /* ------------------------------------------------------------------ */

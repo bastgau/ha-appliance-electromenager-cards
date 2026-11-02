@@ -97,6 +97,11 @@ const DEF = {
   thermomix: { accent: "heat", threshold: 15,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["thermomix", "tm6", "tm7", "tm5", "vorwerk", "robot_cuiseur", "robot_culinaire", "cookidoo"] },
+  // Philips Hue Play HDMI Sync Box : entity = media_player ou switch d'alimentation ; sync = interrupteur de la synchro lumineuse ;
+  // mode / intensity / input = entités select (mode vidéo-jeu-musique, intensité, entrée HDMI) ; prise (power) en repli
+  hue_sync: { accent: "active", threshold: 3,
+    fields: ["entity", "power", "energy", "cost", "sync", "mode", "intensity", "input", "switch"],
+    keys: ["hue_sync", "huesync", "sync_box", "syncbox", "hdmi_sync", "hue_play", "hue_hdmi"] },
   coffee_maker: { accent: "heat", threshold: 300,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["cafetiere", "coffee", "senseo", "nespresso", "dolce_gusto", "tassimo", "expresso", "espresso", "cafe"] },

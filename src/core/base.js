@@ -81,7 +81,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "sync", "intensity", "input"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -290,7 +290,7 @@ class ApplianceCardBase extends HTMLElement {
       ftemp: S(c.freezer_temperature), fdoor: S(c.freezer_door), flex: S(c.flex_temperature),
       level: num(S(c.power_level)), pellets: num(S(c.pellet_level)),
       runtime: parseRemaining(S(c.runtime)), usage: parseRemaining(S(c.usage_time)), speed: S(c.speed), bedTemp: num(S(c.bed_temperature)), humidity: num(S(c.humidity)), mode: S(c.mode), window: S(c.window), light: S(c.light), keg: num(S(c.keg_level)), pouring: S(c.pouring), batt: num(S(c.battery_level)), zone2: num(S(c.zone2_temperature)), zone2Ent: S(c.zone2_temperature),
-      tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity), cleanW: S(c.clean_water), dirtyW: S(c.dirty_water),
+      tank: S(c.tank_full), fanSpeed: S(c.fan_speed), targetHum: S(c.target_humidity), cleanW: S(c.clean_water), dirtyW: S(c.dirty_water), syncSw: S(c.sync), intensity: S(c.intensity), input: S(c.input),
       status: "idle", phase: null, alerts: [],
     };
     if (main && ["water_heater", "climate"].includes(domainOf(c.entity))) {
@@ -566,6 +566,23 @@ class ApplianceCardBase extends HTMLElement {
       else if (mpOk) m.status = playing ? "ps_gaming" : ["on", "idle", "paused", "buffering"].includes(ms) ? "screen_on" : "off";
       else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "screen_on" : base === "standby" ? "ps_rest" : "off";
       m.game = m.status === "ps_gaming" && playing ? main.attributes.media_title || null : null;
+    } else if (kind === "hue_sync") {
+      // Hue Play HDMI Sync Box : entity (media_player / switch) = boîtier allumé ; sync = synchro lumineuse ;
+      // mode (select) = vidéo / jeu / musique ; sans entité, la prise (puissance) décide : veille sous threshold, synchro au-dessus
+      const isMp = main && domainOf(c.entity) === "media_player", ms = main ? String(main.state).toLowerCase() : "";
+      const mainOk = main && !BAD.includes(ms), syncOk = m.syncSw && !BAD.includes(String(m.syncSw.state).toLowerCase());
+      let on = null;
+      if (mainOk) on = isMp ? ms !== "off" : ms === "on";
+      else if (syncOk) on = isOn(m.syncSw) ? true : null;
+      if (on === null && watts !== null) on = watts >= (c.standby_threshold ?? 0.5);
+      if (on === null && sw) on = isOn(sw);
+      if (on === null) on = base === "running" || base === "standby";
+      const syncing = on && (syncOk ? isOn(m.syncSw) : mainOk && isMp ? ms === "playing" : watts !== null ? watts > threshold : base === "running");
+      const md = m.mode && !BAD.includes(String(m.mode.state).toLowerCase()) ? String(m.mode.state).toLowerCase() : "";
+      if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
+      else if (!on) m.status = "off";
+      else if (!syncing) m.status = "standby";
+      else m.status = /game|jeu|gaming|spiel/.test(md) ? "sync_game" : /music|musi|audio|musik/.test(md) ? "sync_music" : "sync_video";
     } else if (kind === "desktop_pc" || kind === "laptop" || kind === "monitor") {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (explicitState) m.status = base === "running" ? "screen_on" : powered ? "standby" : "off";
@@ -792,7 +809,7 @@ class ApplianceCardBase extends HTMLElement {
   /* ---------------- rendering ---------------- */
   _lcdText(m) {
     const hass = this._hass, kind = this._kind;
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo", "sync_video", "sync_game", "sync_music"].includes(m.status);
     if (m.status === "unavailable") return "- - -";
     if (["fridge", "wine_cooler", "chest_freezer", "drawer_freezer"].includes(kind)) return m.tempVal != null ? `${fmtNum(hass, m.tempVal, 0)}°` : "--°";
     if (kind === "towel_dryer") {
@@ -899,7 +916,7 @@ class ApplianceCardBase extends HTMLElement {
   _render(m) {
     const hass = this._hass, c = this._config, kind = this._kind;
     const $ = (i) => this.shadowRoot.getElementById(i);
-    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo"].includes(m.status);
+    const active = ["running", "heating", "preheating", "cooling", "ignition", "filtering", "printing", "producing", "low", "speed1", "speed2", "cooking", "brewing", "keep_warm", "screen_on", "online", "ac_dry", "ac_fan", "defrost", "pouring", "playing", "muted", "fan_1", "fan_2", "fan_3", "charging", "drying", "boiling", "toasting", "powered", "lit", "wv_cleaning", "wv_selfclean", "wv_drying", "ps_gaming", "mixing", "turbo", "sync_video", "sync_game", "sync_music"].includes(m.status);
     this._fetchCycle(active);
     const hideWouldApply = this._applyHide(active, m.alerts.length > 0);
     $("wrap").className = [
@@ -943,6 +960,12 @@ class ApplianceCardBase extends HTMLElement {
         g.classList.toggle("on", i < lit);
         g.classList.toggle("next", st === "charging" && lv != null && i === lit);
       });
+    }
+    if (kind === "hue_sync") {
+      // entrée HDMI active : chiffre de l'état de l'entité `input` ou de l'attribut source du media_player (« HDMI 2 », « input2 »…)
+      const srcTxt = m.input && !BAD.includes(String(m.input.state).toLowerCase()) ? m.input.state : (m.main && m.main.attributes ? m.main.attributes.source : "");
+      const n = parseInt((String(srcTxt || "").match(/[1-4]/) || [0])[0], 10);
+      this.shadowRoot.querySelectorAll(".hs-in").forEach((p, i) => p.classList.toggle("on", m.status !== "off" && n === i + 1));
     }
     if (kind === "ps5") {
       // démarrage (éteinte / repos → allumée) : balayage bleu des bandeaux, puis blanc
@@ -1243,6 +1266,12 @@ class ApplianceCardBase extends HTMLElement {
       if (m.tank) tile(m.tankFull ? "mdi:cup-water" : "mdi:cup-outline", tr(hass, m.tankFull ? "tank_full_short" : "tank_ok"), lb("tank"), c.tank_full, m.tankFull ? "warn" : "");
       if (m.fanSpeed && !BAD.includes(String(m.fanSpeed.state).toLowerCase())) tile("mdi:fan", domainOf(c.fan_speed) === "fan" ? `${fmtNum(hass, Number(m.fanSpeed.attributes.percentage) || 0, 0)} %` : stateText(hass, m.fanSpeed), lb("fan_speed"), c.fan_speed);
       if (m.dhMode) tile("mdi:tune-variant", m.dhMode, lb("mode"), c.mode || c.entity);
+    } else if (kind === "hue_sync") {
+      const ok = (st) => st && !BAD.includes(String(st.state).toLowerCase());
+      const srcTxt = ok(m.input) ? stateText(hass, m.input) : (m.main && m.main.attributes && m.main.attributes.source) || "";
+      if (ok(m.mode)) tile("mdi:television-ambient-light", stateText(hass, m.mode), lb("mode"), c.mode);
+      if (ok(m.intensity)) tile("mdi:signal", stateText(hass, m.intensity), lb("intensity"), c.intensity);
+      if (srcTxt) tile("mdi:video-input-hdmi", String(srcTxt), lb("input"), c.input || c.entity);
     } else if (kind === "wet_vacuum") {
       if (m.batt != null) tile(m.status === "charging" ? "mdi:battery-charging" : "mdi:battery", `${fmtNum(hass, m.batt, 0)} %`, lb("battery"), c.battery_level, m.battLow ? "warn" : "");
       const tank = (pct, alert, okKey, badKey) => (pct != null ? `${fmtNum(hass, pct, 0)} %` : tr(hass, alert ? badKey : okKey));

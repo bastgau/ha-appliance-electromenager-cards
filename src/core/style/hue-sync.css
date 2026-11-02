@@ -1,0 +1,27 @@
+/* ---------- Philips Hue Play HDMI Sync Box ---------- */
+/* câbles : gris ; entrée active (source HDMI) en blanc ; sortie vers la TV qui prend la couleur de la synchro */
+.k-hue_sync .hs-in { stroke: #3a4048; transition: stroke .4s, filter .4s; }
+.k-hue_sync .hs-in.on { stroke: #cfd6de; filter: drop-shadow(0 0 1.4px #cfe6ff); }
+.k-hue_sync .hs-out { stroke: #2d3238; transition: stroke .4s; }
+.k-hue_sync.active .hs-out { stroke: #8fb4ff; filter: drop-shadow(0 0 1.6px #6c9cff); }
+/* bandeau de façade : éteint sombre, veille blanc doux, synchro arc-en-ciel qui défile */
+.k-hue_sync .hs-strip { fill: #1a1e22; transition: fill .4s; }
+.k-hue_sync.st-standby .hs-strip { fill: #e8edf2; opacity: .55; }
+.k-hue_sync.active .hs-strip { fill: #ff3d6e; filter: drop-shadow(0 0 2px #ff3d6e); animation: hs-hue 6s linear infinite; }
+.k-hue_sync.st-sync_game .hs-strip { animation-duration: 2.4s; }
+.k-hue_sync.st-sync_music .hs-strip { animation: hs-hue 4s linear infinite, hs-beat .9s ease-in-out infinite; }
+/* voyant : éteint, blanc en veille, vert en synchro */
+.k-hue_sync .hs-led { fill: #2a2f35; }
+.k-hue_sync.st-standby .hs-led { fill: #f2f8ff; }
+.k-hue_sync.active .hs-led { fill: #35e08a; filter: drop-shadow(0 0 1.6px #35e08a); }
+/* image de la TV : sombre éteint, colorée quand la synchro tourne */
+.k-hue_sync .hs-pic { opacity: 0; transition: opacity .8s; }
+.k-hue_sync.active .hs-pic { opacity: .5; animation: hs-hue 12s linear infinite; }
+.k-hue_sync.st-sync_game .hs-pic { animation-duration: 4s; }
+/* halo de couleurs autour de l'écran : vidéo = dérive lente, jeu = rapide, musique = pulsation */
+.k-hue_sync .hs-glow { opacity: 0; transition: opacity .8s; transform-box: fill-box; transform-origin: 50% 60%; }
+.k-hue_sync.active .hs-glow { opacity: .85; animation: hs-hue 12s linear infinite; }
+.k-hue_sync.st-sync_game .hs-glow { animation-duration: 4s; }
+.k-hue_sync.st-sync_music .hs-glow { animation: hs-hue 8s linear infinite, hs-beat .9s ease-in-out infinite; }
+@keyframes hs-hue { to { filter: hue-rotate(360deg); } }
+@keyframes hs-beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
