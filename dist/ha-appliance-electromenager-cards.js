@@ -255,6 +255,7 @@ const STRINGS = {
     "ps_rest": "Rest mode",
     "ps_gaming": "Gaming",
     "hue_sync": "Hue Sync Box",
+    "hue_boot": "Starting",
     "confirm_off_console": "Console on – click again to cut power",
     "confirm_off_always": "Click again to cut power",
     "f_confirm_always": "Always confirm before cutting power (plug on)",
@@ -574,6 +575,7 @@ const STRINGS = {
     "ps_rest": "Ruhemodus",
     "ps_gaming": "Im Spiel",
     "hue_sync": "Hue Sync Box",
+    "hue_boot": "Startet",
     "confirm_off_console": "Konsole an – erneut klicken zum Ausschalten",
     "confirm_off_always": "Erneut klicken zum Abschalten",
     "f_confirm_always": "Vor dem Abschalten immer bestätigen (Steckdose an)",
@@ -893,6 +895,7 @@ const STRINGS = {
     "ps_rest": "Mode repos",
     "ps_gaming": "En jeu",
     "hue_sync": "Hue Sync Box",
+    "hue_boot": "Démarrage",
     "confirm_off_console": "Console allumée – cliquer encore pour couper",
     "confirm_off_always": "Cliquer encore pour couper",
     "f_confirm_always": "Toujours confirmer avant de couper (prise allumée)",
@@ -1212,6 +1215,7 @@ const STRINGS = {
     "ps_rest": "Modalità riposo",
     "ps_gaming": "In gioco",
     "hue_sync": "Hue Sync Box",
+    "hue_boot": "Avvio",
     "confirm_off_console": "Console accesa – clicca di nuovo per togliere corrente",
     "confirm_off_always": "Clicca di nuovo per togliere corrente",
     "f_confirm_always": "Conferma sempre prima di togliere corrente (presa accesa)",
@@ -1355,6 +1359,7 @@ const STRINGS = {
     "ps_rest": "Hvilemodus",
     "ps_gaming": "Spiller",
     "hue_sync": "Hue Sync Box",
+    "hue_boot": "Starter",
     "confirm_off_console": "Konsollen er på – klikk igjen for å kutte strømmen",
     "confirm_off_always": "Klikk igjen for å kutte strømmen",
     "f_confirm_always": "Bekreft alltid før strømmen brytes (kontakt på)",
@@ -1850,6 +1855,7 @@ const STRINGS = {
     "ps_rest": "Rustmodus",
     "ps_gaming": "Aan het gamen",
     "hue_sync": "Hue Sync Box",
+    "hue_boot": "Opstarten",
     "confirm_off_console": "Console aan – klik nogmaals om uit te schakelen",
     "confirm_off_always": "Klik nogmaals om de stroom te onderbreken",
     "f_confirm_always": "Altijd bevestigen voor de stroom wordt onderbroken (stekker aan)",
@@ -2169,6 +2175,7 @@ const STRINGS = {
     "ps_rest": "Mod repaus",
     "ps_gaming": "În joc",
     "hue_sync": "Hue Sync Box",
+    "hue_boot": "Pornire",
     "confirm_off_console": "Consola pornită – apasă din nou pentru a opri",
     "confirm_off_always": "Apasă din nou pentru a tăia alimentarea",
     "f_confirm_always": "Confirmă întotdeauna înainte de a tăia alimentarea (priză pornită)",
@@ -2488,6 +2495,7 @@ const STRINGS = {
     "ps_rest": "Режим покоя",
     "ps_gaming": "Игра",
     "hue_sync": "Hue Sync Box",
+    "hue_boot": "Запуск",
     "confirm_off_console": "Консоль включена – нажмите ещё раз, чтобы отключить",
     "confirm_off_always": "Нажмите ещё раз, чтобы отключить питание",
     "f_confirm_always": "Всегда подтверждать отключение питания (розетка включена)",
@@ -2807,6 +2815,7 @@ const STRINGS = {
     "ps_rest": "Режим мировања",
     "ps_gaming": "Игре",
     "hue_sync": "Hue Sync Box",
+    "hue_boot": "Покретање",
     "confirm_off_console": "Конзола је укључена – кликните поново за искључење струје",
     "confirm_off_always": "Кликните поново за искључење струје",
     "f_confirm_always": "Увек потврди пре искључења струје (утичница укључена)",
@@ -3126,6 +3135,7 @@ const STRINGS = {
     "ps_rest": "Režim mirovanja",
     "ps_gaming": "Igre",
     "hue_sync": "Hue Sync Box",
+    "hue_boot": "Pokretanje",
     "confirm_off_console": "Konzola je uključena – kliknite ponovo za isključenje struje",
     "confirm_off_always": "Kliknite ponovo za isključenje struje",
     "f_confirm_always": "Uvek potvrdi pre isključenja struje (utičnica uključena)",
@@ -6191,6 +6201,14 @@ class ApplianceCardBase extends HTMLElement {
       // sans switch d'état configuré : la puissance de la prise décide (allumé au-dessus de threshold, sinon veille)
       else if (!c.entity && watts !== null) m.status = watts > threshold ? "powered" : "standby";
       else m.status = "unavailable";
+      // démarrage : 10 s après le passage de la prise de coupée à allumée (LED violette), quel que soit l'état du switch d'état
+      const plugOff = !!sw && String(sw.state).toLowerCase() === "off";
+      if (plugOff) { this._hsWasOff = true; this._hsBootUntil = 0; }
+      else if (this._hsWasOff && sw && !BAD.includes(String(sw.state).toLowerCase())) {
+        this._hsWasOff = false; this._hsBootUntil = Date.now() + 10000;
+        clearTimeout(this._hsBootT); this._hsBootT = setTimeout(() => { if (this._hass) this._render(this._compute()); }, 10100);
+      }
+      if (!plugOff && this._hsBootUntil && Date.now() < this._hsBootUntil) m.status = "hue_boot";
     } else if (kind === "desktop_pc" || kind === "laptop" || kind === "monitor") {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (explicitState) m.status = base === "running" ? "screen_on" : powered ? "standby" : "off";
@@ -8547,10 +8565,11 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @keyframes tmx-turbo { 0%,100% { transform: translate(0,0) rotate(0); } 20% { transform: translate(-.7px,.35px) rotate(-.5deg); } 40% { transform: translate(.6px,-.4px) rotate(.4deg); } 60% { transform: translate(-.5px,-.25px) rotate(-.3deg); } 80% { transform: translate(.7px,.25px) rotate(.5deg); } }
 
 /* ---------- Philips Hue Play HDMI Sync Box ---------- */
-/* voyant en façade : éteint sombre, violet en veille, blanc allumé */
+/* voyant en façade : éteint sombre, rouge en veille, violet pendant les 10 s de démarrage, blanc allumé */
 .k-hue_sync .hs-led { fill: #2a2f35; transition: fill .4s; }
 .k-hue_sync .hs-halo { opacity: 0; transition: opacity .4s; }
-.k-hue_sync.st-standby .hs-led { fill: #b46bff; filter: drop-shadow(0 0 1.6px #b46bff); }
+.k-hue_sync.st-standby .hs-led { fill: #ff3b30; filter: drop-shadow(0 0 1.6px #ff3b30); }
+.k-hue_sync.st-hue_boot .hs-led { fill: #b46bff; filter: drop-shadow(0 0 2px #b46bff); animation: ac-pulse 1.6s ease-in-out infinite; }
 .k-hue_sync.st-powered .hs-led { fill: #fff; filter: drop-shadow(0 0 2px #fff); }
 .k-hue_sync.st-powered .hs-halo { opacity: .6; }
 `;

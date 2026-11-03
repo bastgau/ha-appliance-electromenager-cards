@@ -575,6 +575,14 @@ class ApplianceCardBase extends HTMLElement {
       // sans switch d'état configuré : la puissance de la prise décide (allumé au-dessus de threshold, sinon veille)
       else if (!c.entity && watts !== null) m.status = watts > threshold ? "powered" : "standby";
       else m.status = "unavailable";
+      // démarrage : 10 s après le passage de la prise de coupée à allumée (LED violette), quel que soit l'état du switch d'état
+      const plugOff = !!sw && String(sw.state).toLowerCase() === "off";
+      if (plugOff) { this._hsWasOff = true; this._hsBootUntil = 0; }
+      else if (this._hsWasOff && sw && !BAD.includes(String(sw.state).toLowerCase())) {
+        this._hsWasOff = false; this._hsBootUntil = Date.now() + 10000;
+        clearTimeout(this._hsBootT); this._hsBootT = setTimeout(() => { if (this._hass) this._render(this._compute()); }, 10100);
+      }
+      if (!plugOff && this._hsBootUntil && Date.now() < this._hsBootUntil) m.status = "hue_boot";
     } else if (kind === "desktop_pc" || kind === "laptop" || kind === "monitor") {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (explicitState) m.status = base === "running" ? "screen_on" : powered ? "standby" : "off";

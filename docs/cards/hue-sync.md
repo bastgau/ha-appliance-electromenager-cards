@@ -5,10 +5,12 @@
 | State | LED |
 |---|---|
 | **Off** | off |
-| **Standby** | purple |
+| **Starting** | purple (10 s after the plug is switched on) |
+| **Standby** | red |
 | **On** | white |
 
 How the status is computed (both switches are expected: the box has its own status switch):
+0. **Starting**: for 10 s after the plug goes from off to on, whatever the status switch says (it may be unavailable while the box boots).
 1. `switch` (the smart plug): **off** means the box is **off**.
 2. `entity` (the box's own status switch): **on** means *On*, **off** means *Standby*. If it is configured but unavailable while the plug is on, the card shows *Unavailable*.
 3. Only if `entity` is **not configured**: the `power` sensor of the plug decides, *On* above `threshold` (default **3 W**, not measured: adjust it to your plug), *Standby* otherwise.

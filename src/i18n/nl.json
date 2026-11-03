@@ -240,6 +240,7 @@
     "ps_rest": "Rustmodus",
     "ps_gaming": "Aan het gamen",
     "hue_sync": "Hue Sync Box",
+    "hue_boot": "Opstarten",
     "confirm_off_console": "Console aan – klik nogmaals om uit te schakelen",
     "confirm_off_always": "Klik nogmaals om de stroom te onderbreken",
     "f_confirm_always": "Altijd bevestigen voor de stroom wordt onderbroken (stekker aan)",

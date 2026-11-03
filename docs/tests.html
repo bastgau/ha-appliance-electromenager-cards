@@ -1245,6 +1245,15 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  let c=hs('off','on'); ok('hue plug off -> off',has(c,'st-off')&&!has(c,'active'),c.wrap.className);
  c=hs('on','on'); ok('hue state on -> powered',has(c,'st-powered')&&has(c,'active')&&/En marche/.test(c.txt()),c.txt());
  c=hs('on','off'); ok('hue state off -> standby',has(c,'st-standby')&&!has(c,'active'),c.wrap.className);
+ {const real=Date.now; let now=real(); Date.now=()=>now;
+  c=card('hue-sync',{switch:'switch.plug',entity:'switch.state'},[mk('switch.plug','off'),mk('switch.state','unavailable')]); ok('hue boot: plug off -> off',has(c,'st-off'),c.wrap.className);
+  c.el.hass=hassOf([mk('switch.plug','on'),mk('switch.state','unavailable')]); ok('hue boot: plug turned on -> starting (even if status unavailable)',has(c,'st-hue_boot')&&/Démarrage/.test(c.txt()),c.wrap.className+c.txt());
+  c.el.hass=hassOf([mk('switch.plug','on'),mk('switch.state','off')]); ok('hue boot: still starting 5 s later',(now+=5000,c.el.hass=hassOf([mk('switch.plug','on'),mk('switch.state','off')]),has(c,'st-hue_boot')),c.wrap.className);
+  now+=6000; c.el._render(c.el._compute()); /* ce que fait le minuteur de 10 s */ ok('hue boot: after 10 s -> standby',has(c,'st-standby'),c.wrap.className);
+  c.el.hass=hassOf([mk('switch.plug','on'),mk('switch.state','on')]); ok('hue boot over: status on -> powered',has(c,'st-powered'),c.wrap.className);
+  c.el.hass=hassOf([mk('switch.plug','off'),mk('switch.state','unavailable')]); c.el.hass=hassOf([mk('switch.plug','on'),mk('switch.state','on')]); ok('hue boot: plug cut then on again -> starting again',has(c,'st-hue_boot'),c.wrap.className);
+  c.el.hass=hassOf([mk('switch.plug','off'),mk('switch.state','unavailable')]); ok('hue boot: plug cut during boot -> off',has(c,'st-off'),c.wrap.className);
+  Date.now=real;}
  c=hs('off','unavailable'); ok('hue plug off + status switch unavailable -> off',has(c,'st-off'),c.wrap.className);
  c=hs('on','unavailable'); ok('hue plug on + status switch unavailable -> unavailable',has(c,'st-unavailable'),c.wrap.className);
  c=card('hue-sync',{switch:'switch.plug',entity:'switch.state',button:'entity'},[mk('switch.plug','on'),mk('switch.state','off')]);
