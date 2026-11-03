@@ -252,7 +252,6 @@ const STRINGS = {
     "ps_rest": "Rest mode",
     "ps_gaming": "Gaming",
     "hue_sync": "Hue Sync Box",
-    "f_standby_threshold_hue": "Standby above (W)",
     "confirm_off_console": "Console on – click again to cut power",
     "confirm_off_always": "Click again to cut power",
     "f_confirm_always": "Always confirm before cutting power (plug on)",
@@ -569,7 +568,6 @@ const STRINGS = {
     "ps_rest": "Ruhemodus",
     "ps_gaming": "Im Spiel",
     "hue_sync": "Hue Sync Box",
-    "f_standby_threshold_hue": "Standby über (W)",
     "confirm_off_console": "Konsole an – erneut klicken zum Ausschalten",
     "confirm_off_always": "Erneut klicken zum Abschalten",
     "f_confirm_always": "Vor dem Abschalten immer bestätigen (Steckdose an)",
@@ -886,7 +884,6 @@ const STRINGS = {
     "ps_rest": "Mode repos",
     "ps_gaming": "En jeu",
     "hue_sync": "Hue Sync Box",
-    "f_standby_threshold_hue": "Veille au-dessus de (W)",
     "confirm_off_console": "Console allumée – cliquer encore pour couper",
     "confirm_off_always": "Cliquer encore pour couper",
     "f_confirm_always": "Toujours confirmer avant de couper (prise allumée)",
@@ -1203,7 +1200,6 @@ const STRINGS = {
     "ps_rest": "Modalità riposo",
     "ps_gaming": "In gioco",
     "hue_sync": "Hue Sync Box",
-    "f_standby_threshold_hue": "Standby sopra (W)",
     "confirm_off_console": "Console accesa – clicca di nuovo per togliere corrente",
     "confirm_off_always": "Clicca di nuovo per togliere corrente",
     "f_confirm_always": "Conferma sempre prima di togliere corrente (presa accesa)",
@@ -1347,7 +1343,6 @@ const STRINGS = {
     "ps_rest": "Hvilemodus",
     "ps_gaming": "Spiller",
     "hue_sync": "Hue Sync Box",
-    "f_standby_threshold_hue": "Standby over (W)",
     "confirm_off_console": "Konsollen er på – klikk igjen for å kutte strømmen",
     "confirm_off_always": "Klikk igjen for å kutte strømmen",
     "f_confirm_always": "Bekreft alltid før strømmen brytes (kontakt på)",
@@ -1837,7 +1832,6 @@ const STRINGS = {
     "ps_rest": "Rustmodus",
     "ps_gaming": "Aan het gamen",
     "hue_sync": "Hue Sync Box",
-    "f_standby_threshold_hue": "Stand-by boven (W)",
     "confirm_off_console": "Console aan – klik nogmaals om uit te schakelen",
     "confirm_off_always": "Klik nogmaals om de stroom te onderbreken",
     "f_confirm_always": "Altijd bevestigen voor de stroom wordt onderbroken (stekker aan)",
@@ -2154,7 +2148,6 @@ const STRINGS = {
     "ps_rest": "Mod repaus",
     "ps_gaming": "În joc",
     "hue_sync": "Hue Sync Box",
-    "f_standby_threshold_hue": "Standby peste (W)",
     "confirm_off_console": "Consola pornită – apasă din nou pentru a opri",
     "confirm_off_always": "Apasă din nou pentru a tăia alimentarea",
     "f_confirm_always": "Confirmă întotdeauna înainte de a tăia alimentarea (priză pornită)",
@@ -2471,7 +2464,6 @@ const STRINGS = {
     "ps_rest": "Режим покоя",
     "ps_gaming": "Игра",
     "hue_sync": "Hue Sync Box",
-    "f_standby_threshold_hue": "Ожидание выше (Вт)",
     "confirm_off_console": "Консоль включена – нажмите ещё раз, чтобы отключить",
     "confirm_off_always": "Нажмите ещё раз, чтобы отключить питание",
     "f_confirm_always": "Всегда подтверждать отключение питания (розетка включена)",
@@ -2788,7 +2780,6 @@ const STRINGS = {
     "ps_rest": "Режим мировања",
     "ps_gaming": "Игре",
     "hue_sync": "Hue Sync Box",
-    "f_standby_threshold_hue": "Мировање изнад (W)",
     "confirm_off_console": "Конзола је укључена – кликните поново за искључење струје",
     "confirm_off_always": "Кликните поново за искључење струје",
     "f_confirm_always": "Увек потврди пре искључења струје (утичница укључена)",
@@ -3105,7 +3096,6 @@ const STRINGS = {
     "ps_rest": "Režim mirovanja",
     "ps_gaming": "Igre",
     "hue_sync": "Hue Sync Box",
-    "f_standby_threshold_hue": "Mirovanje iznad (W)",
     "confirm_off_console": "Konzola je uključena – kliknite ponovo za isključenje struje",
     "confirm_off_always": "Kliknite ponovo za isključenje struje",
     "f_confirm_always": "Uvek potvrdi pre isključenja struje (utičnica uključena)",
@@ -6163,13 +6153,11 @@ class ApplianceCardBase extends HTMLElement {
       else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "screen_on" : base === "standby" ? "ps_rest" : "off";
       m.game = m.status === "ps_gaming" && playing ? main.attributes.media_title || null : null;
     } else if (kind === "hue_sync") {
-      // Hue Sync Box : prise (switch) coupée → éteint ; switch d'état (entity) on → allumé (LED blanche), off → veille (LED violette) ;
-      // sans switch d'état, la puissance de la prise décide (veille sous threshold)
+      // Hue Sync Box : prise (switch) coupée → éteint ; sinon le switch d'état du boîtier (entity) : on → allumé (LED blanche), off → veille (LED violette)
       const es = main ? String(main.state).toLowerCase() : "";
       if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
       else if (main && !BAD.includes(es)) m.status = es === "on" ? "powered" : "standby";
-      else if (watts !== null) m.status = watts > threshold ? "powered" : watts >= (c.standby_threshold ?? 0.5) ? "standby" : "off";
-      else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "powered" : base === "standby" ? "standby" : "off";
+      else m.status = "unavailable";
     } else if (kind === "desktop_pc" || kind === "laptop" || kind === "monitor") {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (explicitState) m.status = base === "running" ? "screen_on" : powered ? "standby" : "off";
@@ -7076,9 +7064,6 @@ function buildForm(kind) {
             { name: "style", selector: { select: { mode: "dropdown", options: [
               { value: "wall", label: "Murale / Wall-mounted" }, { value: "stand", label: "Pied central / Center stand" }, { value: "feet", label: "Deux pieds / Two feet" }] } } },
           ] : []),
-          ...(kind === "hue_sync" ? [
-            { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
-          ] : []),
           ...(kind === "ps5" ? [
             { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
             { name: "gaming_threshold", selector: { number: { min: 30, max: 400, step: 5, mode: "box", unit_of_measurement: "W" } } },
@@ -7168,7 +7153,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "hue_sync" && s.name === "standby_threshold" ? "f_standby_threshold_hue" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 

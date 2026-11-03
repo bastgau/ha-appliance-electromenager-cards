@@ -567,13 +567,11 @@ class ApplianceCardBase extends HTMLElement {
       else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "screen_on" : base === "standby" ? "ps_rest" : "off";
       m.game = m.status === "ps_gaming" && playing ? main.attributes.media_title || null : null;
     } else if (kind === "hue_sync") {
-      // Hue Sync Box : prise (switch) coupée → éteint ; switch d'état (entity) on → allumé (LED blanche), off → veille (LED violette) ;
-      // sans switch d'état, la puissance de la prise décide (veille sous threshold)
+      // Hue Sync Box : prise (switch) coupée → éteint ; sinon le switch d'état du boîtier (entity) : on → allumé (LED blanche), off → veille (LED violette)
       const es = main ? String(main.state).toLowerCase() : "";
       if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
       else if (main && !BAD.includes(es)) m.status = es === "on" ? "powered" : "standby";
-      else if (watts !== null) m.status = watts > threshold ? "powered" : watts >= (c.standby_threshold ?? 0.5) ? "standby" : "off";
-      else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "powered" : base === "standby" ? "standby" : "off";
+      else m.status = "unavailable";
     } else if (kind === "desktop_pc" || kind === "laptop" || kind === "monitor") {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (explicitState) m.status = base === "running" ? "screen_on" : powered ? "standby" : "off";

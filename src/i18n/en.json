@@ -237,7 +237,6 @@
     "ps_rest": "Rest mode",
     "ps_gaming": "Gaming",
     "hue_sync": "Hue Sync Box",
-    "f_standby_threshold_hue": "Standby above (W)",
     "confirm_off_console": "Console on – click again to cut power",
     "confirm_off_always": "Click again to cut power",
     "f_confirm_always": "Always confirm before cutting power (plug on)",
