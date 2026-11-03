@@ -4146,7 +4146,7 @@ SVG.hue_sync = () => `
 <linearGradient id="ID-hsfront" x1="0" x2="1"><stop offset="0" stop-color="#1d2126"/><stop offset="1" stop-color="#0a0b0d"/></linearGradient>
 <linearGradient id="ID-hsside" x1="0" x2="1"><stop offset="0" stop-color="#14171b"/><stop offset="1" stop-color="#050607"/></linearGradient>
 <radialGradient id="ID-hsled"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
-<g transform="translate(0 27)">
+<g transform="translate(-2 5.700)">
 <ellipse cx="62" cy="79" rx="56" ry="3.600" fill="url(#ID-shadow)"/>
 <g class="hs-box" stroke-linejoin="round">
   <path d="M78 70L112 52V63L78 81Z" fill="url(#ID-hsside)" stroke="#050607" stroke-width="4"/>
