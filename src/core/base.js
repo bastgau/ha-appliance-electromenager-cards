@@ -566,6 +566,23 @@ class ApplianceCardBase extends HTMLElement {
       else if (mpOk) m.status = playing ? "ps_gaming" : ["on", "idle", "paused", "buffering"].includes(ms) ? "screen_on" : "off";
       else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "screen_on" : base === "standby" ? "ps_rest" : "off";
       m.game = m.status === "ps_gaming" && playing ? main.attributes.media_title || null : null;
+    } else if (kind === "hue_sync") {
+      // Hue Sync Box : prise (switch) coupée → éteint ; sinon le switch d'état du boîtier (entity) : on → allumé (LED blanche), off → veille (LED violette) ;
+      // seul repli : pas de switch d'état configuré → puissance de la prise vs threshold
+      const es = main ? String(main.state).toLowerCase() : "";
+      if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
+      else if (main && !BAD.includes(es)) m.status = es === "on" ? "powered" : "standby";
+      // sans switch d'état configuré : la puissance de la prise décide (allumé au-dessus de threshold, sinon veille)
+      else if (!c.entity && watts !== null) m.status = watts > threshold ? "powered" : "standby";
+      else m.status = "unavailable";
+      // démarrage : 10 s après le passage de la prise de coupée à allumée (LED violette), quel que soit l'état du switch d'état
+      const plugOff = !!sw && String(sw.state).toLowerCase() === "off";
+      if (plugOff) { this._hsWasOff = true; this._hsBootUntil = 0; }
+      else if (this._hsWasOff && sw && !BAD.includes(String(sw.state).toLowerCase())) {
+        this._hsWasOff = false; this._hsBootUntil = Date.now() + 10000;
+        clearTimeout(this._hsBootT); this._hsBootT = setTimeout(() => { if (this._hass) this._render(this._compute()); }, 10100);
+      }
+      if (!plugOff && this._hsBootUntil && Date.now() < this._hsBootUntil) m.status = "hue_boot";
     } else if (kind === "desktop_pc" || kind === "laptop" || kind === "monitor") {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (explicitState) m.status = base === "running" ? "screen_on" : powered ? "standby" : "off";
@@ -1116,7 +1133,8 @@ class ApplianceCardBase extends HTMLElement {
         ${sub ? `<div class="sub">${esc(sub)}</div>` : ""}`;
     }
 
-    const swId = c.switch || (kind === "dehumidifier" && domainOf(c.entity) === "humidifier" ? c.entity : null)
+    // Hue Sync Box : button = « switch » (la prise, défaut) ou « entity » (le switch d'état) : celui que le bouton on/off pilote
+    const swId = (kind === "hue_sync" && c.button === "entity" && c.entity) || c.switch || (kind === "dehumidifier" && domainOf(c.entity) === "humidifier" ? c.entity : null)
       || (kind === "garland" && domainOf(c.entity) === "light" ? c.entity : null);
     this._sw = null;
     // multiprise sans switch global : le bouton marche / arrêt pilote toutes les prises (une allumée → tout couper, sinon tout allumer)

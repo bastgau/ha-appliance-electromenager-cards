@@ -199,6 +199,9 @@ const STRINGS = {
     "f_program": "Program / phase sensor",
     "f_door": "Door sensor",
     "f_switch": "Switch to toggle (optional)",
+    "f_switch_hue": "Smart plug switch (off = Off)",
+    "f_entity_hue": "Box status switch (on = On, off = Standby)",
+    "f_button_hue": "On/off button controls",
     "f_threshold": "Running threshold (W)",
     "f_temperature": "Temperature sensor",
     "f_target_temperature": "Target temperature sensor",
@@ -251,6 +254,8 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Rest mode",
     "ps_gaming": "Gaming",
+    "hue_sync": "Hue Sync Box",
+    "hue_boot": "Starting",
     "confirm_off_console": "Console on – click again to cut power",
     "confirm_off_always": "Click again to cut power",
     "f_confirm_always": "Always confirm before cutting power (plug on)",
@@ -514,6 +519,9 @@ const STRINGS = {
     "f_program": "Programm-/Phasensensor",
     "f_door": "Türsensor",
     "f_switch": "Zu schaltender Schalter (optional)",
+    "f_switch_hue": "Schalter der Steckdose (aus = Aus)",
+    "f_entity_hue": "Status-Schalter des Geräts (an = Ein, aus = Standby)",
+    "f_button_hue": "Die Ein/Aus-Taste schaltet",
     "f_threshold": "Betriebsschwelle (W)",
     "f_temperature": "Temperatursensor",
     "f_target_temperature": "Sollwertsensor",
@@ -566,6 +574,8 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Ruhemodus",
     "ps_gaming": "Im Spiel",
+    "hue_sync": "Hue Sync Box",
+    "hue_boot": "Startet",
     "confirm_off_console": "Konsole an – erneut klicken zum Ausschalten",
     "confirm_off_always": "Erneut klicken zum Abschalten",
     "f_confirm_always": "Vor dem Abschalten immer bestätigen (Steckdose an)",
@@ -829,6 +839,9 @@ const STRINGS = {
     "f_program": "Capteur de programme / phase",
     "f_door": "Capteur de porte",
     "f_switch": "Interrupteur à piloter (optionnel)",
+    "f_switch_hue": "Switch de la prise connectée (coupé = Éteint)",
+    "f_entity_hue": "Switch d'état du boîtier (on = Allumé, off = Veille)",
+    "f_button_hue": "Le bouton on/off pilote",
     "f_threshold": "Seuil de fonctionnement (W)",
     "f_temperature": "Capteur de température",
     "f_target_temperature": "Capteur de consigne",
@@ -881,6 +894,8 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Mode repos",
     "ps_gaming": "En jeu",
+    "hue_sync": "Hue Sync Box",
+    "hue_boot": "Démarrage",
     "confirm_off_console": "Console allumée – cliquer encore pour couper",
     "confirm_off_always": "Cliquer encore pour couper",
     "f_confirm_always": "Toujours confirmer avant de couper (prise allumée)",
@@ -1144,6 +1159,9 @@ const STRINGS = {
     "f_program": "Sensore programma / fase",
     "f_door": "Sensore sportello",
     "f_switch": "Interruttore da comandare (opzionale)",
+    "f_switch_hue": "Interruttore della presa smart (spento = Spento)",
+    "f_entity_hue": "Interruttore di stato del dispositivo (acceso = Acceso, spento = Standby)",
+    "f_button_hue": "Il pulsante on/off comanda",
     "f_threshold": "Soglia di funzionamento (W)",
     "f_temperature": "Sensore temperatura",
     "f_target_temperature": "Sensore temperatura obiettivo",
@@ -1196,6 +1214,8 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Modalità riposo",
     "ps_gaming": "In gioco",
+    "hue_sync": "Hue Sync Box",
+    "hue_boot": "Avvio",
     "confirm_off_console": "Console accesa – clicca di nuovo per togliere corrente",
     "confirm_off_always": "Clicca di nuovo per togliere corrente",
     "f_confirm_always": "Conferma sempre prima di togliere corrente (presa accesa)",
@@ -1338,6 +1358,8 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Hvilemodus",
     "ps_gaming": "Spiller",
+    "hue_sync": "Hue Sync Box",
+    "hue_boot": "Starter",
     "confirm_off_console": "Konsollen er på – klikk igjen for å kutte strømmen",
     "confirm_off_always": "Klikk igjen for å kutte strømmen",
     "f_confirm_always": "Bekreft alltid før strømmen brytes (kontakt på)",
@@ -1529,6 +1551,9 @@ const STRINGS = {
     "f_program": "Sensor for program / fase",
     "f_door": "Dørsensor",
     "f_switch": "Bryter som slås av/på (valgfri)",
+    "f_switch_hue": "Bryter for stikkontakten (av = Av)",
+    "f_entity_hue": "Statusbryter for enheten (på = På, av = Standby)",
+    "f_button_hue": "Av/på-knappen styrer",
     "f_threshold": "Terskel for «i gang» (W)",
     "f_temperature": "Temperatursensor",
     "f_target_temperature": "Sensor for måltemperatur",
@@ -1774,6 +1799,9 @@ const STRINGS = {
     "f_program": "Programma- / fasesensor",
     "f_door": "Deursensor",
     "f_switch": "Schakelaar om te bedienen (optioneel)",
+    "f_switch_hue": "Schakelaar van het stopcontact (uit = Uit)",
+    "f_entity_hue": "Statusschakelaar van het apparaat (aan = Aan, uit = Stand-by)",
+    "f_button_hue": "De aan/uit-knop bedient",
     "f_threshold": "Drempel voor 'bezig' (W)",
     "f_temperature": "Temperatuursensor",
     "f_target_temperature": "Sensor doeltemperatuur",
@@ -1826,6 +1854,8 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Rustmodus",
     "ps_gaming": "Aan het gamen",
+    "hue_sync": "Hue Sync Box",
+    "hue_boot": "Opstarten",
     "confirm_off_console": "Console aan – klik nogmaals om uit te schakelen",
     "confirm_off_always": "Klik nogmaals om de stroom te onderbreken",
     "f_confirm_always": "Altijd bevestigen voor de stroom wordt onderbroken (stekker aan)",
@@ -2089,6 +2119,9 @@ const STRINGS = {
     "f_program": "Senzor program / fază",
     "f_door": "Senzor de ușă",
     "f_switch": "Comutator de controlat (opțional)",
+    "f_switch_hue": "Comutatorul prizei inteligente (oprit = Oprit)",
+    "f_entity_hue": "Comutator de stare al dispozitivului (pornit = Pornit, oprit = Standby)",
+    "f_button_hue": "Butonul pornit/oprit controlează",
     "f_threshold": "Prag de funcționare (W)",
     "f_temperature": "Senzor de temperatură",
     "f_target_temperature": "Senzor temperatură țintă",
@@ -2141,6 +2174,8 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Mod repaus",
     "ps_gaming": "În joc",
+    "hue_sync": "Hue Sync Box",
+    "hue_boot": "Pornire",
     "confirm_off_console": "Consola pornită – apasă din nou pentru a opri",
     "confirm_off_always": "Apasă din nou pentru a tăia alimentarea",
     "f_confirm_always": "Confirmă întotdeauna înainte de a tăia alimentarea (priză pornită)",
@@ -2404,6 +2439,9 @@ const STRINGS = {
     "f_program": "Датчик программы / фазы",
     "f_door": "Датчик дверцы",
     "f_switch": "Переключатель для управления (необязательно)",
+    "f_switch_hue": "Переключатель розетки (выкл. = Выключен)",
+    "f_entity_hue": "Переключатель состояния устройства (вкл. = Включён, выкл. = Ожидание)",
+    "f_button_hue": "Кнопка вкл/выкл управляет",
     "f_threshold": "Порог работы (Вт)",
     "f_temperature": "Датчик температуры",
     "f_target_temperature": "Датчик целевой температуры",
@@ -2456,6 +2494,8 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Режим покоя",
     "ps_gaming": "Игра",
+    "hue_sync": "Hue Sync Box",
+    "hue_boot": "Запуск",
     "confirm_off_console": "Консоль включена – нажмите ещё раз, чтобы отключить",
     "confirm_off_always": "Нажмите ещё раз, чтобы отключить питание",
     "f_confirm_always": "Всегда подтверждать отключение питания (розетка включена)",
@@ -2719,6 +2759,9 @@ const STRINGS = {
     "f_program": "Сензор програма / фазе",
     "f_door": "Сензор врата",
     "f_switch": "Прекидач за пребацивање (опционо)",
+    "f_switch_hue": "Прекидач паметне утичнице (искључен = Искључен)",
+    "f_entity_hue": "Прекидач стања уређаја (укључен = Укључен, искључен = Мировање)",
+    "f_button_hue": "Дугме укљ./искљ. управља",
     "f_threshold": "Праг рада (W)",
     "f_temperature": "Сензор температуре",
     "f_target_temperature": "Сензор циљне температуре",
@@ -2771,6 +2814,8 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Режим мировања",
     "ps_gaming": "Игре",
+    "hue_sync": "Hue Sync Box",
+    "hue_boot": "Покретање",
     "confirm_off_console": "Конзола је укључена – кликните поново за искључење струје",
     "confirm_off_always": "Кликните поново за искључење струје",
     "f_confirm_always": "Увек потврди пре искључења струје (утичница укључена)",
@@ -3034,6 +3079,9 @@ const STRINGS = {
     "f_program": "Senzor programa / faze",
     "f_door": "Senzor vrata",
     "f_switch": "Prekidač za prebacivanje (opciono)",
+    "f_switch_hue": "Prekidač pametne utičnice (isključen = Isključen)",
+    "f_entity_hue": "Prekidač stanja uređaja (uključen = Uključen, isključen = Mirovanje)",
+    "f_button_hue": "Dugme uklj./isklj. upravlja",
     "f_threshold": "Prag rada (W)",
     "f_temperature": "Senzor temperature",
     "f_target_temperature": "Senzor ciljne temperature",
@@ -3086,6 +3134,8 @@ const STRINGS = {
     "ps5": "PlayStation 5",
     "ps_rest": "Režim mirovanja",
     "ps_gaming": "Igre",
+    "hue_sync": "Hue Sync Box",
+    "hue_boot": "Pokretanje",
     "confirm_off_console": "Konzola je uključena – kliknite ponovo za isključenje struje",
     "confirm_off_always": "Kliknite ponovo za isključenje struje",
     "f_confirm_always": "Uvek potvrdi pre isključenja struje (utičnica uključena)",
@@ -4126,6 +4176,30 @@ SVG.hob = () => `
   <rect x="37.5" y="75" width="5" height="3.4" rx="1.4" fill="#2b2f34"/></g>
   <g class="steam-pot"><path d="M34 72q-3-5 0-10t0-10"/><path d="M41 70q-3-5 0-10t0-10"/><path d="M48 72q-3-5 0-10t0-10"/></g>
 </g></g>`;
+
+/* Philips Hue Play HDMI Sync Box : boîtier noir plat aux angles arrondis, vu de trois quarts (face avant à droite),
+   avec en façade un voyant et le connecteur rond. Voyant : blanc allumé, violet en veille, éteint sinon.
+   Silhouette seulement : aucun logo. */
+SVG.hue_sync = () => `
+<defs>${DEFS}
+<linearGradient id="ID-hstop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a2f35"/><stop offset=".5" stop-color="#171a1e"/><stop offset="1" stop-color="#0d0f11"/></linearGradient>
+<linearGradient id="ID-hsfront" x1="0" x2="1"><stop offset="0" stop-color="#1d2126"/><stop offset="1" stop-color="#0a0b0d"/></linearGradient>
+<linearGradient id="ID-hsside" x1="0" x2="1"><stop offset="0" stop-color="#14171b"/><stop offset="1" stop-color="#050607"/></linearGradient>
+<radialGradient id="ID-hsled"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
+<g transform="translate(-2 5.700)">
+<ellipse cx="62" cy="79" rx="56" ry="3.600" fill="url(#ID-shadow)"/>
+<g class="hs-box" stroke-linejoin="round">
+  <path d="M78 70L112 52V63L78 81Z" fill="url(#ID-hsside)" stroke="#050607" stroke-width="4"/>
+  <path d="M12 64L78 70V81L12 75Z" fill="url(#ID-hsfront)" stroke="#0a0b0d" stroke-width="4"/>
+  <path d="M78 70L112 52" stroke="#5a636d" stroke-opacity=".5" stroke-width=".7"/>
+  <path d="M12 64L46 46L112 52L78 70Z" fill="url(#ID-hstop)" stroke="#1b1f23" stroke-width="4"/>
+  <path d="M15 63.500L47 48.500L108 54" fill="none" stroke="#7a838d" stroke-opacity=".45" stroke-width=".8"/>
+  <path d="M40 62L62 54L84 58" fill="none" stroke="#fff" stroke-opacity=".05" stroke-width="5"/>
+  <circle class="hs-halo" cx="58" cy="76.200" r="5" fill="url(#ID-hsled)"/>
+  <circle class="hs-led" cx="58" cy="76.200" r="1.200"/>
+  <ellipse cx="68" cy="77.300" rx="3.500" ry="2.200" fill="#050607" stroke="#3a424b" stroke-width=".4"/>
+</g>
+</g>`;
 
 SVG.kettle = () => `
 <defs>${DEFS}
@@ -5338,6 +5412,10 @@ const DEF = {
   thermomix: { accent: "heat", threshold: 15,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["thermomix", "tm6", "tm7", "tm5", "vorwerk", "robot_cuiseur", "robot_culinaire", "cookidoo"] },
+  // Philips Hue Play HDMI Sync Box : switch = prise connectée (coupée → éteint) ; entity = switch d'état du boîtier (on → allumé, off → veille) ; button (select) = switch ou entity : celui que pilote le bouton on/off (défaut : switch)
+  hue_sync: { accent: "active", threshold: 3,
+    fields: ["entity", "switch", "power", "energy", "cost"],
+    keys: ["hue_sync", "huesync", "sync_box", "syncbox", "hdmi_sync", "hue_play", "hue_hdmi"] },
   coffee_maker: { accent: "heat", threshold: 300,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["cafetiere", "coffee", "senseo", "nespresso", "dolce_gusto", "tassimo", "expresso", "espresso", "cafe"] },
@@ -6114,6 +6192,23 @@ class ApplianceCardBase extends HTMLElement {
       else if (mpOk) m.status = playing ? "ps_gaming" : ["on", "idle", "paused", "buffering"].includes(ms) ? "screen_on" : "off";
       else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "screen_on" : base === "standby" ? "ps_rest" : "off";
       m.game = m.status === "ps_gaming" && playing ? main.attributes.media_title || null : null;
+    } else if (kind === "hue_sync") {
+      // Hue Sync Box : prise (switch) coupée → éteint ; sinon le switch d'état du boîtier (entity) : on → allumé (LED blanche), off → veille (LED violette) ;
+      // seul repli : pas de switch d'état configuré → puissance de la prise vs threshold
+      const es = main ? String(main.state).toLowerCase() : "";
+      if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
+      else if (main && !BAD.includes(es)) m.status = es === "on" ? "powered" : "standby";
+      // sans switch d'état configuré : la puissance de la prise décide (allumé au-dessus de threshold, sinon veille)
+      else if (!c.entity && watts !== null) m.status = watts > threshold ? "powered" : "standby";
+      else m.status = "unavailable";
+      // démarrage : 10 s après le passage de la prise de coupée à allumée (LED violette), quel que soit l'état du switch d'état
+      const plugOff = !!sw && String(sw.state).toLowerCase() === "off";
+      if (plugOff) { this._hsWasOff = true; this._hsBootUntil = 0; }
+      else if (this._hsWasOff && sw && !BAD.includes(String(sw.state).toLowerCase())) {
+        this._hsWasOff = false; this._hsBootUntil = Date.now() + 10000;
+        clearTimeout(this._hsBootT); this._hsBootT = setTimeout(() => { if (this._hass) this._render(this._compute()); }, 10100);
+      }
+      if (!plugOff && this._hsBootUntil && Date.now() < this._hsBootUntil) m.status = "hue_boot";
     } else if (kind === "desktop_pc" || kind === "laptop" || kind === "monitor") {
       if (base === "off" || base === "unavailable") m.status = base;
       else if (explicitState) m.status = base === "running" ? "screen_on" : powered ? "standby" : "off";
@@ -6664,7 +6759,8 @@ class ApplianceCardBase extends HTMLElement {
         ${sub ? `<div class="sub">${esc(sub)}</div>` : ""}`;
     }
 
-    const swId = c.switch || (kind === "dehumidifier" && domainOf(c.entity) === "humidifier" ? c.entity : null)
+    // Hue Sync Box : button = « switch » (la prise, défaut) ou « entity » (le switch d'état) : celui que le bouton on/off pilote
+    const swId = (kind === "hue_sync" && c.button === "entity" && c.entity) || c.switch || (kind === "dehumidifier" && domainOf(c.entity) === "humidifier" ? c.entity : null)
       || (kind === "garland" && domainOf(c.entity) === "light" ? c.entity : null);
     this._sw = null;
     // multiprise sans switch global : le bouton marche / arrêt pilote toutes les prises (une allumée → tout couper, sinon tout allumer)
@@ -7020,6 +7116,10 @@ function buildForm(kind) {
             { name: "style", selector: { select: { mode: "dropdown", options: [
               { value: "wall", label: "Murale / Wall-mounted" }, { value: "stand", label: "Pied central / Center stand" }, { value: "feet", label: "Deux pieds / Two feet" }] } } },
           ] : []),
+          ...(kind === "hue_sync" ? [
+            { name: "button", selector: { select: { mode: "dropdown", options: [
+              { value: "switch", label: "Prise (switch) / Plug (switch)" }, { value: "entity", label: "Statut du boîtier (entity) / Box status (entity)" }] } } },
+          ] : []),
           ...(kind === "ps5" ? [
             { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },
             { name: "gaming_threshold", selector: { number: { min: 30, max: 400, step: 5, mode: "box", unit_of_measurement: "W" } } },
@@ -7109,7 +7209,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "hue_sync" && ["entity", "switch", "button"].includes(s.name) ? `f_${s.name}_hue` : kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -7138,7 +7238,7 @@ function stubFor(kind, hass) {
   if (power) cfg.power = power;
   if (energy) cfg.energy = energy;
   if (cost) cfg.cost = cost;
-  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
+  if (sw && ["water_heater", "oven", "microwave", "pool_pump", "air_fryer", "coffee_maker", "thermomix", "hue_sync", "tv", "range_hood", "ac_split", "heat_pump", "towel_dryer", "server_rack", "desktop_pc", "ps5", "laptop", "monitor", "kettle", "toaster", "power_strip", "phone_charger", "piano", "garland", "wine_cooler", "beer_tap", "av_receiver", "fan", "tool_charger", "ceiling_fan", "dehumidifier"].includes(kind)) cfg.switch = sw;
   else if (sw && !cfg.entity) cfg.entity = sw;
   const clim = kind === "radiator" ? pick((i) => i.startsWith("climate.")) : null;
   if (clim) cfg.entity = clim;
@@ -8463,6 +8563,15 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .k-thermomix.st-turbo .tmx-body { animation: tmx-turbo .09s linear infinite; }
 @keyframes tmx-rise { 0% { opacity: 0; transform: translateY(0) scale(.6); } 20% { opacity: .9; } 100% { opacity: 0; transform: translateY(-16px) scale(1.7); } }
 @keyframes tmx-turbo { 0%,100% { transform: translate(0,0) rotate(0); } 20% { transform: translate(-.7px,.35px) rotate(-.5deg); } 40% { transform: translate(.6px,-.4px) rotate(.4deg); } 60% { transform: translate(-.5px,-.25px) rotate(-.3deg); } 80% { transform: translate(.7px,.25px) rotate(.5deg); } }
+
+/* ---------- Philips Hue Play HDMI Sync Box ---------- */
+/* voyant en façade : éteint sombre, rouge en veille, violet pendant les 10 s de démarrage, blanc allumé */
+.k-hue_sync .hs-led { fill: #2a2f35; transition: fill .4s; }
+.k-hue_sync .hs-halo { opacity: 0; transition: opacity .4s; }
+.k-hue_sync.st-standby .hs-led { fill: #ff3b30; filter: drop-shadow(0 0 1.6px #ff3b30); }
+.k-hue_sync.st-hue_boot .hs-led { fill: #b46bff; filter: drop-shadow(0 0 2px #b46bff); animation: ac-pulse 1.6s ease-in-out infinite; }
+.k-hue_sync.st-powered .hs-led { fill: #fff; filter: drop-shadow(0 0 2px #fff); }
+.k-hue_sync.st-powered .hs-halo { opacity: .6; }
 `;
 
 /* ------------------------------------------------------------------ */
