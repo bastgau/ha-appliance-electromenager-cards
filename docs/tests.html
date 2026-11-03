@@ -1239,6 +1239,22 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  c=card('ps5',{entity:'media_player.ps5'},[mk('media_player.ps5','playing',{media_title:'Astro Bot'})]); ok('ps5 PSN only',has(c,'st-ps_gaming')&&/Astro Bot/.test(c.txt()),c.txt());
  c=ps(60,'on'); c.sr.querySelector('.toggle').click(); {const armed=!c.h.calls.length&&/Console allumée/.test(c.sr.getElementById('actions').textContent); c.sr.querySelector('.toggle').click(); ok('ps5 off needs two clicks',armed&&c.h.calls.length===1,JSON.stringify(c.h.calls));}
  c=ps(2,'off'); c.sr.querySelector('.toggle').click(); ok('ps5 rest mode: cut needs confirmation',!c.h.calls.length,JSON.stringify(c.h.calls));
+ // TV ambilight : halo (TV allumée + interrupteur on), intensité = niveau normalisé, tuile on/off
+{const tv=(tvW,amb,lvl,extra={},la={min:0,max:200})=>card('tv',{power:'sensor.p',ambilight:'switch.amb',ambilight_level:'number.lvl',...extra},[mk('sensor.p',tvW,W),mk('switch.amb',amb),mk('number.lvl',lvl,la)]);
+ const amb=(c)=>c.sr.querySelector('.amb-tile'), v=(c)=>c.sr.querySelector('.wrap').style.getPropertyValue('--amb');
+ let c=tv(120,'on',100); ok('tv ambilight on + TV on -> halo, level 100/200 = 0.50',has(c,'amb-on')&&v(c)==='0.50'&&/50 %/.test(amb(c).textContent),c.wrap.className+v(c));
+ c=tv(120,'on',200); ok('tv ambilight level max -> 1.00',has(c,'amb-on')&&v(c)==='1.00',v(c));
+ c=tv(120,'on',30,{},{}); ok('tv ambilight level without min/max -> 0..100',v(c)==='0.30'&&/30 %/.test(amb(c).textContent),v(c));
+ c=tv(120,'off',100); ok('tv ambilight off -> no halo, tile shows Éteint',!has(c,'amb-on')&&/Éteint/.test(amb(c).textContent),c.wrap.className);
+ c=tv(0.1,'on',100); ok('tv off -> no halo and no ambilight tile',!has(c,'amb-on')&&!amb(c),c.wrap.className);
+ c=tv(120,'unavailable',100); ok('tv ambilight unavailable -> no halo, no tile',!has(c,'amb-on')&&!amb(c),c.wrap.className);
+ c=tv(120,'on',0); ok('tv ambilight on but level 0 -> no halo, tile on',!has(c,'amb-on')&&!!amb(c)&&amb(c).classList.contains('on'),c.wrap.className);
+ c=card('tv',{power:'sensor.p',ambilight:'switch.amb'},[mk('sensor.p',120,W),mk('switch.amb','on')]); ok('tv ambilight without level -> medium halo 0.70, tile says On',has(c,'amb-on')&&v(c)==='0.70'&&/En marche/.test(amb(c).textContent),c.wrap.className+v(c));
+ c=card('tv',{power:'sensor.p',ambilight_level:'number.lvl'},[mk('sensor.p',120,W),mk('number.lvl',100,{min:0,max:200})]); ok('tv level only (no switch) -> halo but no toggle tile',has(c,'amb-on')&&!amb(c),c.wrap.className);
+ c=tv(120,'on',100); amb(c).click(); ok('tv ambilight tile click toggles the switch (no more-info)',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.amb'}]]),JSON.stringify(c.h.calls));
+ c=tv(120,'on',100,{style:'stand'}); ok('tv ambilight works with stand style',has(c,'amb-on')&&!!c.sr.querySelector('.tv-amb'),c.wrap.className);
+ c=tv(120,'on',100,{},{min:0,max:200}); const cn=card('tv',{power:'sensor.p',ambilight:'switch.amb',labels:{ambilight:'Lumière'}},[mk('sensor.p',120,W),mk('switch.amb','on')],'en'); ok('tv ambilight tile: custom label',/Lumière/.test(amb(cn).textContent),amb(cn).textContent);
+}
  c=ps(0.2,'off'); c.sr.querySelector('.toggle').click(); ok('ps5 off: one click',c.h.calls.length===1,JSON.stringify(c.h.calls));}
 // tap_action / hold_action on the illustration — issue #142
 {const ev=(c)=>{const e=[];['hass-more-info','hass-action'].forEach(t=>c.el.addEventListener(t,x=>e.push([t,x.detail])));return e;};

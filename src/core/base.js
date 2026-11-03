@@ -81,7 +81,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "ambilight", "ambilight_level"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -118,6 +118,13 @@ class ApplianceCardBase extends HTMLElement {
       if (path.some((n) => n.classList && n.classList.contains("illus"))) {
         if (this._held) { this._held = false; return; }
         if (c.tap_action) { this._action(c.tap_action); return; }
+      }
+      // tuile à bascule (ambilight) : un clic change l'état de l'entité au lieu d'ouvrir sa fiche
+      const tg = path.find((n) => n.dataset && n.dataset.toggle);
+      if (tg && this._hass) {
+        const id = tg.dataset.toggle, dom = domainOf(id);
+        this._hass.callService(["switch", "input_boolean", "light"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: id });
+        return;
       }
       const tile = path.find((n) => n.dataset && n.dataset.entity);
       const eid = tile ? tile.dataset.entity : (c.entity || c.power || c.switch || c.temperature || (Array.isArray(c.outlets) && c.outlets[0]));
@@ -532,6 +539,19 @@ class ApplianceCardBase extends HTMLElement {
       else if (watts !== null) m.status = watts > threshold ? "screen_on" : watts >= (c.standby_threshold ?? 0.2) ? "standby" : "off";
       else m.status = base === "running" ? "screen_on" : "standby";
       if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
+      // Ambilight : halo derrière l'écran si la TV est allumée et l'interrupteur on ; ambilight_level (number) règle son intensité,
+      // normalisée avec min / max de l'entité (0 à 100 par défaut). Sans niveau, intensité moyenne ; sans interrupteur, le niveau > 0 suffit.
+      const aSt = S(c.ambilight), lSt = S(c.ambilight_level), aState = aSt ? String(aSt.state).toLowerCase() : "";
+      let frac = null;
+      if (lSt && !BAD.includes(String(lSt.state).toLowerCase())) {
+        const v = num(lSt), lo = Number.isFinite(Number(lSt.attributes.min)) ? Number(lSt.attributes.min) : 0, hi = Number.isFinite(Number(lSt.attributes.max)) ? Number(lSt.attributes.max) : 100;
+        if (v != null && hi > lo) frac = Math.max(0, Math.min(1, (v - lo) / (hi - lo)));
+      }
+      m.ambSt = aSt && ["on", "off"].includes(aState) ? aSt : null;
+      m.ambPct = frac != null ? frac * 100 : null;
+      m.ambFrac = frac ?? 0.7;
+      const ambSwitchOn = c.ambilight ? aState === "on" : frac != null;
+      m.ambOn = m.status === "screen_on" && ambSwitchOn && (frac == null || frac > 0);
     } else if (kind === "range_hood") {
       const sp = m.speed ? String(m.speed.state).toLowerCase() : "", spn = num(m.speed);
       const hi = c.high_threshold ?? 130, lightT = c.light_threshold ?? 3;
@@ -906,7 +926,7 @@ class ApplianceCardBase extends HTMLElement {
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
       m.alerts.length ? "alert" : "", isOn(m.door) ? "door-open" : "", isOn(m.fdoor) ? "fz-open" : "",
-      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
+      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.ambOn ? "amb-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
     ].filter(Boolean).join(" ");
 
     // illustration dynamic parts
@@ -955,6 +975,7 @@ class ApplianceCardBase extends HTMLElement {
       this._psPrev = m.status;
     }
     if (kind === "tv") {
+      $("wrap").style.setProperty("--amb", (m.ambFrac ?? 0.7).toFixed(2));
       const prev = this._tvPrev, on = m.status === "screen_on";
       const scr = this.shadowRoot.querySelector(".tv-flash");
       if (prev !== undefined && scr && (prev === "screen_on") !== on) {
@@ -1317,6 +1338,12 @@ class ApplianceCardBase extends HTMLElement {
     }
     if (m.energyS) tile("mdi:solar-power-variant", fmtEnergy(hass, m.energyS) ?? "—", lb("energy_solar"), c.energy_solar);
     if (m.cost && c.show_cost !== false) tile(solar ? "mdi:piggy-bank-outline" : "mdi:cash", fmtUnit(hass, m.cost, 2, 2) ?? "—", lb(solar ? "savings" : "cost"), c.cost);
+    // Ambilight : tuile on/off (un clic bascule l'interrupteur), seulement TV allumée et interrupteur on ou off
+    if (kind === "tv" && c.ambilight && m.status === "screen_on" && m.ambSt) {
+      const on = String(m.ambSt.state).toLowerCase() === "on", val = on ? (m.ambPct != null ? `${Math.round(m.ambPct)} %` : tr(hass, "powered")) : tr(hass, "off");
+      tiles.push(`<div class="tile amb-tile ${on ? "on" : ""}" data-entity="${esc(c.ambilight)}" data-toggle="${esc(c.ambilight)}" title="${esc(tr(hass, "toggle_ambilight"))}">
+        <span class="val">${esc(val)}</span><span class="lbl"><ha-icon icon="mdi:television-ambient-light"></ha-icon>${esc(lb("ambilight"))}</span></div>`);
+    }
     // durée d'utilisation du jour (écrans, consoles, PC) : capteur usage_time, sinon historique (+ temps écoulé depuis la lecture si toujours allumé)
     if (USAGE_KINDS.includes(kind) && c.show_usage_time !== false) {
       const u = this._use, today = u && this._useDay === new Date().toDateString();

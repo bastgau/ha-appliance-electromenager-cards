@@ -248,6 +248,10 @@ const STRINGS = {
     "f_display": "Consumption shown as (kWh, cost or both)",
     "f_tap_action": "Tap action (illustration)",
     "f_hold_action": "Hold action (illustration)",
+    "ambilight": "Ambilight",
+    "f_ambilight": "Ambilight switch (on/off)",
+    "f_ambilight_level": "Ambilight level (number, halo intensity)",
+    "toggle_ambilight": "Turn the ambilight on/off",
     "ps5": "PlayStation 5",
     "ps_rest": "Rest mode",
     "ps_gaming": "Gaming",
@@ -563,6 +567,10 @@ const STRINGS = {
     "f_display": "Verbrauch anzeigen als (kWh, Kosten oder beides)",
     "f_tap_action": "Tipp-Aktion (Illustration)",
     "f_hold_action": "Halte-Aktion (Illustration)",
+    "ambilight": "Ambilight",
+    "f_ambilight": "Ambilight-Schalter (an/aus)",
+    "f_ambilight_level": "Ambilight-Stufe (Number, Halo-Intensität)",
+    "toggle_ambilight": "Ambilight ein/aus",
     "ps5": "PlayStation 5",
     "ps_rest": "Ruhemodus",
     "ps_gaming": "Im Spiel",
@@ -878,6 +886,10 @@ const STRINGS = {
     "f_display": "Affichage de la conso (kWh, € ou les deux)",
     "f_tap_action": "Action au clic sur l'illustration",
     "f_hold_action": "Action à l'appui long sur l'illustration",
+    "ambilight": "Ambilight",
+    "f_ambilight": "Interrupteur ambilight (on/off)",
+    "f_ambilight_level": "Niveau ambilight (number, intensité du halo)",
+    "toggle_ambilight": "Activer / désactiver l'ambilight",
     "ps5": "PlayStation 5",
     "ps_rest": "Mode repos",
     "ps_gaming": "En jeu",
@@ -1193,6 +1205,10 @@ const STRINGS = {
     "f_display": "Consumo mostrato in (kWh, costo o entrambi)",
     "f_tap_action": "Azione al tocco (illustrazione)",
     "f_hold_action": "Azione alla pressione prolungata (illustrazione)",
+    "ambilight": "Ambilight",
+    "f_ambilight": "Interruttore Ambilight (on/off)",
+    "f_ambilight_level": "Livello Ambilight (number, intensità dell'alone)",
+    "toggle_ambilight": "Accendi/spegni Ambilight",
     "ps5": "PlayStation 5",
     "ps_rest": "Modalità riposo",
     "ps_gaming": "In gioco",
@@ -1335,6 +1351,10 @@ const STRINGS = {
     "f_display": "Forbruk vist som (kWh, kostnad eller begge)",
     "f_tap_action": "Trykkhandling (illustrasjon)",
     "f_hold_action": "Holdhandling (illustrasjon)",
+    "ambilight": "Ambilight",
+    "f_ambilight": "Ambilight-bryter (på/av)",
+    "f_ambilight_level": "Ambilight-nivå (number, glødens styrke)",
+    "toggle_ambilight": "Slå Ambilight av/på",
     "ps5": "PlayStation 5",
     "ps_rest": "Hvilemodus",
     "ps_gaming": "Spiller",
@@ -1823,6 +1843,10 @@ const STRINGS = {
     "f_display": "Verbruik tonen als (kWh, kosten of beide)",
     "f_tap_action": "Tikactie (illustratie)",
     "f_hold_action": "Vasthoudactie (illustratie)",
+    "ambilight": "Ambilight",
+    "f_ambilight": "Ambilight-schakelaar (aan/uit)",
+    "f_ambilight_level": "Ambilight-niveau (number, intensiteit van de gloed)",
+    "toggle_ambilight": "Ambilight aan/uit",
     "ps5": "PlayStation 5",
     "ps_rest": "Rustmodus",
     "ps_gaming": "Aan het gamen",
@@ -2138,6 +2162,10 @@ const STRINGS = {
     "f_display": "Consum afișat ca (kWh, cost sau ambele)",
     "f_tap_action": "Acțiune la atingere (ilustrație)",
     "f_hold_action": "Acțiune la apăsare lungă (ilustrație)",
+    "ambilight": "Ambilight",
+    "f_ambilight": "Comutator Ambilight (pornit/oprit)",
+    "f_ambilight_level": "Nivel Ambilight (number, intensitatea halo)",
+    "toggle_ambilight": "Pornește/oprește Ambilight",
     "ps5": "PlayStation 5",
     "ps_rest": "Mod repaus",
     "ps_gaming": "În joc",
@@ -2453,6 +2481,10 @@ const STRINGS = {
     "f_display": "Показывать расход как (кВт·ч, стоимость или оба)",
     "f_tap_action": "Действие при нажатии (иллюстрация)",
     "f_hold_action": "Действие при удержании (иллюстрация)",
+    "ambilight": "Ambilight",
+    "f_ambilight": "Переключатель Ambilight (вкл/выкл)",
+    "f_ambilight_level": "Уровень Ambilight (number, яркость ореола)",
+    "toggle_ambilight": "Включить/выключить Ambilight",
     "ps5": "PlayStation 5",
     "ps_rest": "Режим покоя",
     "ps_gaming": "Игра",
@@ -2768,6 +2800,10 @@ const STRINGS = {
     "f_display": "Приказ потрошње као (kWh, трошак или обоје)",
     "f_tap_action": "Акција на додир (илустрација)",
     "f_hold_action": "Акција на задржавање (илустрација)",
+    "ambilight": "Ambilight",
+    "f_ambilight": "Прекидач Ambilight (укљ./искљ.)",
+    "f_ambilight_level": "Ниво Ambilight (number, јачина ореола)",
+    "toggle_ambilight": "Укључи/искључи Ambilight",
     "ps5": "PlayStation 5",
     "ps_rest": "Режим мировања",
     "ps_gaming": "Игре",
@@ -3083,6 +3119,10 @@ const STRINGS = {
     "f_display": "Prikaz potrošnje kao (kWh, trošak ili oboje)",
     "f_tap_action": "Akcija na dodir (ilustracija)",
     "f_hold_action": "Akcija na zadržavanje (ilustracija)",
+    "ambilight": "Ambilight",
+    "f_ambilight": "Prekidač Ambilight (uklj./isklj.)",
+    "f_ambilight_level": "Nivo Ambilight (number, jačina oreola)",
+    "toggle_ambilight": "Uključi/isključi Ambilight",
     "ps5": "PlayStation 5",
     "ps_rest": "Režim mirovanja",
     "ps_gaming": "Igre",
@@ -4976,7 +5016,10 @@ SVG.tv = (c) => `
 <linearGradient id="ID-hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f5a73"/><stop offset=".55" stop-color="#3b2a7a"/><stop offset="1" stop-color="#0f1420"/></linearGradient>
 <linearGradient id="ID-fade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0f1420" stop-opacity=".95"/><stop offset=".6" stop-color="#0f1420" stop-opacity="0"/></linearGradient>
 <linearGradient id="ID-gloss" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<filter id="ID-amb" x="-35%" y="-45%" width="170%" height="190%"><feGaussianBlur stdDeviation="5"/></filter>
+<linearGradient id="ID-ambg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff3d6e"/><stop offset=".35" stop-color="#a45cff"/><stop offset=".7" stop-color="#2f8cff"/><stop offset="1" stop-color="#35e08a"/></linearGradient>
 <linearGradient id="ID-logo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38e1ff"/><stop offset="1" stop-color="#8a5cff"/></linearGradient></defs>
+<g class="tv-amb"><g filter="url(#ID-amb)"><rect x="-1" y="33.5" width="122" height="72" rx="6" fill="none" stroke="url(#ID-ambg)"/></g></g>
 ${TV_STAND[tvStyle(c)]}
 <rect x="2.5" y="36.5" width="115" height="66" rx="2" fill="#0b0d10" stroke="#2c3138" stroke-width=".7"/>
 <rect x="4" y="38" width="112" height="63" rx="1" fill="url(#ID-off)"/>
@@ -5292,8 +5335,9 @@ const DEF = {
   av_receiver: { accent: "active", threshold: 40,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["ampli", "amplificateur", "home_cinema", "homecinema", "avr", "receiver", "denon", "yamaha", "onkyo", "marantz", "pioneer"] },
+  // ambilight (switch on/off) + ambilight_level (number) : halo derrière l'écran quand la TV est allumée, tuile on/off
   tv: { accent: "active", threshold: 25,
-    fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
+    fields: ["entity", "power", "energy", "cost", "usage_time", "ambilight", "ambilight_level", "switch"],
     keys: ["tv", "tele", "television", "televiseur", "bravia", "webos", "android_tv", "tizen", "salon_tv"] },
   range_hood: { accent: "active", threshold: 40,
     fields: ["entity", "power", "energy", "cost", "speed", "light", "switch"],
@@ -5629,7 +5673,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "ambilight", "ambilight_level"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -5666,6 +5710,13 @@ class ApplianceCardBase extends HTMLElement {
       if (path.some((n) => n.classList && n.classList.contains("illus"))) {
         if (this._held) { this._held = false; return; }
         if (c.tap_action) { this._action(c.tap_action); return; }
+      }
+      // tuile à bascule (ambilight) : un clic change l'état de l'entité au lieu d'ouvrir sa fiche
+      const tg = path.find((n) => n.dataset && n.dataset.toggle);
+      if (tg && this._hass) {
+        const id = tg.dataset.toggle, dom = domainOf(id);
+        this._hass.callService(["switch", "input_boolean", "light"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: id });
+        return;
       }
       const tile = path.find((n) => n.dataset && n.dataset.entity);
       const eid = tile ? tile.dataset.entity : (c.entity || c.power || c.switch || c.temperature || (Array.isArray(c.outlets) && c.outlets[0]));
@@ -6080,6 +6131,19 @@ class ApplianceCardBase extends HTMLElement {
       else if (watts !== null) m.status = watts > threshold ? "screen_on" : watts >= (c.standby_threshold ?? 0.2) ? "standby" : "off";
       else m.status = base === "running" ? "screen_on" : "standby";
       if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
+      // Ambilight : halo derrière l'écran si la TV est allumée et l'interrupteur on ; ambilight_level (number) règle son intensité,
+      // normalisée avec min / max de l'entité (0 à 100 par défaut). Sans niveau, intensité moyenne ; sans interrupteur, le niveau > 0 suffit.
+      const aSt = S(c.ambilight), lSt = S(c.ambilight_level), aState = aSt ? String(aSt.state).toLowerCase() : "";
+      let frac = null;
+      if (lSt && !BAD.includes(String(lSt.state).toLowerCase())) {
+        const v = num(lSt), lo = Number.isFinite(Number(lSt.attributes.min)) ? Number(lSt.attributes.min) : 0, hi = Number.isFinite(Number(lSt.attributes.max)) ? Number(lSt.attributes.max) : 100;
+        if (v != null && hi > lo) frac = Math.max(0, Math.min(1, (v - lo) / (hi - lo)));
+      }
+      m.ambSt = aSt && ["on", "off"].includes(aState) ? aSt : null;
+      m.ambPct = frac != null ? frac * 100 : null;
+      m.ambFrac = frac ?? 0.7;
+      const ambSwitchOn = c.ambilight ? aState === "on" : frac != null;
+      m.ambOn = m.status === "screen_on" && ambSwitchOn && (frac == null || frac > 0);
     } else if (kind === "range_hood") {
       const sp = m.speed ? String(m.speed.state).toLowerCase() : "", spn = num(m.speed);
       const hi = c.high_threshold ?? 130, lightT = c.light_threshold ?? 3;
@@ -6454,7 +6518,7 @@ class ApplianceCardBase extends HTMLElement {
       "wrap", c.layout === "split" ? "layout-split" : "", `k-${kind}`, `st-${m.status}`, `accent-${m.accent || this._def.accent}`,
       active ? "active" : "", m.phase ? `ph-${m.phase}` : "",
       m.alerts.length ? "alert" : "", isOn(m.door) ? "door-open" : "", isOn(m.fdoor) ? "fz-open" : "",
-      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
+      m.alerts.includes("too_warm") ? "warm" : "", m.alerts.includes("humid") ? "humid" : "", c.animations === false ? "no-anim" : c.animations === true ? "force-anim" : "", m.lights ? "lights-on" : "", m.ambOn ? "amb-on" : "", m.solarHeat ? "solar-heat" : "", hideWouldApply ? "would-hide" : "", m.acMode ? `mode-${m.acMode}` : "", m.osc ? "osc" : "",
     ].filter(Boolean).join(" ");
 
     // illustration dynamic parts
@@ -6503,6 +6567,7 @@ class ApplianceCardBase extends HTMLElement {
       this._psPrev = m.status;
     }
     if (kind === "tv") {
+      $("wrap").style.setProperty("--amb", (m.ambFrac ?? 0.7).toFixed(2));
       const prev = this._tvPrev, on = m.status === "screen_on";
       const scr = this.shadowRoot.querySelector(".tv-flash");
       if (prev !== undefined && scr && (prev === "screen_on") !== on) {
@@ -6865,6 +6930,12 @@ class ApplianceCardBase extends HTMLElement {
     }
     if (m.energyS) tile("mdi:solar-power-variant", fmtEnergy(hass, m.energyS) ?? "—", lb("energy_solar"), c.energy_solar);
     if (m.cost && c.show_cost !== false) tile(solar ? "mdi:piggy-bank-outline" : "mdi:cash", fmtUnit(hass, m.cost, 2, 2) ?? "—", lb(solar ? "savings" : "cost"), c.cost);
+    // Ambilight : tuile on/off (un clic bascule l'interrupteur), seulement TV allumée et interrupteur on ou off
+    if (kind === "tv" && c.ambilight && m.status === "screen_on" && m.ambSt) {
+      const on = String(m.ambSt.state).toLowerCase() === "on", val = on ? (m.ambPct != null ? `${Math.round(m.ambPct)} %` : tr(hass, "powered")) : tr(hass, "off");
+      tiles.push(`<div class="tile amb-tile ${on ? "on" : ""}" data-entity="${esc(c.ambilight)}" data-toggle="${esc(c.ambilight)}" title="${esc(tr(hass, "toggle_ambilight"))}">
+        <span class="val">${esc(val)}</span><span class="lbl"><ha-icon icon="mdi:television-ambient-light"></ha-icon>${esc(lb("ambilight"))}</span></div>`);
+    }
     // durée d'utilisation du jour (écrans, consoles, PC) : capteur usage_time, sinon historique (+ temps écoulé depuis la lecture si toujours allumé)
     if (USAGE_KINDS.includes(kind) && c.show_usage_time !== false) {
       const u = this._use, today = u && this._useDay === new Date().toDateString();
@@ -6907,6 +6978,8 @@ const SEL = {
   door: { entity: { domain: "binary_sensor" } },
   freezer_door: { entity: { domain: "binary_sensor" } },
   switch: { entity: { domain: ["switch", "input_boolean", "light"] } },
+  ambilight: { entity: { domain: ["switch", "input_boolean", "light"] } },
+  ambilight_level: { entity: { domain: ["number", "input_number", "sensor"] } },
   // climate / water_heater acceptés : la carte lit alors current_temperature / temperature (pas l'état, qui est un mode)
   temperature: { entity: { filter: [{ domain: ["sensor", "input_number"], device_class: "temperature" }, { domain: ["climate", "water_heater"] }] } },
   target_temperature: { entity: { domain: ["sensor", "input_number", "number", "climate", "water_heater"] } },
@@ -7820,6 +7893,13 @@ svg { width: 100%; height: 100%; display: block; overflow: visible; }
 @keyframes tv-logo { 0%, 36% { opacity: 0; transform: scale(.3); } 50% { opacity: 1; transform: scale(1.12); } 58% { transform: scale(1); } 80% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(2.6); } }
 @keyframes tv-reveal { 0%, 84% { opacity: 0; } 100% { opacity: 1; } }
 @keyframes tv-shut { 0% { opacity: .85; transform: scale(1, 1); } 45% { opacity: 1; transform: scale(1, .015); } 75% { opacity: 1; transform: scale(.03, .015); } 100% { opacity: 0; transform: scale(0, 0); } }
+/* ambilight : halo coloré derrière l'écran (TV allumée + interrupteur on) ; --amb (0 à 1) règle l'épaisseur et l'opacité, les couleurs dérivent */
+.tv-amb { opacity: 0; pointer-events: none; transform-box: view-box; transform-origin: 60px 69.5px; transition: opacity .6s, transform .6s; }
+.tv-amb rect { stroke-width: calc(3px + var(--amb, .7) * 9px); }
+.k-tv.amb-on .tv-amb { opacity: calc(.2 + var(--amb, .7) * .8); transform: scale(calc(.98 + var(--amb, .7) * .06)); animation: tv-amb-hue 16s linear infinite; }
+@keyframes tv-amb-hue { to { filter: hue-rotate(360deg); } }
+.k-tv .amb-tile { cursor: pointer; }
+.k-tv .amb-tile.on { box-shadow: inset 0 0 0 1px var(--c); }
 
 /* ---------- range hood ---------- */
 .hd-fan { transform-box: view-box; transform-origin: 60px 60px; }
