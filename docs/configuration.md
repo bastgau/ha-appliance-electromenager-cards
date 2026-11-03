@@ -168,3 +168,27 @@ appliance-alert-color: "#db4437"
 appliance-ok-color: "#43a047"
 appliance-illustration-size: 116px
 ```
+
+## Sélecteur de cartes : une seule entrée
+
+La carte `custom:appliance-card` apparaît dans le sélecteur de Home Assistant et permet de choisir le type d'appareil dans l'éditeur. L'aperçu live des cartes individuelles est désactivé (onglet « Par carte » plus fluide).
+
+Dans l'éditeur de cette carte, deux cases (réglage enregistré dans le navigateur, à cocher aussi sur le smartphone, puis recharger la page) :
+
+- **N'afficher que la carte unique Appliance** : les autres entrées Appliance disparaissent du sélecteur (le YAML existant reste valide).
+- **Désactiver les aperçus de toutes les cartes personnalisées** : plus aucun aperçu live pour les cartes personnalisées, y compris celles d'autres dépôts HACS. Les aperçus des cartes natives de Home Assistant ne sont pas concernés.
+
+Équivalent sans l'éditeur, dans la console du navigateur :
+
+```js
+localStorage.setItem('applianceCardsSinglePicker', '1');
+localStorage.setItem('applianceCardsNoPreview', '1');
+```
+
+(ou `window.applianceCardsSinglePicker = true` / `window.applianceCardsNoPreview = true` avant le chargement du module ; retire les clés pour revenir à l'état par défaut.)
+
+```yaml
+type: custom:appliance-card
+appliance: appliance-washer-card
+entity: sensor.lave_linge
+```

@@ -26,6 +26,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
   background:var(--secondary-background-color);color:var(--primary-text-color);font:500 12px/16px var(--paper-font-body1_-_font-family,Roboto,sans-serif);transition:background .3s,color .3s}
 .ctl button.sel{background:var(--lt-ok);color:#2a2112}
 .ctl button ha-icon{--mdc-icon-size:16px}
+.ctl button.ico ha-icon{--mdc-icon-size:22px}
 .ctl button:hover{filter:brightness(1.12)}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;margin-top:6px}
 .tile{box-sizing:border-box;background:var(--secondary-background-color);border-radius:10px;padding:5px 7px;min-width:0;overflow:hidden;text-align:center;cursor:pointer}
@@ -35,6 +36,21 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .tile .v{font-size:14px;line-height:18px;font-weight:600;color:var(--primary-text-color);margin-top:2px;white-space:nowrap}
 .tile .v small{font-size:10px;font-weight:400;color:var(--secondary-text-color);margin-left:2px}
 .tile.hide{display:none}
+
+/* ---- compact : petits emplacements fixes (ex. 120 × 130 px) ; l'illustration prend la hauteur restante ---- */
+ha-card.compact{display:flex;flex-direction:column;padding:6px}
+.compact .head{flex:none;gap:4px}
+.compact .title{font-size:12px;line-height:16px}
+.compact .badge{font-size:10px;padding:0 6px}
+.compact .stage{flex:1 1 auto;min-height:0;width:100%;max-width:none;margin-top:3px;border-radius:10px}
+.compact svg{width:100%;height:100%}
+.compact .ctl{flex:none;gap:4px;margin-top:4px}
+.compact .ctl button{padding:3px;border-radius:8px;font-size:11px;line-height:14px}
+.compact .ctl button ha-icon{--mdc-icon-size:14px}
+.compact .ctl button.ico ha-icon{--mdc-icon-size:18px}
+.compact .tiles{flex:none;gap:4px;margin-top:4px}
+.compact .tile{padding:2px 5px;border-radius:8px}
+.compact .tile .v{font-size:12px;line-height:15px;margin-top:0}
 
 /* ---- commun : tout ce qui éclaire ne se voit qu'allumé, à proportion de la luminosité ---- */
 .lit{opacity:0;transition:opacity .8s}
@@ -240,10 +256,14 @@ svg{display:block;width:100%;height:auto;overflow:visible}
     typeof v === 'string' && /^[#a-z0-9(),.\s%]+$/i.test(v.trim()) ? v.trim() : '');
 
   class ApplianceLightCard extends HTMLElement {
+
+    // config exposée sous le nom standard : card-mod (findConfig) lit node.config / node._config
+
+    get _config() { return this._c; }
     setConfig(c) {
       if (window.applianceSize) window.applianceSize(this, c);
       if (!c || typeof c !== 'object') throw new Error('Invalid configuration');
-      this._c = { show_status: true, show_controls: true, show_brightness: true, show_power: true, show_energy: true, follow_light_color: true, ...c };
+      this._c = { show_status: true, show_controls: true, show_brightness: true, show_power: true, show_energy: true, show_button_labels: true, follow_light_color: true, ...c };
       this._built = false;
       if (this._hass) this._render();
     }
@@ -356,7 +376,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       col = col || cfgColor(c.color) || K.color;
       const bri = isFinite(Number(a.brightness)) ? Math.max(0.15, Number(a.brightness) / 255) : 1;
       const cycle = this.kind === 'color_bulb' && st === 'on' && (c.color_cycle === true || /loop|rainbow|cycle|colou?r/i.test(String(a.effect || '')));
-      card.className = `${st}${cycle ? ' cycle' : ''} ${c.animations === false ? 'noanim' : ''}`;
+      card.className = `${st}${cycle ? ' cycle' : ''} ${c.animations === false ? 'noanim' : ''}${c.compact === true ? ' compact' : ''}`;
       card.style.setProperty('--lc', col);
       card.style.setProperty('--b', (st === 'on' ? bri : 0).toFixed(3));
       // sapin : guirlande d'une seule couleur si multicolor: false
@@ -372,7 +392,15 @@ svg{display:block;width:100%;height:auto;overflow:visible}
       ctl.classList.toggle('hide', c.show_controls === false || !['light', 'switch', 'input_boolean'].includes(d));
       ctl.querySelectorAll('button').forEach((b) => {
         const k = b.dataset.a;
-        b.querySelector('span').textContent = this._t(k === 'on' ? 'turn_on' : k === 'off' ? 'turn_off' : 'color');
+        const txt = this._l(k === 'on' ? 'turn_on' : k === 'off' ? 'turn_off' : 'color');
+        const span = b.querySelector('span');
+        span.textContent = txt;
+        // icônes seules : libellé masqué, conservé en tooltip / accessibilité
+        const icoOnly = c.show_button_labels === false;
+        span.style.display = icoOnly ? 'none' : '';
+        b.classList.toggle('ico', icoOnly);
+        b.title = icoOnly ? txt : '';
+        if (icoOnly) b.setAttribute('aria-label', txt); else b.removeAttribute('aria-label');
         b.classList.toggle('sel', k === 'on' ? st === 'on' && !cycle : k === 'off' ? st !== 'on' : cycle);
         if (k === 'color') b.classList.toggle('hide', d !== 'light');
       });
@@ -426,7 +454,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
         ] },
         { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [
-          bool('show_status'), bool('show_controls'), bool('show_brightness'), bool('show_power'), bool('show_energy'), bool('animations'),
+          bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_button_labels'), bool('show_brightness'), bool('show_power'), bool('show_energy'), bool('animations'),
         ] },
       ];
       this._form.computeLabel = (s) => window.applianceEditorLabel(s.name, this._hass);
