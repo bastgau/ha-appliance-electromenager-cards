@@ -17,13 +17,15 @@ How the status is computed (both switches are expected: the box has its own stat
 type: custom:appliance-hue-sync-card
 switch: switch.hue_sync_box_plug     # smart plug: off = Off
 entity: switch.hue_sync_box          # box status: on = On, off = Standby
-power: sensor.hue_sync_box_plug_power  # optional: power tile only
+button: switch.hue_sync_box         # optional: switch under the on/off button (default: the plug)
+power: sensor.hue_sync_box_plug_power  # optional
 energy: sensor.hue_sync_box_plug_energy
 ```
 
 | Option | Description |
 |---|---|
-| `switch` | Smart plug switch: off → *Off*; also the on/off button. |
+| `switch` | Smart plug switch: off → *Off*. It is also the on/off button, unless `button` is set. |
+| `button` | Switch toggled by the on/off button (and shown as on/off on it). Default: `switch`. Use it, for example, to make the button toggle the box status switch instead of the plug. |
 | `entity` | Switch reflecting the box status: on → *On*, off → *Standby*. |
 | `power` | Plug power: shown as a tile, and used for the status only when `entity` is not set. |
 | `threshold` | On above this power (W), when `entity` is not set. Default 3. |

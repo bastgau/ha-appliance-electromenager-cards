@@ -199,6 +199,9 @@ const STRINGS = {
     "f_program": "Program / phase sensor",
     "f_door": "Door sensor",
     "f_switch": "Switch to toggle (optional)",
+    "f_switch_hue": "Smart plug switch (off = Off)",
+    "f_entity_hue": "Box status switch (on = On, off = Standby)",
+    "f_button_hue": "On/off button switch (default: the plug switch)",
     "f_threshold": "Running threshold (W)",
     "f_temperature": "Temperature sensor",
     "f_target_temperature": "Target temperature sensor",
@@ -515,6 +518,9 @@ const STRINGS = {
     "f_program": "Programm-/Phasensensor",
     "f_door": "Türsensor",
     "f_switch": "Zu schaltender Schalter (optional)",
+    "f_switch_hue": "Schalter der Steckdose (aus = Aus)",
+    "f_entity_hue": "Status-Schalter des Geräts (an = Ein, aus = Standby)",
+    "f_button_hue": "Schalter der Ein/Aus-Taste (Standard: Schalter der Steckdose)",
     "f_threshold": "Betriebsschwelle (W)",
     "f_temperature": "Temperatursensor",
     "f_target_temperature": "Sollwertsensor",
@@ -831,6 +837,9 @@ const STRINGS = {
     "f_program": "Capteur de programme / phase",
     "f_door": "Capteur de porte",
     "f_switch": "Interrupteur à piloter (optionnel)",
+    "f_switch_hue": "Switch de la prise connectée (coupé = Éteint)",
+    "f_entity_hue": "Switch d'état du boîtier (on = Allumé, off = Veille)",
+    "f_button_hue": "Switch du bouton on/off (par défaut : celui de la prise)",
     "f_threshold": "Seuil de fonctionnement (W)",
     "f_temperature": "Capteur de température",
     "f_target_temperature": "Capteur de consigne",
@@ -1147,6 +1156,9 @@ const STRINGS = {
     "f_program": "Sensore programma / fase",
     "f_door": "Sensore sportello",
     "f_switch": "Interruttore da comandare (opzionale)",
+    "f_switch_hue": "Interruttore della presa smart (spento = Spento)",
+    "f_entity_hue": "Interruttore di stato del dispositivo (acceso = Acceso, spento = Standby)",
+    "f_button_hue": "Interruttore del pulsante on/off (predefinito: quello della presa)",
     "f_threshold": "Soglia di funzionamento (W)",
     "f_temperature": "Sensore temperatura",
     "f_target_temperature": "Sensore temperatura obiettivo",
@@ -1534,6 +1546,9 @@ const STRINGS = {
     "f_program": "Sensor for program / fase",
     "f_door": "Dørsensor",
     "f_switch": "Bryter som slås av/på (valgfri)",
+    "f_switch_hue": "Bryter for stikkontakten (av = Av)",
+    "f_entity_hue": "Statusbryter for enheten (på = På, av = Standby)",
+    "f_button_hue": "Bryter for av/på-knappen (standard: stikkontaktbryteren)",
     "f_threshold": "Terskel for «i gang» (W)",
     "f_temperature": "Temperatursensor",
     "f_target_temperature": "Sensor for måltemperatur",
@@ -1779,6 +1794,9 @@ const STRINGS = {
     "f_program": "Programma- / fasesensor",
     "f_door": "Deursensor",
     "f_switch": "Schakelaar om te bedienen (optioneel)",
+    "f_switch_hue": "Schakelaar van het stopcontact (uit = Uit)",
+    "f_entity_hue": "Statusschakelaar van het apparaat (aan = Aan, uit = Stand-by)",
+    "f_button_hue": "Schakelaar van de aan/uit-knop (standaard: die van het stopcontact)",
     "f_threshold": "Drempel voor 'bezig' (W)",
     "f_temperature": "Temperatuursensor",
     "f_target_temperature": "Sensor doeltemperatuur",
@@ -2095,6 +2113,9 @@ const STRINGS = {
     "f_program": "Senzor program / fază",
     "f_door": "Senzor de ușă",
     "f_switch": "Comutator de controlat (opțional)",
+    "f_switch_hue": "Comutatorul prizei inteligente (oprit = Oprit)",
+    "f_entity_hue": "Comutator de stare al dispozitivului (pornit = Pornit, oprit = Standby)",
+    "f_button_hue": "Comutatorul butonului pornit/oprit (implicit: cel al prizei)",
     "f_threshold": "Prag de funcționare (W)",
     "f_temperature": "Senzor de temperatură",
     "f_target_temperature": "Senzor temperatură țintă",
@@ -2411,6 +2432,9 @@ const STRINGS = {
     "f_program": "Датчик программы / фазы",
     "f_door": "Датчик дверцы",
     "f_switch": "Переключатель для управления (необязательно)",
+    "f_switch_hue": "Переключатель розетки (выкл. = Выключен)",
+    "f_entity_hue": "Переключатель состояния устройства (вкл. = Включён, выкл. = Ожидание)",
+    "f_button_hue": "Переключатель кнопки вкл/выкл (по умолчанию — розетка)",
     "f_threshold": "Порог работы (Вт)",
     "f_temperature": "Датчик температуры",
     "f_target_temperature": "Датчик целевой температуры",
@@ -2727,6 +2751,9 @@ const STRINGS = {
     "f_program": "Сензор програма / фазе",
     "f_door": "Сензор врата",
     "f_switch": "Прекидач за пребацивање (опционо)",
+    "f_switch_hue": "Прекидач паметне утичнице (искључен = Искључен)",
+    "f_entity_hue": "Прекидач стања уређаја (укључен = Укључен, искључен = Мировање)",
+    "f_button_hue": "Прекидач дугмета укљ./искљ. (подразумевано: прекидач утичнице)",
     "f_threshold": "Праг рада (W)",
     "f_temperature": "Сензор температуре",
     "f_target_temperature": "Сензор циљне температуре",
@@ -3043,6 +3070,9 @@ const STRINGS = {
     "f_program": "Senzor programa / faze",
     "f_door": "Senzor vrata",
     "f_switch": "Prekidač za prebacivanje (opciono)",
+    "f_switch_hue": "Prekidač pametne utičnice (isključen = Isključen)",
+    "f_entity_hue": "Prekidač stanja uređaja (uključen = Uključen, isključen = Mirovanje)",
+    "f_button_hue": "Prekidač dugmeta uklj./isklj. (podrazumevano: prekidač utičnice)",
     "f_threshold": "Prag rada (W)",
     "f_temperature": "Senzor temperature",
     "f_target_temperature": "Senzor ciljne temperature",
@@ -5372,9 +5402,9 @@ const DEF = {
   thermomix: { accent: "heat", threshold: 15,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["thermomix", "tm6", "tm7", "tm5", "vorwerk", "robot_cuiseur", "robot_culinaire", "cookidoo"] },
-  // Philips Hue Play HDMI Sync Box : switch = prise connectée (coupée → éteint) ; entity = switch d'état du boîtier (on → allumé, off → veille)
+  // Philips Hue Play HDMI Sync Box : switch = prise connectée (coupée → éteint) ; entity = switch d'état du boîtier (on → allumé, off → veille) ; button = switch piloté par le bouton on/off (défaut : switch)
   hue_sync: { accent: "active", threshold: 3,
-    fields: ["entity", "power", "energy", "cost", "switch"],
+    fields: ["entity", "switch", "button", "power", "energy", "cost"],
     keys: ["hue_sync", "huesync", "sync_box", "syncbox", "hdmi_sync", "hue_play", "hue_hdmi"] },
   coffee_maker: { accent: "heat", threshold: 300,
     fields: ["entity", "power", "energy", "cost", "switch"],
@@ -5667,7 +5697,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "button"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -6711,7 +6741,7 @@ class ApplianceCardBase extends HTMLElement {
         ${sub ? `<div class="sub">${esc(sub)}</div>` : ""}`;
     }
 
-    const swId = c.switch || (kind === "dehumidifier" && domainOf(c.entity) === "humidifier" ? c.entity : null)
+    const swId = (kind === "hue_sync" && c.button) || c.switch || (kind === "dehumidifier" && domainOf(c.entity) === "humidifier" ? c.entity : null)
       || (kind === "garland" && domainOf(c.entity) === "light" ? c.entity : null);
     this._sw = null;
     // multiprise sans switch global : le bouton marche / arrêt pilote toutes les prises (une allumée → tout couper, sinon tout allumer)
@@ -6954,6 +6984,7 @@ const SEL = {
   door: { entity: { domain: "binary_sensor" } },
   freezer_door: { entity: { domain: "binary_sensor" } },
   switch: { entity: { domain: ["switch", "input_boolean", "light"] } },
+  button: { entity: { domain: ["switch", "input_boolean", "light"] } },
   // climate / water_heater acceptés : la carte lit alors current_temperature / temperature (pas l'état, qui est un mode)
   temperature: { entity: { filter: [{ domain: ["sensor", "input_number"], device_class: "temperature" }, { domain: ["climate", "water_heater"] }] } },
   target_temperature: { entity: { domain: ["sensor", "input_number", "number", "climate", "water_heater"] } },
@@ -7156,7 +7187,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "hue_sync" && ["entity", "switch", "button"].includes(s.name) ? `f_${s.name}_hue` : kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 

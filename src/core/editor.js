@@ -14,6 +14,7 @@ const SEL = {
   door: { entity: { domain: "binary_sensor" } },
   freezer_door: { entity: { domain: "binary_sensor" } },
   switch: { entity: { domain: ["switch", "input_boolean", "light"] } },
+  button: { entity: { domain: ["switch", "input_boolean", "light"] } },
   // climate / water_heater acceptés : la carte lit alors current_temperature / temperature (pas l'état, qui est un mode)
   temperature: { entity: { filter: [{ domain: ["sensor", "input_number"], device_class: "temperature" }, { domain: ["climate", "water_heater"] }] } },
   target_temperature: { entity: { domain: ["sensor", "input_number", "number", "climate", "water_heater"] } },
@@ -216,7 +217,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "hue_sync" && ["entity", "switch", "button"].includes(s.name) ? `f_${s.name}_hue` : kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 
