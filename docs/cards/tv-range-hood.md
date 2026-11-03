@@ -17,6 +17,19 @@ power: sensor.tv_plug_power
 energy: sensor.tv_plug_energy_today
 ```
 
+**Ambilight** (optional): a coloured halo around the screen, whose colours drift slowly (decorative: the card has no real colour data).
+- The halo shows only while the **TV is on** and the `ambilight` switch is **on**. It works with the three styles (wall, stand, feet).
+- `ambilight_level` (a `number`, for example the brightness of a Hue Sync Box) sets how pronounced the halo is. The value is converted to a percentage with the `min` and `max` of the entity (0 to 100 when it has none). A level of 0 hides the halo. Without a level, the halo has a medium intensity.
+- An **Ambilight** tile appears while the TV is on and the `ambilight` entity is `on` or `off`: it shows the level (or *On* / *Off*), and a click toggles the switch. Without an `ambilight` entity, there is no tile, and a level above 0 is enough to show the halo.
+
+```yaml
+type: custom:appliance-tv-card
+entity: switch.tv_plug
+power: sensor.tv_plug_power
+ambilight: switch.ambilight_system        # on/off, toggled from the tile
+ambilight_level: number.sync_box_brightness  # halo intensity
+```
+
 **Range hood** (`custom:appliance-range-hood-card`): chimney hood above a cooktop and a steaming pot.
 - **Fan running**: the fan spins, steam from the pot is drawn up into the hood, air flows upwards; faster at high speed, with the speed LEDs.
 - **Lights**: the lamps light up the cooktop. With a power sensor alone, a few watts (above `light_threshold`, 3 W) without the motor = « Lights only »; or set a `light` entity.

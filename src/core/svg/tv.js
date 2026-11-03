@@ -21,7 +21,10 @@ SVG.tv = (c) => `
 <linearGradient id="ID-hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f5a73"/><stop offset=".55" stop-color="#3b2a7a"/><stop offset="1" stop-color="#0f1420"/></linearGradient>
 <linearGradient id="ID-fade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0f1420" stop-opacity=".95"/><stop offset=".6" stop-color="#0f1420" stop-opacity="0"/></linearGradient>
 <linearGradient id="ID-gloss" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<filter id="ID-amb" x="-35%" y="-45%" width="170%" height="190%"><feGaussianBlur stdDeviation="5"/></filter>
+<linearGradient id="ID-ambg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff3d6e"/><stop offset=".35" stop-color="#a45cff"/><stop offset=".7" stop-color="#2f8cff"/><stop offset="1" stop-color="#35e08a"/></linearGradient>
 <linearGradient id="ID-logo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38e1ff"/><stop offset="1" stop-color="#8a5cff"/></linearGradient></defs>
+<g class="tv-amb"><g filter="url(#ID-amb)"><rect x="-1" y="33.5" width="122" height="72" rx="6" fill="none" stroke="url(#ID-ambg)"/></g></g>
 ${TV_STAND[tvStyle(c)]}
 <rect x="2.5" y="36.5" width="115" height="66" rx="2" fill="#0b0d10" stroke="#2c3138" stroke-width=".7"/>
 <rect x="4" y="38" width="112" height="63" rx="1" fill="url(#ID-off)"/>

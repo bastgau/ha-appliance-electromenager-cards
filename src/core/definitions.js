@@ -51,8 +51,9 @@ const DEF = {
   av_receiver: { accent: "active", threshold: 40,
     fields: ["entity", "power", "energy", "cost", "switch"],
     keys: ["ampli", "amplificateur", "home_cinema", "homecinema", "avr", "receiver", "denon", "yamaha", "onkyo", "marantz", "pioneer"] },
+  // ambilight (switch on/off) + ambilight_level (number) : halo derrière l'écran quand la TV est allumée, tuile on/off
   tv: { accent: "active", threshold: 25,
-    fields: ["entity", "power", "energy", "cost", "usage_time", "switch"],
+    fields: ["entity", "power", "energy", "cost", "usage_time", "ambilight", "ambilight_level", "switch"],
     keys: ["tv", "tele", "television", "televiseur", "bravia", "webos", "android_tv", "tizen", "salon_tv"] },
   range_hood: { accent: "active", threshold: 40,
     fields: ["entity", "power", "energy", "cost", "speed", "light", "switch"],
