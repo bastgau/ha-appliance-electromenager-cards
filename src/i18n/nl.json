@@ -186,7 +186,7 @@
     "f_switch": "Schakelaar om te bedienen (optioneel)",
     "f_switch_hue": "Schakelaar van het stopcontact (uit = Uit)",
     "f_entity_hue": "Statusschakelaar van het apparaat (aan = Aan, uit = Stand-by)",
-    "f_button_hue": "Schakelaar van de aan/uit-knop (standaard: die van het stopcontact)",
+    "f_button_hue": "De aan/uit-knop bedient",
     "f_threshold": "Drempel voor 'bezig' (W)",
     "f_temperature": "Temperatuursensor",
     "f_target_temperature": "Sensor doeltemperatuur",

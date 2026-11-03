@@ -186,7 +186,7 @@
     "f_switch": "Interrupteur à piloter (optionnel)",
     "f_switch_hue": "Switch de la prise connectée (coupé = Éteint)",
     "f_entity_hue": "Switch d'état du boîtier (on = Allumé, off = Veille)",
-    "f_button_hue": "Switch du bouton on/off (par défaut : celui de la prise)",
+    "f_button_hue": "Le bouton on/off pilote",
     "f_threshold": "Seuil de fonctionnement (W)",
     "f_temperature": "Capteur de température",
     "f_target_temperature": "Capteur de consigne",

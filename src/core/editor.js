@@ -14,7 +14,6 @@ const SEL = {
   door: { entity: { domain: "binary_sensor" } },
   freezer_door: { entity: { domain: "binary_sensor" } },
   switch: { entity: { domain: ["switch", "input_boolean", "light"] } },
-  button: { entity: { domain: ["switch", "input_boolean", "light"] } },
   // climate / water_heater acceptés : la carte lit alors current_temperature / temperature (pas l'état, qui est un mode)
   temperature: { entity: { filter: [{ domain: ["sensor", "input_number"], device_class: "temperature" }, { domain: ["climate", "water_heater"] }] } },
   target_temperature: { entity: { domain: ["sensor", "input_number", "number", "climate", "water_heater"] } },
@@ -127,6 +126,10 @@ function buildForm(kind) {
           ...(kind === "tv" ? [
             { name: "style", selector: { select: { mode: "dropdown", options: [
               { value: "wall", label: "Murale / Wall-mounted" }, { value: "stand", label: "Pied central / Center stand" }, { value: "feet", label: "Deux pieds / Two feet" }] } } },
+          ] : []),
+          ...(kind === "hue_sync" ? [
+            { name: "button", selector: { select: { mode: "dropdown", options: [
+              { value: "switch", label: "Prise (switch) / Plug (switch)" }, { value: "entity", label: "Statut du boîtier (entity) / Box status (entity)" }] } } },
           ] : []),
           ...(kind === "ps5" ? [
             { name: "standby_threshold", selector: { number: { min: 0, max: 20, step: 0.1, mode: "box", unit_of_measurement: "W" } } },

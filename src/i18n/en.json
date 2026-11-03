@@ -186,7 +186,7 @@
     "f_switch": "Switch to toggle (optional)",
     "f_switch_hue": "Smart plug switch (off = Off)",
     "f_entity_hue": "Box status switch (on = On, off = Standby)",
-    "f_button_hue": "On/off button switch (default: the plug switch)",
+    "f_button_hue": "On/off button controls",
     "f_threshold": "Running threshold (W)",
     "f_temperature": "Temperature sensor",
     "f_target_temperature": "Target temperature sensor",

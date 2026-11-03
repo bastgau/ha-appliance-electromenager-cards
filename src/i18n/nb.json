@@ -257,7 +257,7 @@
 "f_switch": "Bryter som slås av/på (valgfri)",
 "f_switch_hue": "Bryter for stikkontakten (av = Av)",
 "f_entity_hue": "Statusbryter for enheten (på = På, av = Standby)",
-"f_button_hue": "Bryter for av/på-knappen (standard: stikkontaktbryteren)",
+"f_button_hue": "Av/på-knappen styrer",
 "f_threshold": "Terskel for «i gang» (W)",
 "f_temperature": "Temperatursensor",
 "f_target_temperature": "Sensor for måltemperatur",

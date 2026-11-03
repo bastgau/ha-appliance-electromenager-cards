@@ -186,7 +186,7 @@
     "f_switch": "Zu schaltender Schalter (optional)",
     "f_switch_hue": "Schalter der Steckdose (aus = Aus)",
     "f_entity_hue": "Status-Schalter des Geräts (an = Ein, aus = Standby)",
-    "f_button_hue": "Schalter der Ein/Aus-Taste (Standard: Schalter der Steckdose)",
+    "f_button_hue": "Die Ein/Aus-Taste schaltet",
     "f_threshold": "Betriebsschwelle (W)",
     "f_temperature": "Temperatursensor",
     "f_target_temperature": "Sollwertsensor",
