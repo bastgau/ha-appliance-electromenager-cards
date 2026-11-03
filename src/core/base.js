@@ -567,10 +567,13 @@ class ApplianceCardBase extends HTMLElement {
       else m.status = base === "unavailable" ? "unavailable" : base === "running" ? "screen_on" : base === "standby" ? "ps_rest" : "off";
       m.game = m.status === "ps_gaming" && playing ? main.attributes.media_title || null : null;
     } else if (kind === "hue_sync") {
-      // Hue Sync Box : prise (switch) coupée → éteint ; sinon le switch d'état du boîtier (entity) : on → allumé (LED blanche), off → veille (LED violette)
+      // Hue Sync Box : prise (switch) coupée → éteint ; sinon le switch d'état du boîtier (entity) : on → allumé (LED blanche), off → veille (LED violette) ;
+      // seul repli : pas de switch d'état configuré → puissance de la prise vs threshold
       const es = main ? String(main.state).toLowerCase() : "";
       if (sw && String(sw.state).toLowerCase() === "off") m.status = "off";
       else if (main && !BAD.includes(es)) m.status = es === "on" ? "powered" : "standby";
+      // sans switch d'état configuré : la puissance de la prise décide (allumé au-dessus de threshold, sinon veille)
+      else if (!c.entity && watts !== null) m.status = watts > threshold ? "powered" : "standby";
       else m.status = "unavailable";
     } else if (kind === "desktop_pc" || kind === "laptop" || kind === "monitor") {
       if (base === "off" || base === "unavailable") m.status = base;

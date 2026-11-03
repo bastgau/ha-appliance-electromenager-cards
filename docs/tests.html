@@ -1247,6 +1247,9 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  c=hs('on','off'); ok('hue state off -> standby',has(c,'st-standby')&&!has(c,'active'),c.wrap.className);
  c=hs('off','unavailable'); ok('hue plug off + status switch unavailable -> off',has(c,'st-off'),c.wrap.className);
  c=hs('on','unavailable'); ok('hue plug on + status switch unavailable -> unavailable',has(c,'st-unavailable'),c.wrap.className);
+ c=card('hue-sync',{switch:'switch.plug',power:'sensor.p'},[mk('switch.plug','on'),mk('sensor.p',8,W)]); ok('hue no status switch: power > threshold -> powered',has(c,'st-powered'),c.wrap.className);
+ c=card('hue-sync',{switch:'switch.plug',power:'sensor.p',threshold:10},[mk('switch.plug','on'),mk('sensor.p',8,W)]); ok('hue no status switch: custom threshold -> standby',has(c,'st-standby'),c.wrap.className);
+ c=card('hue-sync',{switch:'switch.plug',power:'sensor.p'},[mk('switch.plug','off'),mk('sensor.p',8,W)]); ok('hue no status switch: plug off -> off',has(c,'st-off'),c.wrap.className);
 }
  c=ps(0.2,'off'); c.sr.querySelector('.toggle').click(); ok('ps5 off: one click',c.h.calls.length===1,JSON.stringify(c.h.calls));}
 // tap_action / hold_action on the illustration — issue #142
