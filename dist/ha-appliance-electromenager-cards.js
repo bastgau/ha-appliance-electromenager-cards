@@ -4156,7 +4156,8 @@ SVG.hue_sync = () => `
 <linearGradient id="ID-hsfront" x1="0" x2="1"><stop offset="0" stop-color="#1d2126"/><stop offset="1" stop-color="#0a0b0d"/></linearGradient>
 <linearGradient id="ID-hsside" x1="0" x2="1"><stop offset="0" stop-color="#14171b"/><stop offset="1" stop-color="#050607"/></linearGradient>
 <radialGradient id="ID-hsled"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
-<ellipse cx="62" cy="104" rx="52" ry="7" fill="url(#ID-shadow)"/>
+<g transform="translate(0 27)">
+<ellipse cx="62" cy="79" rx="56" ry="3.600" fill="url(#ID-shadow)"/>
 <g class="hs-box" stroke-linejoin="round">
   <path d="M78 70L112 52V63L78 81Z" fill="url(#ID-hsside)" stroke="#050607" stroke-width="4"/>
   <path d="M12 64L78 70V81L12 75Z" fill="url(#ID-hsfront)" stroke="#0a0b0d" stroke-width="4"/>
@@ -4167,6 +4168,7 @@ SVG.hue_sync = () => `
   <circle class="hs-halo" cx="58" cy="76.200" r="5" fill="url(#ID-hsled)"/>
   <circle class="hs-led" cx="58" cy="76.200" r="1.200"/>
   <ellipse cx="68" cy="77.300" rx="3.500" ry="2.200" fill="#050607" stroke="#3a424b" stroke-width=".4"/>
+</g>
 </g>`;
 
 SVG.kettle = () => `
