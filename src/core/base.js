@@ -8,6 +8,8 @@ const ROLLING = { "24h": 1, "7d": 7, "30d": 30 };
 const PERIODS = ["day", "week", "month", ...Object.keys(ROLLING)];
 // cartes avec la tuile « durée d'utilisation du jour » (capteur usage_time, sinon calcul depuis l'historique)
 const USAGE_KINDS = ["tv", "monitor", "ps5", "desktop_pc", "laptop"];
+// bouton « sommeil » (option sleep : entité button ou switch) : affiché à gauche du bouton power quand l'appareil est allumé
+const SLEEP_ON = { tv: ["screen_on"], av_receiver: ["playing", "paused", "muted"], hue_sync: ["powered"] };
 const USAGE_ON = ["on", "playing", "paused", "idle", "buffering", "home"];
 
 class ApplianceCardBase extends HTMLElement {
@@ -81,7 +83,7 @@ class ApplianceCardBase extends HTMLElement {
   _ids() {
     const c = this._config;
     return ["entity", "power", "power_solar", "energy_solar", "energy", "cost", "remaining", "progress", "program", "door", "switch",
-      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "ambilight", "ambilight_level"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
+      "power_level", "pellet_level", "runtime", "usage_time", "speed", "bed_temperature", "humidity", "light", "keg_level", "pouring", "battery_level", "zone2_temperature", "zone_1", "zone_2", "zone_3", "zone_4", "mode", "window", "temperature", "target_temperature", "freezer_temperature", "flex_temperature", "freezer_door", "target_humidity", "tank_full", "fan_speed", "clean_water", "dirty_water", "ambilight", "ambilight_level", "sleep"].map((k) => c[k]).filter(Boolean).concat(this._nozzles()).concat(Array.isArray(c.outlets) ? c.outlets.filter((i) => typeof i === "string" && i) : [])
       .concat(Array.isArray(c.images) ? c.images.map((i) => i && typeof i.entity === "string" && i.entity).filter(Boolean) : []);
   }
 
@@ -163,6 +165,14 @@ class ApplianceCardBase extends HTMLElement {
   }
 
   // marche / arrêt de la prise ; un arrêt protégé (cycle en cours…) demande un 2e clic dans les 4 s
+  // bouton sommeil : button / input_button → press ; switch, input_boolean… → toggle
+  _sleep() {
+    const id = this._config.sleep, hass = this._hass;
+    if (!id || !hass) return;
+    const dom = domainOf(id), press = ["button", "input_button"].includes(dom);
+    hass.callService(press || ["switch", "input_boolean", "light"].includes(dom) ? dom : "homeassistant", press ? "press" : "toggle", { entity_id: id });
+  }
+
   _toggleSw() {
     const sw = this._sw, hass = this._hass;
     if (!sw || !hass) return;
@@ -1167,8 +1177,8 @@ class ApplianceCardBase extends HTMLElement {
       const label = tr(hass, arming ? "confirm_off_always" : "toggle");
       const tip = arming ? `<div class="confirm-tip">${esc(label)}</div>` : "";
       if (c.show_toggle !== false) {
-        $("actions").innerHTML = `<button class="toggle ${on ? "on" : ""} ${arming ? "confirm" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="${arming ? "mdi:alert" : "mdi:power"}"></ha-icon></button>${tip}`;
-        $("actions").querySelector("button").onclick = (ev) => { ev.stopPropagation(); this._toggleSw(); };
+        $("actions").innerHTML = `<button class="toggle pwr ${on ? "on" : ""} ${arming ? "confirm" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="${arming ? "mdi:alert" : "mdi:power"}"></ha-icon></button>${tip}`;
+        $("actions").querySelector("button.pwr").onclick = (ev) => { ev.stopPropagation(); this._toggleSw(); };
       } else $("actions").innerHTML = tip;
     } else if (swId) {
       const on = isOn(hass.states[swId]);
@@ -1189,10 +1199,17 @@ class ApplianceCardBase extends HTMLElement {
       const label = arming ? tr(hass, computer ? "confirm_off_pc" : console_ ? "confirm_off_console" : autoGuard ? "confirm_off" : "confirm_off_always") : tr(hass, "toggle");
       const tip = arming ? `<div class="confirm-tip">${esc(label)}</div>` : "";
       if (c.show_toggle !== false) {
-        $("actions").innerHTML = `<button class="toggle ${on ? "on" : ""} ${arming ? "confirm" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="${arming ? "mdi:alert" : "mdi:power"}"></ha-icon></button>${tip}`;
-        $("actions").querySelector("button").onclick = (ev) => { ev.stopPropagation(); this._toggleSw(); };
+        $("actions").innerHTML = `<button class="toggle pwr ${on ? "on" : ""} ${arming ? "confirm" : ""}" title="${esc(label)}" aria-label="${esc(label)}" aria-pressed="${on}"><ha-icon icon="${arming ? "mdi:alert" : "mdi:power"}"></ha-icon></button>${tip}`;
+        $("actions").querySelector("button.pwr").onclick = (ev) => { ev.stopPropagation(); this._toggleSw(); };
       } else $("actions").innerHTML = tip; // bouton masqué : la confirmation d'un tap sur l'illustration reste visible
     } else $("actions").innerHTML = "";
+    // bouton sommeil : à gauche du bouton power, seulement appareil allumé et entité configurée présente
+    const slp = c.sleep && SLEEP_ON[kind] && SLEEP_ON[kind].includes(m.status) ? hass.states[c.sleep] : null;
+    if (slp) {
+      const sOn = String(slp.state).toLowerCase() === "on", sLabel = c.labels && c.labels.sleep_btn ? String(c.labels.sleep_btn) : tr(hass, "sleep_btn");
+      $("actions").insertAdjacentHTML("afterbegin", `<button class="toggle slp ${sOn ? "on" : ""}" title="${esc(sLabel)}" aria-label="${esc(sLabel)}" aria-pressed="${sOn}" ${slp.state === "unavailable" ? "disabled" : ""}><ha-icon icon="mdi:sleep-off"></ha-icon></button>`);
+      $("actions").querySelector("button.slp").onclick = (ev) => { ev.stopPropagation(); this._sleep(); };
+    }
 
     // progress bar
     let pct = null;

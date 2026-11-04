@@ -240,6 +240,8 @@
     "f_ambilight": "Прекидач Ambilight (укљ./искљ.)",
     "f_ambilight_level": "Ниво Ambilight (number, јачина ореола)",
     "toggle_ambilight": "Укључи/искључи Ambilight",
+    "sleep_btn": "Режим спавања",
+    "f_sleep": "Дугме за спавање (button или прекидач)",
     "ps5": "PlayStation 5",
     "ps_rest": "Режим мировања",
     "ps_gaming": "Игре",

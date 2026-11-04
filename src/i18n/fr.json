@@ -240,6 +240,8 @@
     "f_ambilight": "Interrupteur ambilight (on/off)",
     "f_ambilight_level": "Niveau ambilight (number, intensité du halo)",
     "toggle_ambilight": "Activer / désactiver l'ambilight",
+    "sleep_btn": "Sommeil",
+    "f_sleep": "Bouton sommeil (button ou switch)",
     "ps5": "PlayStation 5",
     "ps_rest": "Mode repos",
     "ps_gaming": "En jeu",

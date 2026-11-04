@@ -14,6 +14,7 @@ const SEL = {
   door: { entity: { domain: "binary_sensor" } },
   freezer_door: { entity: { domain: "binary_sensor" } },
   switch: { entity: { domain: ["switch", "input_boolean", "light"] } },
+  sleep: { entity: { domain: ["button", "input_button", "switch", "input_boolean"] } },
   ambilight: { entity: { domain: ["switch", "input_boolean", "light"] } },
   ambilight_level: { entity: { domain: ["number", "input_number", "sensor"] } },
   // climate / water_heater acceptés : la carte lit alors current_temperature / temperature (pas l'état, qui est un mode)

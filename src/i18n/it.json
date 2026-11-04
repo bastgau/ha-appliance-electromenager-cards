@@ -240,6 +240,8 @@
     "f_ambilight": "Interruttore Ambilight (on/off)",
     "f_ambilight_level": "Livello Ambilight (number, intensità dell'alone)",
     "toggle_ambilight": "Accendi/spegni Ambilight",
+    "sleep_btn": "Sospensione",
+    "f_sleep": "Pulsante sospensione (button o interruttore)",
     "ps5": "PlayStation 5",
     "ps_rest": "Modalità riposo",
     "ps_gaming": "In gioco",

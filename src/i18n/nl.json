@@ -240,6 +240,8 @@
     "f_ambilight": "Ambilight-schakelaar (aan/uit)",
     "f_ambilight_level": "Ambilight-niveau (number, intensiteit van de gloed)",
     "toggle_ambilight": "Ambilight aan/uit",
+    "sleep_btn": "Slaapstand",
+    "f_sleep": "Slaapstandknop (button of schakelaar)",
     "ps5": "PlayStation 5",
     "ps_rest": "Rustmodus",
     "ps_gaming": "Aan het gamen",

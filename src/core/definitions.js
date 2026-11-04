@@ -49,11 +49,11 @@ const DEF = {
     fields: ["entity", "power", "energy", "cost", "temperature", "keg_level", "pouring", "switch"],
     keys: ["biere", "beer", "tireuse", "perfectdraft", "beertender", "pompe_a_biere", "kegerator", "draft"] },
   av_receiver: { accent: "active", threshold: 40,
-    fields: ["entity", "power", "energy", "cost", "switch"],
+    fields: ["entity", "power", "energy", "cost", "sleep", "switch"],
     keys: ["ampli", "amplificateur", "home_cinema", "homecinema", "avr", "receiver", "denon", "yamaha", "onkyo", "marantz", "pioneer"] },
   // ambilight (switch on/off) + ambilight_level (number) : halo derrière l'écran quand la TV est allumée, tuile on/off
   tv: { accent: "active", threshold: 25,
-    fields: ["entity", "power", "energy", "cost", "usage_time", "ambilight", "ambilight_level", "switch"],
+    fields: ["entity", "power", "energy", "cost", "usage_time", "ambilight", "ambilight_level", "sleep", "switch"],
     keys: ["tv", "tele", "television", "televiseur", "bravia", "webos", "android_tv", "tizen", "salon_tv"] },
   range_hood: { accent: "active", threshold: 40,
     fields: ["entity", "power", "energy", "cost", "speed", "light", "switch"],
@@ -100,7 +100,7 @@ const DEF = {
     keys: ["thermomix", "tm6", "tm7", "tm5", "vorwerk", "robot_cuiseur", "robot_culinaire", "cookidoo"] },
   // Philips Hue Play HDMI Sync Box : switch = prise connectée (coupée → éteint) ; entity = switch d'état du boîtier (on → allumé, off → veille) ; button (select) = switch ou entity : celui que pilote le bouton on/off (défaut : switch)
   hue_sync: { accent: "active", threshold: 3,
-    fields: ["entity", "switch", "power", "energy", "cost"],
+    fields: ["entity", "switch", "sleep", "power", "energy", "cost"],
     keys: ["hue_sync", "huesync", "sync_box", "syncbox", "hdmi_sync", "hue_play", "hue_hdmi"] },
   coffee_maker: { accent: "heat", threshold: 300,
     fields: ["entity", "power", "energy", "cost", "switch"],

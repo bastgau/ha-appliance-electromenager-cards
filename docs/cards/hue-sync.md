@@ -33,4 +33,10 @@ energy: sensor.hue_sync_box_plug_energy
 | `threshold` | On above this power (W), when `entity` is not set. Default 3. |
 | `show_power` / `show_energy` / `show_cost` / `show_toggle` | Checkboxes in the visual editor. |
 
+**Sleep button** (optional): set `sleep` to a `button` (or `input_button`) or a `switch` (or `input_boolean`) entity, and a **`mdi:sleep-off`** button appears **to the left of the power button** while the box (*On*, not *Standby*) is **on**. A `button` is pressed, a `switch` is toggled (the button is lit while the switch is on). It is hidden when the device is off or in standby, or when the entity does not exist; it is disabled while the entity is unavailable. The label (tooltip) can be changed with `labels: {sleep_btn: ...}`.
+
+```yaml
+sleep: button.hue_sync_sleep
+```
+
 Common options (`energy`, `cost`, `energy_period`, `price_per_kwh`, `display`, `tap_action`, `hold_action`, `labels`…): see [configuration.md](../configuration.md).
