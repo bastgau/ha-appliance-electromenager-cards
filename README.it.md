@@ -33,6 +33,7 @@ Alcuni esempi (elenco completo con anteprime nel [README in inglese](README.md#t
 | Bimby / Thermomix (TM6 / TM7) | `custom:appliance-thermomix-card` |
 | Philips Hue Play HDMI Sync Box | `custom:appliance-hue-sync-card` |
 | Televisore | `custom:appliance-tv-card` |
+| Altoparlante smart (Echo, Nest, Sonos, Devialet, HomePod) | `custom:appliance-smart-speaker-card` |
 | Cappa aspirante | `custom:appliance-range-hood-card` |
 | Climatizzatore interno | `custom:appliance-ac-split-card` |
 | Pompa di calore esterna | `custom:appliance-heat-pump-card` |
