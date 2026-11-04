@@ -1283,6 +1283,36 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  c=tv(120,'on',100,{},{min:0,max:200}); const cn=card('tv',{power:'sensor.p',ambilight:'switch.amb',labels:{ambilight:'Lumière'}},[mk('sensor.p',120,W),mk('switch.amb','on')],'en'); ok('tv ambilight tile: custom label',/Lumière/.test(amb(cn).textContent),amb(cn).textContent);
 }
  c=ps(0.2,'off'); c.sr.querySelector('.toggle').click(); ok('ps5 off: one click',c.h.calls.length===1,JSON.stringify(c.h.calls));}
+// Bouton sommeil (option sleep : button ou switch) : TV, ampli, Hue Sync Box, à gauche du bouton power, appareil allumé seulement
+{const slp=(c)=>c.sr.querySelector('button.slp'), pwr=(c)=>c.sr.querySelector('button.pwr'), U={unit_of_measurement:'W',device_class:'power'};
+ const tv=(w,extra={},st=[mk('button.sl','unknown')])=>card('tv',{switch:'switch.p',power:'sensor.w',sleep:'button.sl',...extra},[mk('switch.p','on'),mk('sensor.w',w,U),...st]);
+ let c=tv(120); ok('sleep tv on: button shown, before the power button',!!slp(c)&&!!pwr(c)&&!!(slp(c).compareDocumentPosition(pwr(c))&Node.DOCUMENT_POSITION_FOLLOWING),c.sr.getElementById('actions').innerHTML.slice(0,200));
+ ok('sleep: icon mdi:sleep-off and translated label',slp(c).querySelector('ha-icon').getAttribute('icon')==='mdi:sleep-off'&&slp(c).title==='Sommeil',slp(c).outerHTML.slice(0,160));
+ slp(c).click(); ok('sleep with a button entity: button.press',JSON.stringify(c.h.calls)===JSON.stringify([['button','press',{entity_id:'button.sl'}]]),JSON.stringify(c.h.calls));
+ c=tv(120); pwr(c).click(); ok('sleep: the power button still toggles the plug',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.p'}]]),JSON.stringify(c.h.calls));
+ c=tv(120,{sleep:'switch.sl'},[mk('switch.sl','on')]); slp(c).click(); ok('sleep with a switch entity: toggle, button shown on',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.sl'}]])&&slp(c).classList.contains('on'),JSON.stringify(c.h.calls));
+ c=tv(120,{sleep:'input_button.sl'},[mk('input_button.sl','unknown')]); slp(c).click(); ok('sleep with an input_button: press',JSON.stringify(c.h.calls)===JSON.stringify([['input_button','press',{entity_id:'input_button.sl'}]]),JSON.stringify(c.h.calls));
+ c=tv(0.1); ok('sleep tv off: button hidden',!slp(c),c.sr.getElementById('actions').innerHTML.slice(0,120));
+ c=tv(0.5); ok('sleep tv standby: button hidden',!slp(c)&&has(c,'st-standby'),c.wrap.className);
+ c=card('tv',{switch:'switch.p',power:'sensor.w'},[mk('switch.p','on'),mk('sensor.w',120,U)]); ok('sleep not configured: no button',!slp(c),'');
+ c=tv(120,{},[]); ok('sleep entity missing in HA: no button',!slp(c),'');
+ c=tv(120,{},[mk('button.sl','unavailable')]); ok('sleep entity unavailable: button disabled',!!slp(c)&&slp(c).disabled,'');
+ c=card('tv',{power:'sensor.w',sleep:'button.sl'},[mk('sensor.w',120,U),mk('button.sl','unknown')]); ok('sleep without power switch: button alone',!!slp(c)&&!pwr(c),c.sr.getElementById('actions').innerHTML.slice(0,120));
+ c=tv(120,{labels:{sleep_btn:'Dodo'}}); ok('sleep: custom label',slp(c).title==='Dodo',slp(c).title);
+ c=tv(120,{},[mk('button.sl','unknown')]); c=card('tv',{switch:'switch.p',power:'sensor.w',sleep:'button.sl'},[mk('switch.p','on'),mk('sensor.w',120,U),mk('button.sl','unknown')],'en'); ok('sleep: english label',slp(c).title==='Sleep',slp(c).title);
+ const av=(ms,extra={})=>card('av-receiver',{entity:'media_player.a',switch:'switch.p',sleep:'button.sl',...extra},[mk('media_player.a',ms),mk('switch.p','on'),mk('button.sl','unknown')]);
+ c=av('playing'); ok('sleep av-receiver playing: button shown',!!slp(c),c.wrap.className);
+ c=av('paused'); ok('sleep av-receiver paused: button shown',!!slp(c),c.wrap.className);
+ c=av('standby'); ok('sleep av-receiver standby: hidden',!slp(c),c.wrap.className);
+ c=av('off'); ok('sleep av-receiver off: hidden',!slp(c),c.wrap.className);
+ c=av('playing'); slp(c).click(); ok('sleep av-receiver: button.press',JSON.stringify(c.h.calls)===JSON.stringify([['button','press',{entity_id:'button.sl'}]]),JSON.stringify(c.h.calls));
+ const hu=(plug,st,extra={})=>card('hue-sync',{switch:'switch.p',entity:'switch.s',sleep:'button.sl',...extra},[mk('switch.p',plug),mk('switch.s',st),mk('button.sl','unknown')]);
+ c=hu('on','on'); ok('sleep hue-sync on: button shown, before the power button',!!slp(c)&&!!(slp(c).compareDocumentPosition(pwr(c))&Node.DOCUMENT_POSITION_FOLLOWING),c.wrap.className);
+ c=hu('on','off'); ok('sleep hue-sync standby: hidden',!slp(c),c.wrap.className);
+ c=hu('off','on'); ok('sleep hue-sync off (plug cut): hidden',!slp(c),c.wrap.className);
+ c=hu('on','on'); slp(c).click(); ok('sleep hue-sync: button.press (not the plug)',JSON.stringify(c.h.calls)===JSON.stringify([['button','press',{entity_id:'button.sl'}]]),JSON.stringify(c.h.calls));
+ c=hu('on','on',{button:'entity'}); pwr(c).click(); ok('sleep hue-sync with button:entity: power button toggles the status switch',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.s'}]]),JSON.stringify(c.h.calls));
+}
 // tap_action / hold_action on the illustration — issue #142
 {const ev=(c)=>{const e=[];['hass-more-info','hass-action'].forEach(t=>c.el.addEventListener(t,x=>e.push([t,x.detail])));return e;};
  const il=(c)=>c.sr.querySelector('.illus');

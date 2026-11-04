@@ -240,6 +240,8 @@
     "f_ambilight": "Ambilight-Schalter (an/aus)",
     "f_ambilight_level": "Ambilight-Stufe (Number, Halo-Intensität)",
     "toggle_ambilight": "Ambilight ein/aus",
+    "sleep_btn": "Schlafmodus",
+    "f_sleep": "Schlafmodus-Taste (Button oder Schalter)",
     "ps5": "PlayStation 5",
     "ps_rest": "Ruhemodus",
     "ps_gaming": "Im Spiel",

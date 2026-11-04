@@ -64,6 +64,8 @@
 "f_ambilight": "Ambilight-bryter (på/av)",
 "f_ambilight_level": "Ambilight-nivå (number, glødens styrke)",
 "toggle_ambilight": "Slå Ambilight av/på",
+"sleep_btn": "Dvalemodus",
+"f_sleep": "Dvalemodus-knapp (button eller bryter)",
 "ps5": "PlayStation 5",
 "ps_rest": "Hvilemodus",
 "ps_gaming": "Spiller",

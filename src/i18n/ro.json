@@ -240,6 +240,8 @@
     "f_ambilight": "Comutator Ambilight (pornit/oprit)",
     "f_ambilight_level": "Nivel Ambilight (number, intensitatea halo)",
     "toggle_ambilight": "Pornește/oprește Ambilight",
+    "sleep_btn": "Mod somn",
+    "f_sleep": "Buton somn (button sau comutator)",
     "ps5": "PlayStation 5",
     "ps_rest": "Mod repaus",
     "ps_gaming": "În joc",

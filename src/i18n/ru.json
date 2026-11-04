@@ -240,6 +240,8 @@
     "f_ambilight": "Переключатель Ambilight (вкл/выкл)",
     "f_ambilight_level": "Уровень Ambilight (number, яркость ореола)",
     "toggle_ambilight": "Включить/выключить Ambilight",
+    "sleep_btn": "Спящий режим",
+    "f_sleep": "Кнопка спящего режима (button или переключатель)",
     "ps5": "PlayStation 5",
     "ps_rest": "Режим покоя",
     "ps_gaming": "Игра",
