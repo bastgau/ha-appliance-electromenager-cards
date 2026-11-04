@@ -24,6 +24,7 @@ All cards have a visual editor. When added from the card picker, entities are de
 | `name` | Custom name |
 | `color` | Accent color (any CSS color) |
 | `show_toggle` | `false` to hide the power button |
+| `sleep` | TV, AV receiver, Hue Sync Box: a `button` / `input_button` (pressed) or `switch` / `input_boolean` (toggled) entity. A `mdi:sleep-off` button appears to the left of the power button while the device is on. Label: `labels.sleep_btn` |
 | `tap_action` / `hold_action` | Core cards: standard Home Assistant action when tapping / holding (0.5 s) the illustration: `more-info`, `toggle`, `navigate`, `url`, `perform-action`, `none`. `toggle` switches the `switch` plug, with the same safety confirmation as the power button (`confirm_off`). Default: tap opens more-info, hold does nothing. The tiles keep opening the more-info of their own entity |
 | `usage_time`, `show_usage_time` | TV, monitor, PS5, desktop PC, laptop: **Usage today** tile (time switched on since midnight). Read from `usage_time` (a sensor such as `history_stats`, in h, min or `h:mm`) if set; otherwise computed by the card from the Home Assistant history since midnight — `power` above `threshold`, or the `entity` on / playing / idle. `show_usage_time: false` hides it. Shown by default |
 | `show_power` | `false` to hide the power chip (e.g. when `power` is an estimated sensor used only to detect the running state) |

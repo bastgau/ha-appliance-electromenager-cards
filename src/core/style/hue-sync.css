@@ -1,0 +1,8 @@
+/* ---------- Philips Hue Play HDMI Sync Box ---------- */
+/* voyant en façade : éteint sombre, rouge en veille, violet pendant les 10 s de démarrage, blanc allumé */
+.k-hue_sync .hs-led { fill: #2a2f35; transition: fill .4s; }
+.k-hue_sync .hs-halo { opacity: 0; transition: opacity .4s; }
+.k-hue_sync.st-standby .hs-led { fill: #ff3b30; filter: drop-shadow(0 0 1.6px #ff3b30); }
+.k-hue_sync.st-hue_boot .hs-led { fill: #b46bff; filter: drop-shadow(0 0 2px #b46bff); animation: ac-pulse 1.6s ease-in-out infinite; }
+.k-hue_sync.st-powered .hs-led { fill: #fff; filter: drop-shadow(0 0 2px #fff); }
+.k-hue_sync.st-powered .hs-halo { opacity: .6; }

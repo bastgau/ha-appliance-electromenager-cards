@@ -30,6 +30,38 @@ ambilight: switch.ambilight_system        # on/off, toggled from the tile
 ambilight_level: number.sync_box_brightness  # halo intensity
 ```
 
+**Sleep button** (optional): set `sleep` to a `button` (or `input_button`) or a `switch` (or `input_boolean`) entity, and a **`mdi:sleep-off`** button appears **to the left of the power button** while the TV is **on**. A `button` is pressed, a `switch` is toggled. The button always has the neutral (grey) style of the power button when the device is off. It is hidden when the device is off or in standby, or when the entity does not exist; it is disabled while the entity is unavailable. The label (tooltip) can be changed with `labels: {sleep_btn: ...}`.
+
+```yaml
+sleep: button.tv_sleep
+```
+
+**Projectors** (same card, option `model`, "TV or projector" in the visual editor): `projector` (classic short-throw projector) or `projector_compact` (compact laser projector) shows a photo of the projector instead of the TV. **On**: the light beam and the lens glow (the lamp warms up for 3 s when it switches on), green LED. **Standby**: red LED. **Off**: no beam, no LED.
+
+Functions (checkboxes in the visual editor):
+
+| Option | Shows | Default |
+|---|---|---|
+| `show_controls` | buttons: power, next source, volume −, play / pause, volume +, mute (only those the `media_player` supports) | on for a projector, off for a TV |
+| `show_source` | current source (`HDMI 1`…) | on for a projector, off for a TV |
+| `show_volume` | volume (%) | on for a projector, off for a TV |
+| `show_media` | app or programme next to the status | on |
+| `show_lamp` | lamp / laser hours (`lamp_hours` sensor) | on |
+| `show_picture_mode` | picture mode (`picture_mode` entity: select or sensor) | on |
+| `show_temperature` | temperature (`temperature` sensor) | on |
+
+`volume_step` sets the volume buttons step (0.05 = 5 %).
+
+```yaml
+type: custom:appliance-tv-card
+entity: media_player.projector     # Epson, BenQ, Optoma, PJLink…
+model: projector                   # projector / projector_compact
+power: sensor.projector_plug_power
+lamp_hours: sensor.projector_lamp_hours
+picture_mode: select.projector_picture_mode
+temperature: sensor.projector_temperature
+```
+
 **Range hood** (`custom:appliance-range-hood-card`): chimney hood above a cooktop and a steaming pot.
 - **Fan running**: the fan spins, steam from the pot is drawn up into the hood, air flows upwards; faster at high speed, with the speed LEDs.
 - **Lights**: the lamps light up the cooktop. With a power sensor alone, a few watts (above `light_threshold`, 3 W) without the motor = « Lights only »; or set a `light` entity.
