@@ -26,10 +26,16 @@ const SEL = {
   pellet_level: { entity: { domain: ["sensor", "number", "input_number"] } },
   runtime: { entity: { domain: ["sensor"] } },
   usage_time: { entity: { domain: ["sensor"] } },
+  // vidéoprojecteur : heures de lampe / laser et mode d'image
+  lamp_hours: { entity: { domain: ["sensor", "number", "input_number"] } },
+  picture_mode: { entity: { domain: ["select", "input_select", "sensor"] } },
   light: { entity: { domain: ["light", "switch", "binary_sensor", "input_boolean"] } },
   zone2_temperature: { entity: { domain: ["sensor", "input_number"], device_class: "temperature" } },
   battery_level: { entity: { domain: ["sensor", "number", "input_number"] } },
   keg_level: { entity: { domain: ["sensor", "number", "input_number"] } },
+  // chauffe-eau : eau chaude restante, en % ou en litres (avec tank_volume)
+  hot_water_level: { entity: { domain: ["sensor", "number", "input_number"] } },
+  hot_water_volume: { entity: { domain: ["sensor", "number", "input_number"] } },
   pouring: { entity: { domain: ["binary_sensor", "input_boolean", "switch"] } },
   bed_temperature: { entity: { domain: ["sensor"], device_class: "temperature" } },
   humidity: { entity: { domain: ["sensor"], device_class: "humidity" } },
@@ -82,7 +88,8 @@ function buildForm(kind) {
             { name: "last_cycle", selector: { boolean: {} } },
             { name: "estimate", selector: { boolean: {} } },
           ] : []),
-          ...(kind === "water_heater" ? [{ name: "last_cycle", selector: { boolean: {} } }] : []),
+          ...(kind === "water_heater" ? [{ name: "last_cycle", selector: { boolean: {} } },
+            { name: "tank_volume", selector: { number: { min: 0, max: 1000, step: 1, mode: "box", unit_of_measurement: "L" } } }] : []),
           ...(["washer", "dryer", "dishwasher", "water_heater"].includes(kind) ? [
             { name: "cycle_gap", selector: { number: { min: 0, max: 240, step: 1, mode: "box", unit_of_measurement: "min" } } },
           ] : []),
@@ -126,9 +133,48 @@ function buildForm(kind) {
           ...(kind === "av_receiver" ? [
             { name: "max_power", selector: { number: { min: 50, max: 2000, step: 10, mode: "box", unit_of_measurement: "W" } } },
           ] : []),
+          ...(kind === "smart_speaker" ? [
+            // model : photo de l'enceinte (vide = devinée depuis l'entité : Sonos, Google Nest, sinon Echo Dot)
+            { name: "model", selector: { select: { mode: "dropdown", options: [
+              { value: "echo_pop", label: "Amazon Echo Pop" }, { value: "echo_dot", label: "Amazon Echo Dot (5e gén. / 5th gen)" },
+              { value: "echo_show_5", label: "Amazon Echo Show 5" }, { value: "echo_show_8", label: "Amazon Echo Show 8" },
+              { value: "echo_show_10", label: "Amazon Echo Show 10" }, { value: "echo_show_11", label: "Amazon Echo Show 11" },
+              { value: "echo_show_15", label: "Amazon Echo Show 15" }, { value: "echo_spot", label: "Amazon Echo Spot" },
+              { value: "nest_mini", label: "Google Nest Mini" }, { value: "nest_audio", label: "Google Nest Audio" },
+              { value: "nest_hub", label: "Google Nest Hub (7\")" }, { value: "nest_hub_2", label: "Google Nest Hub (2e gén. / 2nd gen)" },
+              { value: "nest_hub_max", label: "Google Nest Hub Max" },
+              { value: "sonos_one", label: "Sonos One" }, { value: "sonos_one_sl", label: "Sonos One SL" },
+              { value: "sonos_era_100", label: "Sonos Era 100" }, { value: "sonos_era_300", label: "Sonos Era 300" },
+              { value: "sonos_beam", label: "Sonos Beam / Arc" }, { value: "sonos_sub_mini", label: "Sonos Sub Mini" }, { value: "sonos_sub", label: "Sonos Sub" },
+              { value: "devialet_phantom", label: "Devialet Phantom (1re gén. / 1st gen)" }, { value: "devialet_phantom_reactor", label: "Devialet Phantom Reactor" },
+              { value: "devialet_phantom_i", label: "Devialet Phantom I" }, { value: "devialet_phantom_ii", label: "Devialet Phantom II" },
+              { value: "devialet_phantom_ultimate", label: "Devialet Phantom Ultimate" },
+              { value: "homepod", label: "Apple HomePod (2e gén. / 2nd gen)" }, { value: "homepod_mini", label: "Apple HomePod mini 2" }] } } },
+            // finish : couleur de l'enceinte (Devialet : blanc / noir ; HomePod : minuit / blanc ; HomePod mini : 5 couleurs)
+            { name: "finish", selector: { select: { mode: "dropdown", options: [
+              { value: "white", label: "Blanc / White" }, { value: "black", label: "Noir / Black" }, { value: "midnight", label: "Minuit / Midnight" },
+              { value: "pink", label: "Rose / Pink" }, { value: "green", label: "Vert / Green" }, { value: "blue", label: "Bleu / Blue" }] } } },
+            { name: "show_controls", selector: { boolean: {} }, default: true },
+            { name: "show_media", selector: { boolean: {} }, default: true },
+            { name: "volume_step", selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: "box" } } },
+          ] : []),
           ...(kind === "tv" ? [
+            // model : vidéoprojecteur en photo (vide = télé dessinée)
+            { name: "model", selector: { select: { mode: "dropdown", options: [
+              { value: "", label: "Télé (dessin) / TV (drawing)" },
+              { value: "projector", label: "Vidéoprojecteur classique / Projector (short throw)" },
+              { value: "projector_compact", label: "Vidéoprojecteur compact laser / Compact laser projector" }] } } },
             { name: "style", selector: { select: { mode: "dropdown", options: [
               { value: "wall", label: "Murale / Wall-mounted" }, { value: "stand", label: "Pied central / Center stand" }, { value: "feet", label: "Deux pieds / Two feet" }] } } },
+            // fonctions à afficher (cases à cocher) : boutons de commande, source, volume, lampe, mode d'image, température
+            { name: "show_controls", selector: { boolean: {} } },
+            { name: "show_source", selector: { boolean: {} } },
+            { name: "show_volume", selector: { boolean: {} } },
+            { name: "show_media", selector: { boolean: {} }, default: true },
+            { name: "show_lamp", selector: { boolean: {} }, default: true },
+            { name: "show_picture_mode", selector: { boolean: {} }, default: true },
+            { name: "show_temperature", selector: { boolean: {} }, default: true },
+            { name: "volume_step", selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: "box" } } },
           ] : []),
           ...(kind === "hue_sync" ? [
             { name: "button", selector: { select: { mode: "dropdown", options: [
@@ -223,7 +269,7 @@ function buildForm(kind) {
         ],
       },
     ],
-    computeLabel: (s) => (s.name ? tr(null, kind === "hue_sync" && ["entity", "switch", "button"].includes(s.name) ? `f_${s.name}_hue` : kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
+    computeLabel: (s) => (s.name ? tr(null, kind === "hue_sync" && ["entity", "switch", "button"].includes(s.name) ? `f_${s.name}_hue` : kind === "solar" && s.name === "max_power" ? "f_max_power_solar" : kind === "wine_cooler" && s.name === "max_temperature" ? "f_max_temperature_wine" : kind === "fridge" && s.name === "style" ? "f_fridge_style" : kind === "tv" && s.name === "style" ? "f_tv_style" : kind === "tv" && s.name === "model" ? "f_tv_model" : kind === "tv" && s.name === "show_controls" ? "f_show_controls_tv" : kind === "tv" && s.name === "show_media" ? "f_show_media_tv" : kind === "desktop_pc" && s.name === "style" ? "f_pc_style" : kind === "thermomix" && s.name === "model" ? "f_thermomix_model" : kind === "smart_speaker" && s.name === "model" ? "f_speaker_model" : kind === "smart_speaker" && s.name === "finish" ? "f_speaker_finish" : kind === "printer_3d" && s.name === "model" ? "f_printer_model" : ["monitor", "phone_charger", "piano", "thermomix"].includes(kind) && s.name === "standby_threshold" ? "f_standby_threshold_monitor" : kind === "ps5" && s.name === "standby_threshold" ? "f_standby_threshold_ps5" : kind === "server_rack" && s.name === "max_power" ? "f_max_power_rack" : kind === "radiator" && s.name === "max_power" ? "f_max_power_rad" : `f_${s.name}`) : undefined),
   };
 }
 
@@ -243,7 +289,7 @@ function stubFor(kind, hass) {
   const cost = pick((i) => i.startsWith("sensor.") && /(cout|cost|prix)/.test(i) && /(jour|daily|today|day)/.test(i))
     || pick((i, st) => i.startsWith("sensor.") && dc(st) === "monetary");
   const sw = pick((i) => i.startsWith("switch.") && !/(child_lock|lock|led|indicator)/.test(i));
-  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : ["tv", "av_receiver", "ps5"].includes(kind) ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
+  const wh = kind === "water_heater" ? pick((i) => i.startsWith("water_heater.")) : ["tv", "av_receiver", "ps5", "smart_speaker"].includes(kind) ? pick((i) => i.startsWith("media_player.")) : ["fan", "ceiling_fan"].includes(kind) ? pick((i) => i.startsWith("fan.")) : ["ac_split", "heat_pump"].includes(kind) ? pick((i) => i.startsWith("climate.")) : kind === "dehumidifier" ? pick((i) => i.startsWith("humidifier.")) : null;
   const temp = pick((i, st) => i.startsWith("sensor.") && dc(st) === "temperature");
   const flag = ["washer", "dryer", "dishwasher", "microwave"].includes(kind)
     ? pick((i) => /^(input_boolean|binary_sensor)\./.test(i) && /(running|en_cours|marche|cycle)/.test(i)) : null;

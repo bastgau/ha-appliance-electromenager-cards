@@ -154,6 +154,7 @@ Clique sur une carte pour ses options et ses exemples (pages en anglais).
 |---|---|
 | [Téléviseur](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/tv-range-hood.md) | `custom:appliance-tv-card` |
 | [Ampli home cinéma](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/beer-tap-av-receiver.md) | `custom:appliance-av-receiver-card` |
+| [Enceinte connectée (Echo, Nest, Sonos, Devialet, HomePod)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smart-speaker.md) | `custom:appliance-smart-speaker-card` |
 | [PlayStation 5](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/ps5.md) | `custom:appliance-ps5-card` |
 | [Thermomix (TM6 / TM7)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/thermomix.md) | `custom:appliance-thermomix-card` |
 | [Philips Hue Play HDMI Sync Box](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/hue-sync.md) | `custom:appliance-hue-sync-card` |
