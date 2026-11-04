@@ -1207,7 +1207,7 @@ class ApplianceCardBase extends HTMLElement {
     const slp = c.sleep && SLEEP_ON[kind] && SLEEP_ON[kind].includes(m.status) ? hass.states[c.sleep] : null;
     if (slp) {
       const sOn = String(slp.state).toLowerCase() === "on", sLabel = c.labels && c.labels.sleep_btn ? String(c.labels.sleep_btn) : tr(hass, "sleep_btn");
-      $("actions").insertAdjacentHTML("afterbegin", `<button class="toggle slp ${sOn ? "on" : ""}" title="${esc(sLabel)}" aria-label="${esc(sLabel)}" aria-pressed="${sOn}" ${slp.state === "unavailable" ? "disabled" : ""}><ha-icon icon="mdi:sleep-off"></ha-icon></button>`);
+      $("actions").insertAdjacentHTML("afterbegin", `<button class="toggle slp" title="${esc(sLabel)}" aria-label="${esc(sLabel)}" aria-pressed="${sOn}" ${slp.state === "unavailable" ? "disabled" : ""}><ha-icon icon="mdi:sleep-off"></ha-icon></button>`);
       $("actions").querySelector("button.slp").onclick = (ev) => { ev.stopPropagation(); this._sleep(); };
     }
 

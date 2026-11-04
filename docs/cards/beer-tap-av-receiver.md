@@ -25,7 +25,7 @@ type: custom:appliance-av-receiver-card
 entity: media_player.living_room_avr   # or power: sensor.avr_power
 ```
 
-**Sleep button** (optional): set `sleep` to a `button` (or `input_button`) or a `switch` (or `input_boolean`) entity, and a **`mdi:sleep-off`** button appears **to the left of the power button** while the receiver (playing or paused) is **on**. A `button` is pressed, a `switch` is toggled (the button is lit while the switch is on). It is hidden when the device is off or in standby, or when the entity does not exist; it is disabled while the entity is unavailable. The label (tooltip) can be changed with `labels: {sleep_btn: ...}`.
+**Sleep button** (optional): set `sleep` to a `button` (or `input_button`) or a `switch` (or `input_boolean`) entity, and a **`mdi:sleep-off`** button appears **to the left of the power button** while the receiver (playing or paused) is **on**. A `button` is pressed, a `switch` is toggled. The button always has the neutral (grey) style of the power button when the device is off. It is hidden when the device is off or in standby, or when the entity does not exist; it is disabled while the entity is unavailable. The label (tooltip) can be changed with `labels: {sleep_btn: ...}`.
 
 ```yaml
 sleep: button.av_receiver_sleep

@@ -1290,7 +1290,7 @@ ok('no page errors',__errors.length===0,__errors.join('; '));
  ok('sleep: icon mdi:sleep-off and translated label',slp(c).querySelector('ha-icon').getAttribute('icon')==='mdi:sleep-off'&&slp(c).title==='Sommeil',slp(c).outerHTML.slice(0,160));
  slp(c).click(); ok('sleep with a button entity: button.press',JSON.stringify(c.h.calls)===JSON.stringify([['button','press',{entity_id:'button.sl'}]]),JSON.stringify(c.h.calls));
  c=tv(120); pwr(c).click(); ok('sleep: the power button still toggles the plug',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.p'}]]),JSON.stringify(c.h.calls));
- c=tv(120,{sleep:'switch.sl'},[mk('switch.sl','on')]); slp(c).click(); ok('sleep with a switch entity: toggle, button shown on',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.sl'}]])&&slp(c).classList.contains('on'),JSON.stringify(c.h.calls));
+ c=tv(120,{sleep:'switch.sl'},[mk('switch.sl','on')]); slp(c).click(); ok('sleep with a switch entity: toggle, button keeps the neutral style',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.sl'}]])&&!slp(c).classList.contains('on'),JSON.stringify(c.h.calls));
  c=tv(120,{sleep:'input_button.sl'},[mk('input_button.sl','unknown')]); slp(c).click(); ok('sleep with an input_button: press',JSON.stringify(c.h.calls)===JSON.stringify([['input_button','press',{entity_id:'input_button.sl'}]]),JSON.stringify(c.h.calls));
  c=tv(0.1); ok('sleep tv off: button hidden',!slp(c),c.sr.getElementById('actions').innerHTML.slice(0,120));
  c=tv(0.5); ok('sleep tv standby: button hidden',!slp(c)&&has(c,'st-standby'),c.wrap.className);
