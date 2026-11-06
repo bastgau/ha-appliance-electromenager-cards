@@ -319,13 +319,14 @@
     }
   };
 
-  const customCard = (tag, name, description) => {
+  // names : noms traduits pour la liste du sélecteur « carte unique » (picker.js) ; sans « / » (ce sélecteur réserve « EN / FR » aux cartes d'origine)
+  const customCard = (tag, name, description, names) => {
     window.customCards = window.customCards || [];
-    window.customCards.push({ type: tag, forked: true, name, description, preview: true, documentationURL: "https://github.com/bastgau/ha-appliance-electromenager-cards" });
+    window.customCards.push({ type: tag, forked: true, name, names, description, preview: true, documentationURL: "https://github.com/bastgau/ha-appliance-electromenager-cards" });
   };
   // convention du fork : toute carte créée ici s'appelle appliance-<nom>-forked-card (aucune collision possible avec l'amont)
   const FORKED_TAG = /^appliance-[a-z0-9-]+-forked-card$/;
-  const define = (tag, Parent, build, name, description) => {
+  const define = (tag, Parent, build, name, description, names) => {
     if (!FORKED_TAG.test(tag)) { console.error(`[forked] ${tag} refusée : le type d'une carte du fork doit finir par -forked-card.`); return; }
     if (customElements.get(tag)) return;
     if (!Parent || REQUIRED.some((m) => typeof Parent.prototype[m] !== "function")) {
@@ -333,7 +334,7 @@
       return;
     }
     customElements.define(tag, build(Parent));
-    customCard(tag, name, description);
+    customCard(tag, name, description, names);
   };
 
   /* ================= TV : ambilight + bouton sommeil ================= */
@@ -376,12 +377,14 @@
           <span class="val">${esc(val)}</span><span class="lbl"><ha-icon icon="mdi:television-ambient-light"></ha-icon>${esc(label)}</span></div>`);
       }
     }
-  }, "Appliance – TV (forked : ambilight, sommeil)", "TV card with ambilight halo, ambilight tile and sleep button.");
+  }, "Appliance – TV (forked)", "TV card with ambilight halo, ambilight tile and sleep button.",
+    { en: "TV (forked)", fr: "Téléviseur (forked)", de: "Fernseher (forked)" });
 
   /* ================= Ampli home cinéma : bouton sommeil ================= */
   define("appliance-av-receiver-forked-card", BASE_AV, (P) => class extends withFork(P, {
     sleepOn: ["playing", "paused", "muted"], css: "", fields: ["sleep"], labels: { sleep: "f_sleep" },
-  }) {}, "Appliance – AV receiver (forked : sommeil)", "AV receiver card with a sleep button.");
+  }) {}, "Appliance – AV receiver (forked)", "AV receiver card with a sleep button.",
+    { en: "AV receiver (forked)", fr: "Ampli home cinéma (forked)", de: "AV-Receiver (forked)" });
 
   /* ================= Philips Hue Play HDMI Sync Box ================= */
   // switch = prise connectée (coupée → Off) ; entity = switch d'état du boîtier (on → On, off → Standby) ; sans entity, la puissance
@@ -435,5 +438,6 @@
       if (nm && !c.name) nm.textContent = tt(hass, "hue_sync");
       if (m.status === "hue_boot") { const t = root.querySelector(".status span:nth-child(2)"); if (t) t.textContent = tt(hass, "hue_boot"); }
     }
-  }, "Appliance – Philips Hue Sync Box", "Philips Hue Play HDMI Sync Box: plug + status switch, LED states, sleep button.");
+  }, "Appliance – Hue Sync Box (forked)", "Philips Hue Play HDMI Sync Box: plug + status switch, LED states, sleep button.",
+    { en: "Hue Sync Box (forked)" });
 })();

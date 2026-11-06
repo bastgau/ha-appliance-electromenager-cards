@@ -2,6 +2,8 @@
 
 `custom:appliance-mini-pc-forked-card`: monitors a machine (Home Assistant server, homelab). A dark mini-PC lying on a USB fan base, two gauges (CPU, RAM), temperature, frequency, uptime, load average, free RAM and one bar per disk. Built for the **System Monitor** sensors (`sensor.systemmonitor_*`), but any sensors work.
 
+> The upstream project also has its own `custom:appliance-mini-pc-card` (a photo card of a mini PC). The two cards are independent and can be used side by side: this one is for **monitoring** (CPU, RAM, disks, fan), which is why it carries the `-forked` suffix.
+
 What the drawing shows:
 - **Orange vents**: they turn red and glow as the CPU temperature goes up (scale 40 → 85 °C).
 - **Front LED bar**: blue (ok), orange (warning), red and blinking (critical), off (offline or powered off).

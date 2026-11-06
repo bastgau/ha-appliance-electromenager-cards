@@ -944,7 +944,8 @@ svg.pc{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));hei
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, forked: true, name: 'Appliance – Mini PC / Serveur',
+    type: TAG, forked: true, name: 'Appliance – Mini PC monitor (forked)',
+    names: { en: 'Mini PC monitor (forked)', fr: 'Supervision mini-PC (forked)', de: 'Mini-PC-Überwachung (forked)' },
     description: 'Supervision d\'un mini-PC ou serveur (System Monitor) : CPU, RAM, température, load, disques, uptime, ventilateur externe.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });

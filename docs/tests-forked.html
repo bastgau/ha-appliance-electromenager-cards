@@ -22,8 +22,13 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
 {const ours=window.customCards.filter(c=>c.forked===true).map(c=>c.type).sort(), want=['appliance-av-receiver-forked-card','appliance-hue-sync-forked-card','appliance-mini-pc-forked-card','appliance-tv-forked-card'];
  ok('naming: every card registered by the fork ends with -forked-card',ours.length>0&&ours.every(t=>/^appliance-[a-z0-9-]+-forked-card$/.test(t)),ours.join(', '));
  ok('naming: the fork registers exactly our 4 cards',JSON.stringify(ours)===JSON.stringify(want),ours.join(', '));
- ok('naming: old names without the suffix are not registered',!customElements.get('appliance-hue-sync-card')&&!customElements.get('appliance-mini-pc-card'),'');
- ok('naming: editor element of the Mini-PC follows the suffix',!!customElements.get('appliance-mini-pc-forked-card-editor')&&!customElements.get('appliance-mini-pc-card-editor'),'');
+ // un type sans suffixe peut exister côté amont (ex. appliance-mini-pc-card, carte photo ajoutée par le projet d'origine en 1.80) : il ne doit jamais être le nôtre
+ {const ourCls=['tv','av-receiver','hue-sync','mini-pc'].map(t=>customElements.get(`appliance-${t}-forked-card`));
+  ['appliance-hue-sync-card','appliance-mini-pc-card'].forEach(t=>{const cl=customElements.get(t);
+   ok(`naming: ${t} (no suffix) is never one of our classes`,!cl||!ourCls.includes(cl),t);
+   ok(`naming: customCards entry of ${t} (if any) is not flagged forked`,window.customCards.filter(c=>c.type===t).every(c=>c.forked!==true),t);});}
+ ok('naming: editor element of the Mini-PC follows the suffix and is distinct from any upstream editor',!!customElements.get('appliance-mini-pc-forked-card-editor')&&customElements.get('appliance-mini-pc-forked-card-editor')!==customElements.get('appliance-mini-pc-card-editor'),'');
+ ok('picker names of the fork have no " / " (reserved for upstream "EN / FR" names) and each has an English name',window.customCards.filter(c=>c.forked===true).every(c=>!/ \/ /.test(c.name)&&c.names&&c.names.en&&Object.values(c.names).every(n=>!/ \/ /.test(n))),JSON.stringify(window.customCards.filter(c=>c.forked===true).map(c=>c.names)));
  ok('naming: no card without forked:true uses a -forked-card type',window.customCards.filter(c=>/-forked-card$/.test(c.type)&&c.forked!==true).length===0,'');}
 // sentinelles : méthodes internes de l'amont dont dépendent nos sous-classes (si l'une disparaît, nos cartes sont désactivées)
 {const Base=Object.getPrototypeOf(customElements.get('appliance-tv-card'));
