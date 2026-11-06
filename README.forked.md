@@ -9,6 +9,7 @@ Ce fichier recense les cartes ajoutées par ce fork. **Tout notre code est dans 
 | TV (ambilight, bouton sommeil) | `custom:appliance-tv-forked-card` | [docs/forked/tv-forked.md](docs/forked/tv-forked.md) |
 | Ampli home cinéma (bouton sommeil) | `custom:appliance-av-receiver-forked-card` | [docs/forked/av-receiver-forked.md](docs/forked/av-receiver-forked.md) |
 | Philips Hue Play HDMI Sync Box | `custom:appliance-hue-sync-forked-card` | [docs/forked/hue-sync.md](docs/forked/hue-sync.md) |
+| Box TV (même logique que la Hue, dessin de box TV) | `custom:appliance-tv-box-forked-card` | [docs/forked/tv-box-forked.md](docs/forked/tv-box-forked.md) |
 | Mini-PC / Serveur (System Monitor) | `custom:appliance-mini-pc-forked-card` | [docs/forked/mini-pc.md](docs/forked/mini-pc.md) |
 
 Les cartes TV et ampli **héritent** des cartes d'origine (`custom:appliance-tv-card`, `custom:appliance-av-receiver-card`) : toutes leurs options et les évolutions du projet d'origine fonctionnent telles quelles. Les cartes d'origine ne gèrent **pas** `ambilight`, `ambilight_level` ni `sleep` : pour les utiliser, remplacer le type par la carte `-forked`.
