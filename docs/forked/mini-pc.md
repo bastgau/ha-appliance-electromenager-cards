@@ -1,6 +1,6 @@
 # Mini PC / Server
 
-`custom:appliance-mini-pc-card`: monitors a machine (Home Assistant server, homelab). A dark mini-PC lying on a USB fan base, two gauges (CPU, RAM), temperature, frequency, uptime, load average, free RAM and one bar per disk. Built for the **System Monitor** sensors (`sensor.systemmonitor_*`), but any sensors work.
+`custom:appliance-mini-pc-forked-card`: monitors a machine (Home Assistant server, homelab). A dark mini-PC lying on a USB fan base, two gauges (CPU, RAM), temperature, frequency, uptime, load average, free RAM and one bar per disk. Built for the **System Monitor** sensors (`sensor.systemmonitor_*`), but any sensors work.
 
 What the drawing shows:
 - **Orange vents**: they turn red and glow as the CPU temperature goes up (scale 40 → 85 °C).
@@ -18,7 +18,7 @@ How the state is computed:
 Default thresholds (not measured on your hardware, adjust them): temperature 75 °C (warning) and 90 °C (critical), CPU 90 %, RAM 90 %, disk 85 %. Temperatures follow `temperature_unit` (°C / °F) or the unit system of Home Assistant.
 
 ```yaml
-type: custom:appliance-mini-pc-card
+type: custom:appliance-mini-pc-forked-card
 name: Nipogi
 status: sensor.systemmonitor_status
 cpu: sensor.systemmonitor_cpu_load

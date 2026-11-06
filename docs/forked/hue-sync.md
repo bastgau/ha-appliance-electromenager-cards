@@ -1,6 +1,6 @@
 # Philips Hue Play HDMI Sync Box
 
-`custom:appliance-hue-sync-card`: the Hue Play HDMI Sync Box on its own (silhouette, no logo), with its front LED.
+`custom:appliance-hue-sync-forked-card`: the Hue Play HDMI Sync Box on its own (silhouette, no logo), with its front LED.
 
 | State | LED |
 |---|---|
@@ -16,7 +16,7 @@ How the status is computed (both switches are expected: the box has its own stat
 3. Only if `entity` is **not configured**: the `power` sensor of the plug decides, *On* above `threshold` (default **3 W**, not measured: adjust it to your plug), *Standby* otherwise.
 
 ```yaml
-type: custom:appliance-hue-sync-card
+type: custom:appliance-hue-sync-forked-card
 switch: switch.hue_sync_box_plug     # smart plug: off = Off
 entity: switch.hue_sync_box          # box status: on = On, off = Standby
 button: entity                      # optional: which switch the on/off button toggles: switch (the plug, default) or entity (box status)

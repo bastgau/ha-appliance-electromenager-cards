@@ -8,8 +8,8 @@ Ce fichier recense les cartes ajoutées par ce fork. **Tout notre code est dans 
 |---|---|---|
 | TV (ambilight, bouton sommeil) | `custom:appliance-tv-forked-card` | [docs/forked/tv-forked.md](docs/forked/tv-forked.md) |
 | Ampli home cinéma (bouton sommeil) | `custom:appliance-av-receiver-forked-card` | [docs/forked/av-receiver-forked.md](docs/forked/av-receiver-forked.md) |
-| Philips Hue Play HDMI Sync Box | `custom:appliance-hue-sync-card` | [docs/forked/hue-sync.md](docs/forked/hue-sync.md) |
-| Mini-PC / Serveur (System Monitor) | `custom:appliance-mini-pc-card` | [docs/forked/mini-pc.md](docs/forked/mini-pc.md) |
+| Philips Hue Play HDMI Sync Box | `custom:appliance-hue-sync-forked-card` | [docs/forked/hue-sync.md](docs/forked/hue-sync.md) |
+| Mini-PC / Serveur (System Monitor) | `custom:appliance-mini-pc-forked-card` | [docs/forked/mini-pc.md](docs/forked/mini-pc.md) |
 
 Les cartes TV et ampli **héritent** des cartes d'origine (`custom:appliance-tv-card`, `custom:appliance-av-receiver-card`) : toutes leurs options et les évolutions du projet d'origine fonctionnent telles quelles. Les cartes d'origine ne gèrent **pas** `ambilight`, `ambilight_level` ni `sleep` : pour les utiliser, remplacer le type par la carte `-forked`.
 
@@ -35,3 +35,8 @@ node build.js          # régénère dist/ (le seul conflit attendu : dist/)
 ## Ajouter une nouvelle carte au fork
 
 Créer un fichier `src/forked/<nom>.js` (IIFE autonome, chaînes inline) : `build.js` le prend en compte automatiquement, juste avant `picker.js`. Ne pas modifier les fichiers du projet d'origine.
+
+**Règle de nommage : toute carte créée par le fork s'appelle `appliance-<nom>-forked-card`** (et son éditeur `appliance-<nom>-forked-card-editor`). Un nom sans suffixe pourrait entrer en collision avec une future carte du projet d'origine. Concrètement :
+- l'entrée `window.customCards` porte `forked: true` ;
+- une carte dont le type ne finit pas par `-forked-card` est **refusée à l'exécution** (message d'erreur dans la console) ;
+- `docs/tests-forked.html` vérifie les deux (et que les anciens noms sans suffixe ne sont pas enregistrés).

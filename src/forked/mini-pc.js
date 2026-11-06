@@ -1,4 +1,4 @@
-/* Carte « Mini-PC / Serveur » — custom:appliance-mini-pc-card
+/* Carte « Mini-PC / Serveur » — custom:appliance-mini-pc-forked-card
  * Supervision d'une machine (serveur Home Assistant, homelab) : un mini-PC sombre posé sur un socle
  * ventilateur USB, deux jauges (CPU, RAM), température, fréquence, uptime, load average, RAM libre
  * et une barre par disque. Lit les capteurs de l'intégration System Monitor (sensor.systemmonitor_*).
@@ -9,7 +9,9 @@
  * États : ok, warn, crit, offline (statut ≠ online), off (prise coupée), unavailable.
  */
 (() => {
-  const TAG = 'appliance-mini-pc-card';
+  const TAG = 'appliance-mini-pc-forked-card';
+  // convention du fork : toute carte créée ici s'appelle appliance-<nom>-forked-card
+  if (!/^appliance-[a-z0-9-]+-forked-card$/.test(TAG)) { console.error(`[forked] ${TAG} refusée : le type d'une carte du fork doit finir par -forked-card.`); return; }
   if (customElements.get(TAG)) return;
 
   const T = {
@@ -942,7 +944,7 @@ svg.pc{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));hei
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – Mini PC / Serveur',
+    type: TAG, forked: true, name: 'Appliance – Mini PC / Serveur',
     description: 'Supervision d\'un mini-PC ou serveur (System Monitor) : CPU, RAM, température, load, disques, uptime, ventilateur externe.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });

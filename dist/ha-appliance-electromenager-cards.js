@@ -35231,7 +35231,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
  * Cartes :
  *  - appliance-tv-forked-card          ← appliance-tv-card : halo ambilight, tuile ambilight on/off, bouton sommeil
  *  - appliance-av-receiver-forked-card ← appliance-av-receiver-card : bouton sommeil
- *  - appliance-hue-sync-card           ← appliance-generic-card : Philips Hue Play HDMI Sync Box
+ *  - appliance-hue-sync-forked-card    ← appliance-generic-card : Philips Hue Play HDMI Sync Box
  *
  * Méthodes internes de l'amont utilisées (si l'une est renommée, la carte concernée est désactivée avec un avertissement
  * console) : _build, _ids, _compute, _render, setConfig, getConfigForm, getStubConfig.
@@ -35544,9 +35544,12 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
 
   const customCard = (tag, name, description) => {
     window.customCards = window.customCards || [];
-    window.customCards.push({ type: tag, name, description, preview: true, documentationURL: "https://github.com/bastgau/ha-appliance-electromenager-cards" });
+    window.customCards.push({ type: tag, forked: true, name, description, preview: true, documentationURL: "https://github.com/bastgau/ha-appliance-electromenager-cards" });
   };
+  // convention du fork : toute carte créée ici s'appelle appliance-<nom>-forked-card (aucune collision possible avec l'amont)
+  const FORKED_TAG = /^appliance-[a-z0-9-]+-forked-card$/;
   const define = (tag, Parent, build, name, description) => {
+    if (!FORKED_TAG.test(tag)) { console.error(`[forked] ${tag} refusée : le type d'une carte du fork doit finir par -forked-card.`); return; }
     if (customElements.get(tag)) return;
     if (!Parent || REQUIRED.some((m) => typeof Parent.prototype[m] !== "function")) {
       console.warn(`[forked] ${tag} désactivée : la carte d'origine est absente ou ses méthodes internes (${REQUIRED.join(", ")}) ont changé.`);
@@ -35606,7 +35609,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
   /* ================= Philips Hue Play HDMI Sync Box ================= */
   // switch = prise connectée (coupée → Off) ; entity = switch d'état du boîtier (on → On, off → Standby) ; sans entity, la puissance
   // de la prise décide (threshold, 3 W par défaut) ; 10 s de « Démarrage » après le passage de la prise de coupée à allumée.
-  define("appliance-hue-sync-card", BASE_GEN, (P) => class extends withFork(P, {
+  define("appliance-hue-sync-forked-card", BASE_GEN, (P) => class extends withFork(P, {
     sleepOn: ["powered"], css: CSS_HUE, fields: ["sleep", "button"],
     labels: { entity: "f_entity_hue", switch: "f_switch_hue", button: "f_button_hue", sleep: "f_sleep" },
   }) {
@@ -35658,7 +35661,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
   }, "Appliance – Philips Hue Sync Box", "Philips Hue Play HDMI Sync Box: plug + status switch, LED states, sleep button.");
 })();
 
-/* Carte « Mini-PC / Serveur » — custom:appliance-mini-pc-card
+/* Carte « Mini-PC / Serveur » — custom:appliance-mini-pc-forked-card
  * Supervision d'une machine (serveur Home Assistant, homelab) : un mini-PC sombre posé sur un socle
  * ventilateur USB, deux jauges (CPU, RAM), température, fréquence, uptime, load average, RAM libre
  * et une barre par disque. Lit les capteurs de l'intégration System Monitor (sensor.systemmonitor_*).
@@ -35669,7 +35672,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
  * États : ok, warn, crit, offline (statut ≠ online), off (prise coupée), unavailable.
  */
 (() => {
-  const TAG = 'appliance-mini-pc-card';
+  const TAG = 'appliance-mini-pc-forked-card';
+  // convention du fork : toute carte créée ici s'appelle appliance-<nom>-forked-card
+  if (!/^appliance-[a-z0-9-]+-forked-card$/.test(TAG)) { console.error(`[forked] ${TAG} refusée : le type d'une carte du fork doit finir par -forked-card.`); return; }
   if (customElements.get(TAG)) return;
 
   const T = {
@@ -36602,7 +36607,7 @@ svg.pc{display:block;width:100%;max-width:calc(220px * var(--illus-scale,1));hei
 
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: TAG, name: 'Appliance – Mini PC / Serveur',
+    type: TAG, forked: true, name: 'Appliance – Mini PC / Serveur',
     description: 'Supervision d\'un mini-PC ou serveur (System Monitor) : CPU, RAM, température, load, disques, uptime, ventilateur externe.', preview: true,
     documentationURL: 'https://github.com/skyrotter/ha-appliance-electromenager-cards',
   });
