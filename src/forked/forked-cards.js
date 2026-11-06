@@ -493,8 +493,8 @@
 <linearGradient id="fktbside" gradientUnits="userSpaceOnUse" x1="8" y1="0" x2="112" y2="0"><stop offset="0" stop-color="#2d2f32"/><stop offset=".55" stop-color="#17181a"/><stop offset="1" stop-color="#070708"/></linearGradient>
 <linearGradient id="fktbtop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b3d40"/><stop offset=".45" stop-color="#232426"/><stop offset="1" stop-color="#131415"/></linearGradient>
 <radialGradient id="fktbled"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
-<g transform="translate(0 -1)">
-<ellipse cx="60" cy="92" rx="54" ry="5" fill="url(#fktbsh)"/>
+<g transform="translate(0 -2.4)">
+<ellipse cx="60" cy="87.1" rx="54" ry="3.6" fill="url(#fktbsh)"/>
 <g class="tb-box">
   ${stack}
   <path d="${at(0)}" fill="url(#fktbtop)" stroke="#4b525b" stroke-opacity=".75" stroke-width=".7" stroke-linejoin="round"/>

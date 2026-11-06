@@ -181,6 +181,14 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
  const hb=mkc('hue-sync-forked','off','unavailable'), tbb=mkc('tv-box-forked','off','unavailable');
  hb.el.hass=hassOf([mk('switch.p','on'),mk('switch.s','unavailable')]);
  ok('independence: starting the Hue (purple) does not start the TV box',has(hb,'st-hue_boot')&&has(tbb,'st-off'),hb.wrap.className+' | '+tbb.wrap.className);
+ // niveau d'ombre : la TV box pose sur la même ligne de sol que la Hue (centre de l'ombre et bas du boîtier, en unités du viewBox 0-140)
+ {const ground=(tag,box)=>{const el=document.createElement(`appliance-${tag}-card`);el.setConfig({switch:'switch.p',entity:'switch.s'});el.style.width='300px';document.getElementById('g').appendChild(el);el.hass=hassOf([mk('switch.p','on'),mk('switch.s','on')]);
+   const svg=el.shadowRoot.querySelector('.illus svg'), r=svg.getBoundingClientRect(), k=r.height/140, sh=[...svg.querySelectorAll('ellipse')].find(x=>/sh/.test(x.getAttribute('fill')||'')).getBoundingClientRect(), bx=svg.querySelector(box).getBoundingClientRect();
+   return {shadow:((sh.top+sh.bottom)/2-r.top)/k, bottom:(bx.bottom-r.top)/k, band:(sh.bottom-bx.bottom)/k};};
+  const gh=ground('hue-sync-forked','.hs-box'), gt=ground('tv-box-forked','.tb-box');
+  ok('shadow level: the TV box shadow is at the same height as the Hue one (±0.3)',Math.abs(gt.shadow-gh.shadow)<=0.3,JSON.stringify({hue:gh.shadow.toFixed(1),tvbox:gt.shadow.toFixed(1)}));
+  ok('shadow level: the box bottom is on the same ground line as the Hue (±0.3)',Math.abs(gt.bottom-gh.bottom)<=0.3,JSON.stringify({hue:gh.bottom.toFixed(1),tvbox:gt.bottom.toFixed(1)}));
+  ok('shadow level: the visible shadow band under the box is as thin as the Hue one (±0.5)',Math.abs(gt.band-gh.band)<=0.5,JSON.stringify({hue:gh.band.toFixed(1),tvbox:gt.band.toFixed(1)}));}
  ok('upstream appliance-tv-box-card is still registered and is not ours',!!customElements.get('appliance-tv-box-card')&&customElements.get('appliance-tv-box-card')!==Tb&&!window.customCards.filter(x=>x.type==='appliance-tv-box-card').some(x=>x.forked===true),'');
  const f=Tb.getConfigForm(), fn=f.schema.map(s=>s.name), fh=Hue.getConfigForm(), hn=fh.schema.map(s=>s.name);
  ok('tv-box editor: same fields as the Hue (entity, switch, sleep, button…)',JSON.stringify(fn)===JSON.stringify(hn)&&['entity','switch','sleep','button'].every(n=>fn.includes(n)),fn.join(',')+' | '+hn.join(','));
