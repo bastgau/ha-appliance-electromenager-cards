@@ -1,0 +1,157 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Appliance Cards – tests (cartes forked)</title><style>body{font:14px system-ui,sans-serif;background:#111;color:#ddd;margin:16px}#g{position:absolute;left:-9999px;width:480px}table{border-collapse:collapse;width:100%;max-width:900px}td{padding:4px 8px;border-top:1px solid #333}.p{color:#3ddc84}.f{color:#ff6b6b}h1{font-size:18px}</style></head><body><h1>Appliance Cards — tests automatiques</h1><p id="sum">…</p><table id="res"></table>
+<div id="g"></div>
+<script>
+customElements.define('ha-card', class extends HTMLElement{});
+customElements.define('ha-icon', class extends HTMLElement{});
+window.__errors=[]; window.addEventListener('error',e=>__errors.push(e.message));
+</script>
+<script src="../dist/ha-appliance-electromenager-cards.js"></script>
+<script>
+const R=[]; const ok=(name,cond,info='')=>R.push({name,pass:!!cond,info:cond?'':String(info)});
+const now=new Date().toISOString();
+const mk=(id,state,attrs={})=>({entity_id:id,state:String(state),attributes:attrs,last_changed:now});
+const W={unit_of_measurement:'W',device_class:'power'}, T={unit_of_measurement:'°C',device_class:'temperature'};
+function hassOf(states,lang='fr'){const S={};states.forEach(s=>S[s.entity_id]=s);return{states:S,language:lang,locale:{language:lang},config:{},calls:[],callService(d,s,data){this.calls.push([d,s,data]);}};}
+function card(kind,cfg,states,lang){const el=document.createElement(`appliance-${kind}-card`);el.setConfig(cfg);document.getElementById('g').appendChild(el);const h=hassOf(states,lang);el.hass=h;return {el,h,sr:el.shadowRoot,wrap:el.shadowRoot.getElementById('wrap'),txt:()=>el.shadowRoot.getElementById('info').textContent.replace(/\s+/g,' ').trim(),lcd:()=>el.shadowRoot.querySelector('.lcd')?.textContent};}
+const has=(c,cls)=>c.wrap.classList.contains(cls);
+
+// enregistrement : nos 4 cartes, et les cartes d'origine laissées intactes
+['tv-forked','av-receiver-forked','hue-sync','mini-pc'].forEach(t=>ok(`registered ${t}`,customElements.get(`appliance-${t}-card`)));
+['tv-forked','av-receiver-forked','hue-sync','mini-pc'].forEach(t=>ok(`in the card picker: ${t}`,window.customCards.some(c=>c.type===`appliance-${t}-card`&&/^Appliance – /.test(c.name))));
+// sentinelles : méthodes internes de l'amont dont dépendent nos sous-classes (si l'une disparaît, nos cartes sont désactivées)
+{const Base=Object.getPrototypeOf(customElements.get('appliance-tv-card'));
+ ['_build','_ids','_compute','_render','setConfig'].forEach(m=>ok(`upstream base class still has ${m}()`,typeof Base.prototype[m]==='function'));
+ ok('upstream base class still has static getConfigForm / getStubConfig',typeof Base.getConfigForm==='function'&&typeof Base.getStubConfig==='function');
+ ['appliance-tv-card','appliance-av-receiver-card','appliance-generic-card'].forEach(t=>ok(`parent card exists: ${t}`,!!customElements.get(t)));
+ ok('forked cards keep the parent kind (tv / av_receiver)',customElements.get('appliance-tv-forked-card').kind==='tv'&&customElements.get('appliance-av-receiver-forked-card').kind==='av_receiver');}
+// les cartes d'origine ne gèrent PAS nos options
+{const U={unit_of_measurement:'W',device_class:'power'};
+ let c=card('tv',{switch:'switch.p',power:'sensor.w',ambilight:'switch.amb',sleep:'button.sl'},[mk('switch.p','on'),mk('sensor.w',120,U),mk('switch.amb','on'),mk('button.sl','unknown')]);
+ ok('original tv card: no ambilight, no sleep button',!c.sr.querySelector('.tv-amb')&&!c.sr.querySelector('.amb-tile')&&!c.sr.querySelector('button.slp')&&!has(c,'amb-on'),c.wrap.className);
+ c=card('av-receiver',{entity:'media_player.a',switch:'switch.p',sleep:'button.sl'},[mk('media_player.a','playing'),mk('switch.p','on'),mk('button.sl','unknown')]);
+ ok('original av-receiver card: no sleep button',!c.sr.querySelector('button.slp'),c.sr.getElementById('actions').innerHTML.slice(0,80));}
+// éditeur : nos champs s'ajoutent à ceux de l'amont, avec nos libellés traduits
+{const f=customElements.get('appliance-tv-forked-card').getConfigForm(), names=f.schema.map(s=>s.name);
+ ok('tv-forked editor: upstream fields + ambilight, ambilight_level, sleep',['entity','power','ambilight','ambilight_level','sleep'].every(n=>names.includes(n)),names.join(','));
+ ok('tv-forked editor: translated labels',/mbilight/.test(f.computeLabel({name:'ambilight'}))&&f.computeLabel({name:'entity'})!==undefined,f.computeLabel({name:'ambilight_level'}));
+ const h=customElements.get('appliance-hue-sync-card').getConfigForm(), hn=h.schema.map(s=>s.name);
+ ok('hue-sync editor: entity, switch, sleep, button (select)',['entity','switch','sleep','button'].every(n=>hn.includes(n))&&!!h.schema.find(s=>s.name==='button').selector.select,hn.join(','));
+ ok('hue-sync editor: Hue-specific labels',/Switch|switch/i.test(h.computeLabel({name:'switch'}))&&h.computeLabel({name:'switch'})!==h.computeLabel({name:'entity'}),h.computeLabel({name:'switch'}));
+ ok('stub config of the forked cards works',typeof customElements.get('appliance-hue-sync-card').getStubConfig({states:{}})==='object'&&typeof customElements.get('appliance-tv-forked-card').getStubConfig({states:{}})==='object');}
+
+// Hue Sync Box : switch = prise, entity = switch d'état (on = allumé, off = veille)
+{const hs=(plug,st,extra={})=>card('hue-sync',{switch:'switch.plug',entity:'switch.state',...extra},[mk('switch.plug',plug),mk('switch.state',st)]);
+ let c=hs('off','on'); ok('hue plug off -> off',has(c,'st-off')&&!has(c,'active'),c.wrap.className);
+ c=hs('on','on'); ok('hue state on -> powered',has(c,'st-powered')&&has(c,'active')&&/En marche/.test(c.txt()),c.txt());
+ c=hs('on','off'); ok('hue state off -> standby',has(c,'st-standby')&&!has(c,'active'),c.wrap.className);
+ {const real=Date.now; let now=real(); Date.now=()=>now;
+  c=card('hue-sync',{switch:'switch.plug',entity:'switch.state'},[mk('switch.plug','off'),mk('switch.state','unavailable')]); ok('hue boot: plug off -> off',has(c,'st-off'),c.wrap.className);
+  c.el.hass=hassOf([mk('switch.plug','on'),mk('switch.state','unavailable')]); ok('hue boot: plug turned on -> starting (even if status unavailable)',has(c,'st-hue_boot')&&/Démarrage/.test(c.txt()),c.wrap.className+c.txt());
+  c.el.hass=hassOf([mk('switch.plug','on'),mk('switch.state','off')]); ok('hue boot: still starting 5 s later',(now+=5000,c.el.hass=hassOf([mk('switch.plug','on'),mk('switch.state','off')]),has(c,'st-hue_boot')),c.wrap.className);
+  now+=6000; c.el._render(c.el._compute()); /* ce que fait le minuteur de 10 s */ ok('hue boot: after 10 s -> standby',has(c,'st-standby'),c.wrap.className);
+  c.el.hass=hassOf([mk('switch.plug','on'),mk('switch.state','on')]); ok('hue boot over: status on -> powered',has(c,'st-powered'),c.wrap.className);
+  c.el.hass=hassOf([mk('switch.plug','off'),mk('switch.state','unavailable')]); c.el.hass=hassOf([mk('switch.plug','on'),mk('switch.state','on')]); ok('hue boot: plug cut then on again -> starting again',has(c,'st-hue_boot'),c.wrap.className);
+  c.el.hass=hassOf([mk('switch.plug','off'),mk('switch.state','unavailable')]); ok('hue boot: plug cut during boot -> off',has(c,'st-off'),c.wrap.className);
+  Date.now=real;}
+ c=hs('off','unavailable'); ok('hue plug off + status switch unavailable -> off',has(c,'st-off'),c.wrap.className);
+ c=hs('on','unavailable'); ok('hue plug on + status switch unavailable -> unavailable',has(c,'st-unavailable'),c.wrap.className);
+ c=card('hue-sync',{switch:'switch.plug',entity:'switch.state',button:'entity'},[mk('switch.plug','on'),mk('switch.state','off')]);
+ ok('hue button=entity: button shows the status switch state',!c.sr.querySelector('.toggle').classList.contains('on'),c.sr.querySelector('.toggle').className);
+ c.sr.querySelector('.toggle').click(); ok('hue button=entity: click toggles the status switch, not the plug',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.state'}]]),JSON.stringify(c.h.calls));
+ c=hs('on','on',{button:'switch'}); c.sr.querySelector('.toggle').click(); ok('hue button=switch: toggles the plug',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.plug'}]]),JSON.stringify(c.h.calls));
+ c=hs('on','on'); c.sr.querySelector('.toggle').click(); ok('hue no button option: click toggles the plug',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.plug'}]]),JSON.stringify(c.h.calls));
+ c=card('hue-sync',{switch:'switch.plug',button:'entity'},[mk('switch.plug','on')]); c.sr.querySelector('.toggle').click(); ok('hue button=entity without entity: falls back to the plug',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.plug'}]]),JSON.stringify(c.h.calls));
+ c=card('hue-sync',{switch:'switch.plug',power:'sensor.p'},[mk('switch.plug','on'),mk('sensor.p',8,W)]); ok('hue no status switch: power > threshold -> powered',has(c,'st-powered'),c.wrap.className);
+ c=card('hue-sync',{switch:'switch.plug',power:'sensor.p',threshold:10},[mk('switch.plug','on'),mk('sensor.p',8,W)]); ok('hue no status switch: custom threshold -> standby',has(c,'st-standby'),c.wrap.className);
+ c=card('hue-sync',{switch:'switch.plug',power:'sensor.p'},[mk('switch.plug','off'),mk('sensor.p',8,W)]); ok('hue no status switch: plug off -> off',has(c,'st-off'),c.wrap.className);
+}
+
+// TV ambilight : halo (TV allumée + interrupteur on), intensité = niveau normalisé, tuile on/off
+{const tv=(tvW,amb,lvl,extra={},la={min:0,max:200})=>card('tv-forked',{power:'sensor.p',ambilight:'switch.amb',ambilight_level:'number.lvl',...extra},[mk('sensor.p',tvW,W),mk('switch.amb',amb),mk('number.lvl',lvl,la)]);
+ const amb=(c)=>c.sr.querySelector('.amb-tile'), v=(c)=>c.sr.querySelector('.wrap').style.getPropertyValue('--amb');
+ let c=tv(120,'on',100); ok('tv ambilight on + TV on -> halo, level 100/200 = 0.50',has(c,'amb-on')&&v(c)==='0.50'&&/50 %/.test(amb(c).textContent),c.wrap.className+v(c));
+ c=tv(120,'on',200); ok('tv ambilight level max -> 1.00',has(c,'amb-on')&&v(c)==='1.00',v(c));
+ c=tv(120,'on',30,{},{}); ok('tv ambilight level without min/max -> 0..100',v(c)==='0.30'&&/30 %/.test(amb(c).textContent),v(c));
+ c=tv(120,'off',100); ok('tv ambilight off -> no halo, tile shows Éteint',!has(c,'amb-on')&&/Éteint/.test(amb(c).textContent),c.wrap.className);
+ c=tv(0.1,'on',100); ok('tv off -> no halo and no ambilight tile',!has(c,'amb-on')&&!amb(c),c.wrap.className);
+ c=tv(120,'unavailable',100); ok('tv ambilight unavailable -> no halo, no tile',!has(c,'amb-on')&&!amb(c),c.wrap.className);
+ c=tv(120,'on',0); ok('tv ambilight on but level 0 -> no halo, tile on',!has(c,'amb-on')&&!!amb(c)&&amb(c).classList.contains('on'),c.wrap.className);
+ c=card('tv-forked',{power:'sensor.p',ambilight:'switch.amb'},[mk('sensor.p',120,W),mk('switch.amb','on')]); ok('tv ambilight without level -> medium halo 0.70, tile says On',has(c,'amb-on')&&v(c)==='0.70'&&/En marche/.test(amb(c).textContent),c.wrap.className+v(c));
+ c=card('tv-forked',{power:'sensor.p',ambilight_level:'number.lvl'},[mk('sensor.p',120,W),mk('number.lvl',100,{min:0,max:200})]); ok('tv level only (no switch) -> halo but no toggle tile',has(c,'amb-on')&&!amb(c),c.wrap.className);
+ c=tv(120,'on',100); amb(c).click(); ok('tv ambilight tile click toggles the switch (no more-info)',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.amb'}]]),JSON.stringify(c.h.calls));
+ c=tv(120,'on',100,{style:'stand'}); ok('tv ambilight works with stand style',has(c,'amb-on')&&!!c.sr.querySelector('.tv-amb'),c.wrap.className);
+ c=tv(120,'on',100,{},{min:0,max:200}); const cn=card('tv-forked',{power:'sensor.p',ambilight:'switch.amb',labels:{ambilight:'Lumière'}},[mk('sensor.p',120,W),mk('switch.amb','on')],'en'); ok('tv ambilight tile: custom label',/Lumière/.test(amb(cn).textContent),amb(cn).textContent);
+}
+
+// Bouton sommeil (option sleep : button ou switch) : TV, ampli, Hue Sync Box, à gauche du bouton power, appareil allumé seulement
+{const slp=(c)=>c.sr.querySelector('button.slp'), pwr=(c)=>c.sr.querySelector('button.toggle:not(.slp)'), U={unit_of_measurement:'W',device_class:'power'};
+ const tv=(w,extra={},st=[mk('button.sl','unknown')])=>card('tv-forked',{switch:'switch.p',power:'sensor.w',sleep:'button.sl',...extra},[mk('switch.p','on'),mk('sensor.w',w,U),...st]);
+ let c=tv(120); ok('sleep tv on: button shown, before the power button',!!slp(c)&&!!pwr(c)&&!!(slp(c).compareDocumentPosition(pwr(c))&Node.DOCUMENT_POSITION_FOLLOWING),c.sr.getElementById('actions').innerHTML.slice(0,200));
+ ok('sleep: icon mdi:sleep-off and translated label',slp(c).querySelector('ha-icon').getAttribute('icon')==='mdi:sleep-off'&&slp(c).title==='Sommeil',slp(c).outerHTML.slice(0,160));
+ slp(c).click(); ok('sleep with a button entity: button.press',JSON.stringify(c.h.calls)===JSON.stringify([['button','press',{entity_id:'button.sl'}]]),JSON.stringify(c.h.calls));
+ c=tv(120); pwr(c).click(); ok('sleep: the power button still toggles the plug',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.p'}]]),JSON.stringify(c.h.calls));
+ c=tv(120,{sleep:'switch.sl'},[mk('switch.sl','on')]); slp(c).click(); ok('sleep with a switch entity: toggle, button keeps the neutral style',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.sl'}]])&&!slp(c).classList.contains('on'),JSON.stringify(c.h.calls));
+ c=tv(120,{sleep:'input_button.sl'},[mk('input_button.sl','unknown')]); slp(c).click(); ok('sleep with an input_button: press',JSON.stringify(c.h.calls)===JSON.stringify([['input_button','press',{entity_id:'input_button.sl'}]]),JSON.stringify(c.h.calls));
+ c=tv(0.1); ok('sleep tv off: button hidden',!slp(c),c.sr.getElementById('actions').innerHTML.slice(0,120));
+ c=tv(0.5); ok('sleep tv standby: button hidden',!slp(c)&&has(c,'st-standby'),c.wrap.className);
+ c=card('tv-forked',{switch:'switch.p',power:'sensor.w'},[mk('switch.p','on'),mk('sensor.w',120,U)]); ok('sleep not configured: no button',!slp(c),'');
+ c=tv(120,{},[]); ok('sleep entity missing in HA: no button',!slp(c),'');
+ c=tv(120,{},[mk('button.sl','unavailable')]); ok('sleep entity unavailable: button disabled',!!slp(c)&&slp(c).disabled,'');
+ c=card('tv-forked',{power:'sensor.w',sleep:'button.sl'},[mk('sensor.w',120,U),mk('button.sl','unknown')]); ok('sleep without power switch: button alone',!!slp(c)&&!pwr(c),c.sr.getElementById('actions').innerHTML.slice(0,120));
+ c=tv(120,{labels:{sleep_btn:'Dodo'}}); ok('sleep: custom label',slp(c).title==='Dodo',slp(c).title);
+ c=tv(120,{},[mk('button.sl','unknown')]); c=card('tv-forked',{switch:'switch.p',power:'sensor.w',sleep:'button.sl'},[mk('switch.p','on'),mk('sensor.w',120,U),mk('button.sl','unknown')],'en'); ok('sleep: english label',slp(c).title==='Sleep',slp(c).title);
+ const av=(ms,extra={})=>card('av-receiver-forked',{entity:'media_player.a',switch:'switch.p',sleep:'button.sl',...extra},[mk('media_player.a',ms),mk('switch.p','on'),mk('button.sl','unknown')]);
+ c=av('playing'); ok('sleep av-receiver playing: button shown',!!slp(c),c.wrap.className);
+ c=av('paused'); ok('sleep av-receiver paused: button shown',!!slp(c),c.wrap.className);
+ c=av('standby'); ok('sleep av-receiver standby: hidden',!slp(c),c.wrap.className);
+ c=av('off'); ok('sleep av-receiver off: hidden',!slp(c),c.wrap.className);
+ c=av('playing'); slp(c).click(); ok('sleep av-receiver: button.press',JSON.stringify(c.h.calls)===JSON.stringify([['button','press',{entity_id:'button.sl'}]]),JSON.stringify(c.h.calls));
+ const hu=(plug,st,extra={})=>card('hue-sync',{switch:'switch.p',entity:'switch.s',sleep:'button.sl',...extra},[mk('switch.p',plug),mk('switch.s',st),mk('button.sl','unknown')]);
+ c=hu('on','on'); ok('sleep hue-sync on: button shown, before the power button',!!slp(c)&&!!(slp(c).compareDocumentPosition(pwr(c))&Node.DOCUMENT_POSITION_FOLLOWING),c.wrap.className);
+ c=hu('on','off'); ok('sleep hue-sync standby: hidden',!slp(c),c.wrap.className);
+ c=hu('off','on'); ok('sleep hue-sync off (plug cut): hidden',!slp(c),c.wrap.className);
+ c=hu('on','on'); slp(c).click(); ok('sleep hue-sync: button.press (not the plug)',JSON.stringify(c.h.calls)===JSON.stringify([['button','press',{entity_id:'button.sl'}]]),JSON.stringify(c.h.calls));
+ c=hu('on','on',{button:'entity'}); pwr(c).click(); ok('sleep hue-sync with button:entity: power button toggles the status switch',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.s'}]]),JSON.stringify(c.h.calls));
+}
+
+// Mini-PC / serveur : System Monitor, seuils, ventilateur, alimentation
+{const cls=(c)=>c.sr.querySelector('ha-card').className.trim().split(' ')[0], full=(c)=>c.sr.querySelector('ha-card').className, alert=(c)=>c.sr.getElementById('mpalert').textContent, tiles=(c)=>c.sr.getElementById('mptiles').textContent.replace(/\s+/g,' ');
+ const U=(u,x={})=>({unit_of_measurement:u,...x}), boot=new Date(Date.now()-63*86400e3).toISOString();
+ const cfg={status:'sensor.st',cpu:'sensor.cpu',memory:'sensor.mem',memory_used:'sensor.mu',cpu_temperature:'sensor.t',cpu_speed:'sensor.sp',load_1:'sensor.l1',load_5:'sensor.l5',load_15:'sensor.l15',uptime:'sensor.up',memory_free:'sensor.mf',fan:'switch.fan',disks:[{entity:'sensor.d1',name:'/'},'sensor.d2']};
+ const S=(o={})=>{const v={st:'online',cpu:11,mem:84.1,mu:6.39,t:44,sp:2.6,l1:.48,l5:.53,l15:.53,mf:1236.3,fan:'on',d1:63.1,d2:39.5,...o};
+  return [mk('sensor.st',v.st),mk('sensor.cpu',v.cpu,U('%')),mk('sensor.mem',v.mem,U('%')),mk('sensor.mu',v.mu,U('GiB')),mk('sensor.t',v.t,U('°C',{device_class:'temperature'})),mk('sensor.sp',v.sp,U('GHz')),
+   mk('sensor.l1',v.l1),mk('sensor.l5',v.l5),mk('sensor.l15',v.l15),mk('sensor.up',boot,{device_class:'timestamp'}),mk('sensor.mf',v.mf,U('MiB')),mk('switch.fan',v.fan),
+   mk('sensor.d1',v.d1,U('%',{friendly_name:'Disk used : /'})),mk('sensor.d2',v.d2,U('%',{friendly_name:'Disk used : /diskdata'}))];};
+ let c=card('mini-pc',cfg,S()); ok('mini-pc: online + normal values -> ok',cls(c)==='ok'&&/OK/.test(c.sr.getElementById('mpbadge').textContent),full(c));
+ ok('mini-pc: gauges CPU 11 % / RAM 84 %',/11%/.test(c.sr.querySelector('[data-g=cpu]').textContent)&&/84%/.test(c.sr.querySelector('[data-g=memory]').textContent)&&/6,39/.test(c.sr.querySelector('[data-g=memory]').textContent),c.sr.querySelector('.gauges').textContent);
+ ok('mini-pc: tiles temperature, speed, uptime in months, loads, free RAM',/44/.test(tiles(c))&&/2,6/.test(tiles(c))&&/2 mois/.test(tiles(c))&&/0,48/.test(tiles(c))&&/1 ?236/.test(tiles(c)),tiles(c));
+ ok('mini-pc: two disk bars with names',c.sr.querySelectorAll('.disk').length===2&&/\//.test(c.sr.getElementById('mpdisks').textContent)&&/diskdata/.test(c.sr.getElementById('mpdisks').textContent)&&c.sr.querySelectorAll('.disk .bar i')[0].style.width==='63.1%',c.sr.getElementById('mpdisks').innerHTML.slice(0,200));
+ ok('mini-pc: fan on -> fanon class + pressed button',/fanon/.test(full(c))&&c.sr.getElementById('mpfan').getAttribute('aria-pressed')==='true'&&!c.sr.getElementById('mpfan').hidden);
+ c=card('mini-pc',cfg,S({fan:'off'})); ok('mini-pc: fan off -> no fanon',!/fanon/.test(full(c)),full(c));
+ c.sr.getElementById('mpfan').click(); ok('mini-pc: fan button calls switch.toggle',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.fan'}]]),JSON.stringify(c.h.calls));
+ c=card('mini-pc',cfg,S({t:80})); ok('mini-pc: temperature >= 75 -> warn + hot badge + alert',cls(c)==='warn'&&/Chaud/.test(c.sr.getElementById('mpbadge').textContent)&&/CPU trop chaud/.test(alert(c)),full(c)+alert(c));
+ ok('mini-pc: heat variable follows temperature',Math.abs(parseFloat(c.sr.querySelector('ha-card').style.getPropertyValue('--heat'))-0.889)<0.01,c.sr.querySelector('ha-card').style.getPropertyValue('--heat'));
+ c=card('mini-pc',cfg,S({t:92})); ok('mini-pc: temperature >= 90 -> crit',cls(c)==='crit'&&/Critique/.test(c.sr.getElementById('mpbadge').textContent),full(c));
+ c=card('mini-pc',cfg,S({mem:95})); ok('mini-pc: RAM >= 90 -> warn + alert',cls(c)==='warn'&&/RAM presque pleine/.test(alert(c)),full(c)+alert(c));
+ c=card('mini-pc',cfg,S({d1:91})); ok('mini-pc: disk >= 85 -> warn, bad bar',cls(c)==='warn'&&/Disque presque plein/.test(alert(c))&&c.sr.querySelector('.disk').classList.contains('bad'),full(c)+alert(c));
+ c=card('mini-pc',{...cfg,temperature_warn:50},S({t:55})); ok('mini-pc: custom temperature_warn',cls(c)==='warn',full(c));
+ c=card('mini-pc',cfg,S({st:'offline'})); ok('mini-pc: status != online -> offline, no alerts',cls(c)==='offline'&&/Hors ligne/.test(c.sr.getElementById('mpbadge').textContent)&&alert(c)==='',full(c));
+ c=card('mini-pc',cfg,S({st:'unavailable'})); ok('mini-pc: status unavailable -> unavailable',cls(c)==='unavailable',full(c));
+ c=card('mini-pc',{cpu:'sensor.cpu'},[mk('sensor.cpu',20,U('%'))]); ok('mini-pc: no status entity, CPU readable -> ok',cls(c)==='ok'&&c.sr.getElementById('mpfan').hidden&&c.sr.getElementById('mppwr').hidden,full(c));
+ c=card('mini-pc',{cpu:'sensor.cpu'},[mk('sensor.cpu','unavailable')]); ok('mini-pc: nothing readable -> unavailable',cls(c)==='unavailable',full(c));
+ c=card('mini-pc',{...cfg,cores:4},S({l1:6})); ok('mini-pc: load above cores -> red tile',c.sr.querySelectorAll('.tile.bad').length===1,tiles(c));
+ c=card('mini-pc',{...cfg,switch:'switch.p'},[...S(),mk('switch.p','off')]); ok('mini-pc: power switch off -> off',cls(c)==='off',full(c));
+ c.sr.getElementById('mppwr').click(); ok('mini-pc: power switch off -> one click turns on',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.p'}]]),JSON.stringify(c.h.calls));
+ c=card('mini-pc',{...cfg,switch:'switch.p'},[...S(),mk('switch.p','on')]); c.sr.getElementById('mppwr').click();
+ {const armed=!c.h.calls.length&&c.sr.getElementById('mppwr').classList.contains('confirm'); c.sr.getElementById('mppwr').click(); ok('mini-pc: cutting a running server needs two clicks',armed&&c.h.calls.length===1,JSON.stringify(c.h.calls));}
+ c=card('mini-pc',{...cfg,switch:'switch.p',confirm_off:false},[...S(),mk('switch.p','on')]); c.sr.getElementById('mppwr').click(); ok('mini-pc: confirm_off false -> one click',c.h.calls.length===1,JSON.stringify(c.h.calls));
+ c=card('mini-pc',cfg,S(),'en'); ok('mini-pc: english labels',/Temperature/.test(tiles(c))&&/Uptime/.test(tiles(c))&&/2 months/.test(tiles(c)),tiles(c));
+ const st=window.customCards.find(x=>x.type==='appliance-mini-pc-card'); ok('mini-pc: picker entry',!!st);
+}
+
+window.RESULTS=R;
+const fails=R.filter(r=>!r.pass).length;
+document.getElementById('sum').innerHTML=`<b class="${fails?'f':'p'}">${R.length-fails} / ${R.length} tests réussis</b> — fichier testé : <code>dist/ha-appliance-electromenager-cards.js</code>`;
+document.getElementById('res').innerHTML=R.map(r=>`<tr><td class="${r.pass?'p':'f'}">${r.pass?'✔':'✘'}</td><td>${r.name}</td><td>${r.info||''}</td></tr>`).join('');
+</script></body></html>
+
