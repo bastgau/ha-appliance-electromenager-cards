@@ -35615,9 +35615,9 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
   define("appliance-tv-forked-card", BASE_TV, (P) => class extends withFork(P, {
     sleepOn: ["screen_on"], css: CSS_TV, fields: ["ambilight", "ambilight_level", "sleep", "keep_awake"],
     labels: { ambilight: "f_ambilight", ambilight_level: "f_ambilight_level", sleep: "f_sleep", keep_awake: "f_keep_awake" },
-    // bouton sleep : télé qui se rallume ; bouton anti-veille (à presser quand la notification de mise en veille s'affiche) : minuterie barrée
-    sleepIcon: "mdi:television-play",
-    buttons: [{ key: "keep_awake", icon: "mdi:timer-off-outline", labelKey: "keep_awake_btn", cls: "kaw" }],
+    // sleep button: auto-mode icon ; keep-awake button (press when the TV sleep notification shows): sleep-off icon
+    sleepIcon: "mdi:auto-mode",
+    buttons: [{ key: "keep_awake", icon: "mdi:sleep-off", labelKey: "keep_awake_btn", cls: "kaw" }],
   }) {
     // halo : groupe SVG inséré une fois, derrière le dessin de la TV
     _forkBuilt(root) {
