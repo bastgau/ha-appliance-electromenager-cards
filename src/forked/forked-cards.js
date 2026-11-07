@@ -36,7 +36,9 @@
       "f_button_hue": "On/off button controls",
       "v_on": "On",
       "v_off": "Off",
-      "tv_box": "TV box"
+      "tv_box": "TV box",
+      "keep_awake_btn": "Keep awake",
+      "f_keep_awake": "Keep-awake button (button, switch or script)"
     },
     "fr": {
       "hue_sync": "Hue Sync Box",
@@ -52,7 +54,9 @@
       "f_button_hue": "Le bouton on/off pilote",
       "v_on": "En marche",
       "v_off": "Éteint",
-      "tv_box": "Box TV"
+      "tv_box": "Box TV",
+      "keep_awake_btn": "Rester allumé",
+      "f_keep_awake": "Bouton anti-veille (button, switch ou script)"
     },
     "de": {
       "hue_sync": "Hue Sync Box",
@@ -68,7 +72,9 @@
       "f_button_hue": "Die Ein/Aus-Taste schaltet",
       "v_on": "An",
       "v_off": "Aus",
-      "tv_box": "TV-Box"
+      "tv_box": "TV-Box",
+      "keep_awake_btn": "Wach halten",
+      "f_keep_awake": "Wachhalte-Taste (Button, Schalter oder Skript)"
     },
     "nb": {
       "hue_sync": "Hue Sync Box",
@@ -84,7 +90,9 @@
       "f_button_hue": "Av/på-knappen styrer",
       "v_on": "På",
       "v_off": "Av",
-      "tv_box": "TV-boks"
+      "tv_box": "TV-boks",
+      "keep_awake_btn": "Hold våken",
+      "f_keep_awake": "Hold-våken-knapp (button, bryter eller skript)"
     },
     "nl": {
       "hue_sync": "Hue Sync Box",
@@ -100,7 +108,9 @@
       "f_button_hue": "De aan/uit-knop bedient",
       "v_on": "Aan",
       "v_off": "Uit",
-      "tv_box": "Tv-box"
+      "tv_box": "Tv-box",
+      "keep_awake_btn": "Wakker houden",
+      "f_keep_awake": "Wakker-houden-knop (button, schakelaar of script)"
     },
     "ro": {
       "hue_sync": "Hue Sync Box",
@@ -116,7 +126,9 @@
       "f_button_hue": "Butonul pornit/oprit controlează",
       "v_on": "Pornit",
       "v_off": "Oprit",
-      "tv_box": "TV box"
+      "tv_box": "TV box",
+      "keep_awake_btn": "Menține pornit",
+      "f_keep_awake": "Buton menține pornit (button, comutator sau script)"
     },
     "ru": {
       "hue_sync": "Hue Sync Box",
@@ -132,7 +144,9 @@
       "f_button_hue": "Кнопка вкл/выкл управляет",
       "v_on": "Включено",
       "v_off": "Выкл.",
-      "tv_box": "ТВ-приставка"
+      "tv_box": "ТВ-приставка",
+      "keep_awake_btn": "Не засыпать",
+      "f_keep_awake": "Кнопка «не засыпать» (button, переключатель или скрипт)"
     },
     "sr": {
       "hue_sync": "Hue Sync Box",
@@ -148,7 +162,9 @@
       "f_button_hue": "Дугме укљ./искљ. управља",
       "v_on": "Укључено",
       "v_off": "Искључено",
-      "tv_box": "ТВ бокс"
+      "tv_box": "ТВ бокс",
+      "keep_awake_btn": "Остани укључен",
+      "f_keep_awake": "Дугме за останак укљученог (button, прекидач или скрипта)"
     },
     "sr-Latn": {
       "hue_sync": "Hue Sync Box",
@@ -164,7 +180,9 @@
       "f_button_hue": "Dugme uklj./isklj. upravlja",
       "v_on": "Uključeno",
       "v_off": "Isključeno",
-      "tv_box": "TV boks"
+      "tv_box": "TV boks",
+      "keep_awake_btn": "Ostani uključen",
+      "f_keep_awake": "Dugme za ostanak uključenog (button, prekidač ili skripta)"
     },
     "it": {
       "hue_sync": "Hue Sync Box",
@@ -180,7 +198,9 @@
       "f_button_hue": "Il pulsante on/off comanda",
       "v_on": "Acceso",
       "v_off": "Spento",
-      "tv_box": "TV box"
+      "tv_box": "TV box",
+      "keep_awake_btn": "Resta acceso",
+      "f_keep_awake": "Pulsante anti-sospensione (button, interruttore o script)"
     }
   };
   const hassOf = (h) => h || document.querySelector("home-assistant")?.hass;
@@ -253,20 +273,22 @@
     sleep: { entity: { domain: ["button", "input_button", "switch", "input_boolean"] } },
     ambilight: { entity: { domain: ["switch", "input_boolean", "light"] } },
     ambilight_level: { entity: { domain: ["number", "input_number", "sensor"] } },
+    keep_awake: { entity: { domain: ["button", "input_button", "switch", "input_boolean", "script"] } },
     button: { select: { mode: "dropdown", options: [
       { value: "switch", label: "Prise (switch) / Plug (switch)" }, { value: "entity", label: "Statut du boîtier (entity) / Box status (entity)" }] } },
   };
 
   /* Fabrique : ajoute à une carte d'origine le bouton sommeil, l'élargissement de la liste d'entités surveillées, le style
      injecté et les champs de l'éditeur. opts : sleepOn (statuts « allumé »), fields (champs ajoutés à l'éditeur),
-     labels ({champ: clé de T}), css. */
+     labels ({champ: clé de T}), css, sleepIcon (icône du bouton sleep, mdi:sleep-off par défaut), buttons (boutons d'action
+     supplémentaires [{ key, icon, labelKey, cls }], à gauche du bouton sleep, mêmes règles de visibilité). */
   const withFork = (Parent, opts) => class extends Parent {
     static get _fork() { return opts; }
 
     // entités surveillées : sinon le cache de rendu ignore leurs changements pendant 30 s
     _ids() {
       const c = this._cfg();
-      return super._ids().concat(["sleep", "ambilight", "ambilight_level"].map((k) => c[k]).filter((i) => typeof i === "string" && i));
+      return super._ids().concat(["sleep", "ambilight", "ambilight_level", ...(opts.buttons || []).map((b) => b.key)].map((k) => c[k]).filter((i) => typeof i === "string" && i));
     }
     _cfg() { return this._fc || this._config || {}; }
 
@@ -303,18 +325,36 @@
       hass.callService(press || ["switch", "input_boolean", "light"].includes(dom) ? dom : "homeassistant", press ? "press" : "toggle", { entity_id: id });
     }
 
+    // bouton d'action supplémentaire : button / input_button → press ; script → script.turn_on ; switch, input_boolean… → toggle
+    _press(id) {
+      const hass = this._hass;
+      if (!id || !hass) return;
+      const dom = id.split(".")[0];
+      if (["button", "input_button"].includes(dom)) hass.callService(dom, "press", { entity_id: id });
+      else if (dom === "script") hass.callService("script", "turn_on", { entity_id: id });
+      else hass.callService(["switch", "input_boolean", "light"].includes(dom) ? dom : "homeassistant", "toggle", { entity_id: id });
+    }
+
     _render(m) {
       super._render(m);
       const root = this.shadowRoot, c = this._cfg(), hass = this._hass;
       if (!root || !hass) return;
       if (this._forkRender) this._forkRender(m, root.getElementById("wrap"), root);
       // bouton sommeil : à gauche du bouton power, seulement appareil allumé et entité présente (style neutre du bouton power éteint)
+      const actions = root.getElementById("actions");
       const slp = c.sleep && opts.sleepOn.includes(m.status) ? hass.states[c.sleep] : null;
       if (slp) {
         const label = c.labels && c.labels.sleep_btn ? String(c.labels.sleep_btn) : tt(hass, "sleep_btn");
-        const actions = root.getElementById("actions");
-        actions.insertAdjacentHTML("afterbegin", `<button class="toggle slp" title="${esc(label)}" aria-label="${esc(label)}" ${slp.state === "unavailable" ? "disabled" : ""}><ha-icon icon="mdi:sleep-off"></ha-icon></button>`);
+        actions.insertAdjacentHTML("afterbegin", `<button class="toggle slp" title="${esc(label)}" aria-label="${esc(label)}" ${slp.state === "unavailable" ? "disabled" : ""}><ha-icon icon="${opts.sleepIcon || "mdi:sleep-off"}"></ha-icon></button>`);
         actions.querySelector("button.slp").onclick = (ev) => { ev.stopPropagation(); this._sleep(); };
+      }
+      // boutons d'action supplémentaires (opts.buttons) : insérés à gauche du bouton sleep, mêmes règles de visibilité
+      for (const b of opts.buttons || []) {
+        const st = c[b.key] && opts.sleepOn.includes(m.status) ? hass.states[c[b.key]] : null;
+        if (!st) continue;
+        const label = c.labels && c.labels[b.labelKey] ? String(c.labels[b.labelKey]) : tt(hass, b.labelKey);
+        actions.insertAdjacentHTML("afterbegin", `<button class="toggle ${b.cls}" title="${esc(label)}" aria-label="${esc(label)}" ${st.state === "unavailable" ? "disabled" : ""}><ha-icon icon="${b.icon}"></ha-icon></button>`);
+        actions.querySelector(`button.${b.cls}`).onclick = (ev) => { ev.stopPropagation(); this._press(c[b.key]); };
       }
     }
 
@@ -350,8 +390,11 @@
 
   /* ================= TV : ambilight + bouton sommeil ================= */
   define("appliance-tv-forked-card", BASE_TV, (P) => class extends withFork(P, {
-    sleepOn: ["screen_on"], css: CSS_TV, fields: ["ambilight", "ambilight_level", "sleep"],
-    labels: { ambilight: "f_ambilight", ambilight_level: "f_ambilight_level", sleep: "f_sleep" },
+    sleepOn: ["screen_on"], css: CSS_TV, fields: ["ambilight", "ambilight_level", "sleep", "keep_awake"],
+    labels: { ambilight: "f_ambilight", ambilight_level: "f_ambilight_level", sleep: "f_sleep", keep_awake: "f_keep_awake" },
+    // bouton sleep : télé qui se rallume ; bouton anti-veille (à presser quand la notification de mise en veille s'affiche) : minuterie barrée
+    sleepIcon: "mdi:television-play",
+    buttons: [{ key: "keep_awake", icon: "mdi:timer-off-outline", labelKey: "keep_awake_btn", cls: "kaw" }],
   }) {
     // halo : groupe SVG inséré une fois, derrière le dessin de la TV
     _forkBuilt(root) {
