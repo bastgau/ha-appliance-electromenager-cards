@@ -14,7 +14,7 @@ Dieses Projekt ist kostenlos und Open Source und entsteht in meiner Freizeit. We
 
 <p align="center"><img src="https://raw.githubusercontent.com/skyrotter/ha-appliance-electromenager-cards/main/docs/79-cartes.png" width="560" alt="79 animierte Gerätekarten für Home Assistant"></p>
 
-**90 Lovelace-Karten für Haushaltsgeräte**, jede mit einer realistischen animierten Illustration: eine rotierende Waschmaschinentrommel, eine flackernde Pelletofen-Flamme, eine Dieselheizung mit blauer Brennerkrone, ein Whirlpool mit sprudelnden Düsen, ein Saugroboter, ein Linky-Zähler, ein Heimspeicher … Sie zeigen Status, Leistung, Energie und Kosten live an, folgen deinem Home-Assistant-Theme (hell/dunkel) und sprechen Englisch, Französisch, Deutsch, Norwegisch, Niederländisch, Rumänisch, Russisch, Serbisch und Italienisch.
+**95 Lovelace-Karten für Haushaltsgeräte**, jede mit einer realistischen animierten Illustration: eine rotierende Waschmaschinentrommel, eine flackernde Pelletofen-Flamme, eine Dieselheizung mit blauer Brennerkrone, ein Whirlpool mit sprudelnden Düsen, ein Saugroboter, ein Linky-Zähler, ein Heimspeicher … Sie zeigen Status, Leistung, Energie und Kosten live an, folgen deinem Home-Assistant-Theme (hell/dunkel) und sprechen Englisch, Französisch, Deutsch, Norwegisch, Niederländisch, Rumänisch, Russisch, Serbisch und Italienisch.
 
 Eine einfache smarte Steckdose mit Leistungsmessung genügt. Vernetzte Geräte können zusätzlich Programm, Restzeit, Fortschritt, Tür, Temperaturen … anzeigen.
 
@@ -129,6 +129,7 @@ Klicke auf eine Karte für ihre Optionen und Beispiele.
 | [Briefkasten (Post und Pakete)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/mailbox.md) | `custom:appliance-mailbox-card` |
 | [Rauchmelder (Rauch, CO, 2 Modelle)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smoke-detector.md) | `custom:appliance-smoke-detector-card` |
 | [Smartes Türschloss (Nuki, 2 Modelle)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/smart-lock.md) | `custom:appliance-smart-lock-card` |
+| [Wärmepumpen-Warmwasserbereiter](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/thermo-heater.md) | `custom:appliance-thermo-heater-card` |
 | [Wassermelder](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/leak-detector.md) | `custom:appliance-leak-detector-card` |
 | [Sauna](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/sauna.md) | `custom:appliance-sauna-card` |
 
@@ -192,6 +193,8 @@ Klicke auf eine Karte für ihre Optionen und Beispiele.
 | [Deckenventilator](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/ceiling-fan.md) | `custom:appliance-ceiling-fan-card` |
 | [Akku-Ladegerät für Werkzeug](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/tool-charger.md) | `custom:appliance-tool-charger-card` |
 | [Smarte Waage (Foto Withings)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/scale.md) | `custom:appliance-scale-card` |
+| [Katzenklappe (Chip, Tiere drinnen / draußen)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/cat-flap.md) | `custom:appliance-cat-flap-card` |
+| [Trinkbrunnen für Haustiere](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/pet-fountain.md) | `custom:appliance-pet-fountain-card` |
 | [Allgemeines Gerät (eigenes Bild)](https://github.com/skyrotter/ha-appliance-electromenager-cards/blob/main/docs/cards/generic.md) | `custom:appliance-generic-card` |
 
 ## Dokumentation

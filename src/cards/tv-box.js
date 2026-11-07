@@ -218,7 +218,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
       this._built = false;
       if (this._hass) this._render();
     }
-    set hass(h) { this._hass = h; if (this._c) this._render(); }
+    set hass(h) { const ch = this._c && window.applianceChanged(this, h, this._c); this._hass = h; if (ch) this._render(); }
     connectedCallback() { if (!this._tick) this._tick = setInterval(() => this._progress(), 1000); }
     disconnectedCallback() { clearInterval(this._tick); this._tick = null; clearTimeout(this._osdT); }
     getCardSize() { return 6; }
@@ -421,7 +421,7 @@ ha-card.compact{display:flex;flex-direction:column;padding:6px}
         ent('entity', 'media_player'), ent('entity_remote', 'remote'), ent('entity_power', 'sensor'),
         { name: 'volume_step', default: 0.05, selector: { number: { min: 0.01, max: 0.2, step: 0.01, mode: 'box' } } },
         ...window.applianceActionFields,
-        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
+        { name: 'language', selector: { select: { options: Object.keys(T).map((value) => ({ value, label: { fr: 'Français', en: 'English', de: 'Deutsch', it: 'Italiano', nb: 'Norsk bokmål', ro: 'Română', nl: 'Nederlands', pl: 'Polski', ru: 'Русский', sr: 'Српски', 'sr-Latn': 'Srpski (latinica)' }[value] || value })) } } },
         { type: 'grid', name: '', schema: [bool('show_status'), bool('compact', false), bool('show_controls'), bool('show_artwork'), bool('show_app'), bool('show_volume'), bool('show_power'), bool('animations')] },
         // boutons de la télécommande, un par un
         { type: 'grid', name: '', schema: BTN_KEYS.map((k) => bool(`show_btn_${k}`)) },

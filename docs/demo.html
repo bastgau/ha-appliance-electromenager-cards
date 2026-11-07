@@ -114,7 +114,7 @@ const hass = () => ({
     if (cur && domain === 'homeassistant' && service !== 'toggle') { set(data.entity_id, service === 'turn_off' ? 'off' : 'on'); refresh(); }
     if (cur && domain === 'climate') {
       if (service === 'set_hvac_mode') { set(data.entity_id, data.hvac_mode); cur.attributes.hvac_action = data.hvac_mode === 'off' ? 'off' : 'heating'; }
-      if (service === 'set_temperature') cur.attributes.temperature = data.temperature;
+      if (service === 'set_temperature') set(data.entity_id, states[data.entity_id].state, { ...states[data.entity_id].attributes, temperature: data.temperature }); // nouvel objet, comme Home Assistant
       refresh();
     }
   },
@@ -830,6 +830,57 @@ const SCEN = [
       range(ctl, 'CO', 'sensor.smoke_co', 0, 200, 1, 5, 'ppm', { unit_of_measurement: 'ppm' });
       range(ctl, 'Batterie', 'sensor.smoke_battery', 0, 100, 1, 92, '%', { unit_of_measurement: '%', device_class: 'battery' });
       set('sensor.smoke_temp', 20.5, T); set('button.smoke_test', 'unknown'); set('siren.smoke', 'off');
+    } },
+  { kind: 'cat-flap', title: 'Chatière connectée', lang: true,
+    cfg: { name: 'Chatière', entity: 'lock.cat_flap', entity_mode: 'select.cat_flap_mode', entity_battery: 'sensor.cat_flap_battery', entity_curfew: 'binary_sensor.cat_flap_curfew', entity_motion: 'binary_sensor.cat_flap_motion', entity_intruder: 'binary_sensor.cat_flap_intruder', pets: ['binary_sensor.felix', 'binary_sensor.luna'] },
+    build(ctl) {
+      set('lock.cat_flap', 'unlocked');
+      select(ctl, 'Mode', 'select.cat_flap_mode', [['unlocked', 'Ouverte'], ['locked_in', 'Entrée seule'], ['locked_out', 'Sortie seule'], ['locked_all', 'Verrouillée']], 'unlocked');
+      states['select.cat_flap_mode'].attributes = { options: ['unlocked', 'locked_in', 'locked_out', 'locked_all'] };
+      set('binary_sensor.felix', 'on', { friendly_name: 'Félix' }); set('binary_sensor.luna', 'off', { friendly_name: 'Luna' });
+      checks(ctl, [['Félix dedans', 'binary_sensor.felix', true], ['Luna dedans', 'binary_sensor.luna', false], ['Volet en mouvement', 'binary_sensor.cat_flap_motion', false], ['Couvre-feu', 'binary_sensor.cat_flap_curfew', false], ['Intrus', 'binary_sensor.cat_flap_intruder', false]]);
+      states['binary_sensor.felix'].attributes = { friendly_name: 'Félix' }; states['binary_sensor.luna'].attributes = { friendly_name: 'Luna' };
+      range(ctl, 'Piles', 'sensor.cat_flap_battery', 0, 100, 1, 80, '%', { unit_of_measurement: '%', device_class: 'battery' });
+    } },
+  { kind: 'pet-fountain', title: 'Fontaine à eau pour animaux', lang: true,
+    cfg: { name: 'Fontaine', entity: 'switch.fountain', entity_water_level: 'sensor.fountain_level', entity_filter: 'sensor.fountain_filter', entity_water_today: 'sensor.fountain_today', entity_drinking: 'binary_sensor.fountain_drinking', entity_light: 'switch.fountain_light', entity_mode: 'select.fountain_mode', entity_filter_reset: 'button.fountain_filter_reset', entity_clean: 'binary_sensor.fountain_clean' },
+    build(ctl) {
+      checks(ctl, [['Pompe', 'switch.fountain', true], ['Chat qui boit', 'binary_sensor.fountain_drinking', false], ['Lumière', 'switch.fountain_light', true], ['Nettoyage à faire', 'binary_sensor.fountain_clean', false]]);
+      range(ctl, 'Niveau', 'sensor.fountain_level', 0, 100, 1, 70, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Filtre', 'sensor.fountain_filter', 0, 30, 1, 21, 'j', { unit_of_measurement: 'd' });
+      set('sensor.fountain_today', 184, { unit_of_measurement: 'mL' }); set('button.fountain_filter_reset', 'unknown');
+      select(ctl, 'Mode', 'select.fountain_mode', [['continuous', 'Continu'], ['intermittent', 'Intermittent'], ['sensor', 'Détection']], 'continuous');
+      states['select.fountain_mode'].attributes = { options: ['continuous', 'intermittent', 'sensor'] };
+    } },
+  { kind: 'water-softener', title: "Adoucisseur d'eau", lang: true,
+    cfg: { name: 'Adoucisseur Culligan', entity: 'select.softener_state', entity_flow: 'sensor.softener_flow', entity_capacity: 'sensor.softener_capacity', entity_salt: 'sensor.softener_salt', entity_hardness_in: 'sensor.softener_hin', entity_hardness_out: 'sensor.softener_hout', entity_today: 'sensor.softener_today', entity_regen_days: 'sensor.softener_regen', entity_power: 'sensor.softener_power' },
+    build(ctl) {
+      select(ctl, 'Phase', 'select.softener_state', [['service', 'Service'], ['backwash', 'Contre-lavage'], ['brine', 'Saumure'], ['rinse', 'Rinçage'], ['idle', 'Veille'], ['off', 'Arrêt']], 'service');
+      range(ctl, 'Débit', 'sensor.softener_flow', 0, 30, 0.5, 12, 'L/min', { unit_of_measurement: 'L/min' });
+      range(ctl, 'Sel', 'sensor.softener_salt', 0, 100, 1, 65, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Capacité restante', 'sensor.softener_capacity', 0, 100, 1, 72, '%', { unit_of_measurement: '%' });
+      set('sensor.softener_hin', 32, { unit_of_measurement: '°f' }); set('sensor.softener_hout', 2, { unit_of_measurement: '°f' }); set('sensor.softener_today', 286, { unit_of_measurement: 'L' }); set('sensor.softener_regen', 3, { unit_of_measurement: 'd' }); set('sensor.softener_power', 4, { unit_of_measurement: 'W' });
+    } },
+  { kind: 'smart-tap', title: 'Robinet connecté', lang: true,
+    cfg: { name: 'Robinet jardin', entity: 'valve.garden_tap', entity_flow: 'sensor.tap_flow', entity_today: 'sensor.tap_today', entity_remaining: 'sensor.tap_left', entity_duration: 'number.tap_duration', entity_schedule: 'switch.tap_schedule', entity_rain: 'binary_sensor.tap_rain', entity_moisture: 'sensor.tap_moisture', entity_battery: 'sensor.tap_battery', entity_signal: 'sensor.tap_lqi' },
+    build(ctl) {
+      select(ctl, 'Vanne', 'valve.garden_tap', [['closed', 'Fermée / Closed'], ['open', 'Ouverte / Open']], 'open');
+      range(ctl, 'Débit', 'sensor.tap_flow', 0, 30, 0.5, 8, 'L/min', { unit_of_measurement: 'L/min' });
+      range(ctl, 'Humidité du sol', 'sensor.tap_moisture', 0, 100, 1, 42, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Batterie', 'sensor.tap_battery', 0, 100, 1, 86, '%', { unit_of_measurement: '%', device_class: 'battery' });
+      checks(ctl, [['Pluie', 'binary_sensor.tap_rain', false], ['Programme', 'switch.tap_schedule', true]]);
+      set('sensor.tap_today', 128, { unit_of_measurement: 'L' }); set('sensor.tap_left', 12, { unit_of_measurement: 'min' }); set('number.tap_duration', 15, { unit_of_measurement: 'min' }); set('sensor.tap_lqi', 180);
+    } },
+  { kind: 'water-valve', title: 'Vanne motorisée', lang: true,
+    cfg: { name: "Arrivée d'eau", entity: 'valve.water_main', entity_flow: 'sensor.main_flow', entity_total: 'sensor.main_total', entity_leak: 'binary_sensor.main_leak', entity_battery: 'sensor.main_battery', entity_temperature: 'sensor.main_temp', entity_pressure: 'sensor.main_pressure' },
+    build(ctl) {
+      select(ctl, 'Vanne', 'valve.water_main', [['open', 'Ouverte / Open'], ['closed', 'Fermée / Closed'], ['opening', 'Ouverture'], ['closing', 'Fermeture']], 'open');
+      range(ctl, 'Position', 'sensor.main_position', 0, 100, 1, 100, '%', { unit_of_measurement: '%' });
+      range(ctl, 'Débit', 'sensor.main_flow', 0, 3, 0.1, 0.8, 'm³/h', { unit_of_measurement: 'm³/h' });
+      range(ctl, 'Température', 'sensor.main_temp', -5, 30, 0.5, 14, '°C', T);
+      checks(ctl, [['Fuite', 'binary_sensor.main_leak', false]]);
+      range(ctl, 'Batterie', 'sensor.main_battery', 0, 100, 1, 72, '%', { unit_of_measurement: '%', device_class: 'battery' });
+      set('sensor.main_total', 312, { unit_of_measurement: 'm³' }); set('sensor.main_pressure', 3.1, { unit_of_measurement: 'bar' });
     } },
   { kind: 'leak-detector', title: "Détecteur de fuite d'eau", lang: true,
     cfg: { name: "Sous l'évier", entity_leak: 'binary_sensor.leak_sink', entity_valve: 'valve.water_main_leak', entity_siren: 'siren.leak', entity_battery: 'sensor.leak_battery', entity_temperature: 'sensor.leak_temp' },

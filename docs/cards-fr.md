@@ -320,6 +320,12 @@ entity: media_player.freebox_player_pop
 
 **Balance connectée** : `custom:appliance-scale-card`, photo détourée de la Withings posée au sol en 3D, pour l'intégration **Withings**. À chaque pesée : empreintes lumineuses, plateau qui s'enfonce, chiffres qui défilent puis clignotent, ondes d'impédance et halo au sol ; l'écran alterne ensuite poids, masse grasse et IMC. Jauge IMC à aiguille, courbe sur `trend_days` jours avec l'objectif, « Objectif atteint ». Clic sur la balance : rejoue la pesée. Options : voir [scale.md](cards/scale.md).
 
+**Robinet connecté** (`custom:appliance-smart-tap-card`) : boîtier Zigbee noir à anneau lumineux (type Sonoff SWV) entre le robinet et le tuyau. Ouvert : anneau vert qui pulse, eau qui coule, herbe qui bouge ; pluie, défaut, pile faible, gel. Tout est facultatif. Voir [smart-tap.md](cards/smart-tap.md).
+
+**Vanne motorisée** (`custom:appliance-water-valve-card`) : actionneur noir sur vanne à boule en laiton, levier rose qui tourne d'un quart de tour, eau qui circule dans le tuyau blanc, fuite, gel. Voir [water-valve.md](cards/water-valve.md).
+
+**Adoucisseur d'eau** (`custom:appliance-water-softener-card`) : cuve à résine et bac à sel en écorché, tête de commande avec écran LCD. Service, contre-lavage, aspiration de saumure, rinçage et alerte sel bas, avec les tuyaux animés. Voir [water-softener.md](cards/water-softener.md).
+
 ```yaml
 type: custom:appliance-scale-card
 entity_weight: sensor.withings_weight
