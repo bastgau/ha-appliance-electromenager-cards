@@ -58,11 +58,16 @@ const expand = (rel) => {
   return fs.readdirSync(path.join(SRC, dir)).filter((f) => f.endsWith(ext)).sort().map((f) => `${dir}/${f}`);
 };
 
+/* Fork : tout notre code vit dans src/forked/*.js (chargé après le cœur et les cartes, juste avant picker.js, qui doit rester
+   le dernier pour voir toutes les cartes). Les listes ci-dessus ne sont pas modifiées : plus de conflit avec l'amont. */
+const FORK_FILES = fs.existsSync(path.join(SRC, "forked")) ? expand("forked/*.js") : [];
+const CARDS_ORDERED = CARD_FILES.flatMap((f) => (f === "cards/picker.js" ? [...FORK_FILES, f] : [f]));
+
 let warnings = 0;
 const warn = (msg) => { warnings++; console.warn(`warning: ${msg}`); };
 
 // Every source file must be listed, so nothing is silently left out
-const listed = new Set(["header.js", ...CORE_FILES.flatMap(expand), ...CSS_FILES, ...CARD_FILES]);
+const listed = new Set(["header.js", ...CORE_FILES.flatMap(expand), ...CSS_FILES, ...CARDS_ORDERED]);
 const walk = (dir) => fs.readdirSync(path.join(SRC, dir), { withFileTypes: true }).flatMap((e) =>
   e.isDirectory() ? walk(`${dir}${e.name}/`) : [`${dir}${e.name}`]);
 for (const f of walk("").filter((f) => /\.(js|css)$/.test(f) && !listed.has(f))) warn(`src/${f} is not listed in build.js`);
@@ -90,7 +95,7 @@ for (const l of langs.filter((l) => l !== "en")) {
 const css = CSS_FILES.map(load).join("\n").replace(/[\\`]|\$\{/g, (c) => `\\${c}`);
 let out = load("header.js")
   + '(() => {\n"use strict";\n' + CORE_FILES.flatMap(expand).map(load).join("\n") + "})();\n"
-  + CARD_FILES.map((f) => "\n" + load(f)).join("");
+  + CARDS_ORDERED.map((f) => "\n" + load(f)).join("");
 
 const cssMarkers = out.split("/*@css*/``").length - 1;
 if (cssMarkers !== 1) throw new Error(`expected one /*@css*/\`\` marker, found ${cssMarkers}`);
