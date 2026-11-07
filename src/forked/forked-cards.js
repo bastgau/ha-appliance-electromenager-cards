@@ -9,6 +9,7 @@
  *  - appliance-tv-forked-card          ← appliance-tv-card : halo ambilight, tuile ambilight on/off, bouton sommeil
  *  - appliance-av-receiver-forked-card ← appliance-av-receiver-card : bouton sommeil
  *  - appliance-hue-sync-forked-card    ← appliance-generic-card : Philips Hue Play HDMI Sync Box
+ *  - appliance-tv-box-forked-card      ← appliance-generic-card : TV box (Xiaomi TV Box S), jumelle indépendante de la Hue
  *
  * Méthodes internes de l'amont utilisées (si l'une est renommée, la carte concernée est désactivée avec un avertissement
  * console) : _build, _ids, _compute, _render, setConfig, getConfigForm, getStubConfig.
@@ -34,7 +35,8 @@
       "f_entity_hue": "Box status switch (on = On, off = Standby)",
       "f_button_hue": "On/off button controls",
       "v_on": "On",
-      "v_off": "Off"
+      "v_off": "Off",
+      "tv_box": "TV box"
     },
     "fr": {
       "hue_sync": "Hue Sync Box",
@@ -49,7 +51,8 @@
       "f_entity_hue": "Switch d'état du boîtier (on = Allumé, off = Veille)",
       "f_button_hue": "Le bouton on/off pilote",
       "v_on": "En marche",
-      "v_off": "Éteint"
+      "v_off": "Éteint",
+      "tv_box": "Box TV"
     },
     "de": {
       "hue_sync": "Hue Sync Box",
@@ -64,7 +67,8 @@
       "f_entity_hue": "Status-Schalter des Geräts (an = Ein, aus = Standby)",
       "f_button_hue": "Die Ein/Aus-Taste schaltet",
       "v_on": "An",
-      "v_off": "Aus"
+      "v_off": "Aus",
+      "tv_box": "TV-Box"
     },
     "nb": {
       "hue_sync": "Hue Sync Box",
@@ -79,7 +83,8 @@
       "f_entity_hue": "Statusbryter for enheten (på = På, av = Standby)",
       "f_button_hue": "Av/på-knappen styrer",
       "v_on": "På",
-      "v_off": "Av"
+      "v_off": "Av",
+      "tv_box": "TV-boks"
     },
     "nl": {
       "hue_sync": "Hue Sync Box",
@@ -94,7 +99,8 @@
       "f_entity_hue": "Statusschakelaar van het apparaat (aan = Aan, uit = Stand-by)",
       "f_button_hue": "De aan/uit-knop bedient",
       "v_on": "Aan",
-      "v_off": "Uit"
+      "v_off": "Uit",
+      "tv_box": "Tv-box"
     },
     "ro": {
       "hue_sync": "Hue Sync Box",
@@ -109,7 +115,8 @@
       "f_entity_hue": "Comutator de stare al dispozitivului (pornit = Pornit, oprit = Standby)",
       "f_button_hue": "Butonul pornit/oprit controlează",
       "v_on": "Pornit",
-      "v_off": "Oprit"
+      "v_off": "Oprit",
+      "tv_box": "TV box"
     },
     "ru": {
       "hue_sync": "Hue Sync Box",
@@ -124,7 +131,8 @@
       "f_entity_hue": "Переключатель состояния устройства (вкл. = Включён, выкл. = Ожидание)",
       "f_button_hue": "Кнопка вкл/выкл управляет",
       "v_on": "Включено",
-      "v_off": "Выкл."
+      "v_off": "Выкл.",
+      "tv_box": "ТВ-приставка"
     },
     "sr": {
       "hue_sync": "Hue Sync Box",
@@ -139,7 +147,8 @@
       "f_entity_hue": "Прекидач стања уређаја (укључен = Укључен, искључен = Мировање)",
       "f_button_hue": "Дугме укљ./искљ. управља",
       "v_on": "Укључено",
-      "v_off": "Искључено"
+      "v_off": "Искључено",
+      "tv_box": "ТВ бокс"
     },
     "sr-Latn": {
       "hue_sync": "Hue Sync Box",
@@ -154,7 +163,8 @@
       "f_entity_hue": "Prekidač stanja uređaja (uključen = Uključen, isključen = Mirovanje)",
       "f_button_hue": "Dugme uklj./isklj. upravlja",
       "v_on": "Uključeno",
-      "v_off": "Isključeno"
+      "v_off": "Isključeno",
+      "tv_box": "TV boks"
     },
     "it": {
       "hue_sync": "Hue Sync Box",
@@ -169,7 +179,8 @@
       "f_entity_hue": "Interruttore di stato del dispositivo (acceso = Acceso, spento = Standby)",
       "f_button_hue": "Il pulsante on/off comanda",
       "v_on": "Acceso",
-      "v_off": "Spento"
+      "v_off": "Spento",
+      "tv_box": "TV box"
     }
   };
   const hassOf = (h) => h || document.querySelector("home-assistant")?.hass;
@@ -440,4 +451,112 @@
     }
   }, "Appliance – Hue Sync Box (forked)", "Philips Hue Play HDMI Sync Box: plug + status switch, LED states, sleep button.",
     { en: "Hue Sync Box (forked)" });
+
+  /* ================= TV box (Xiaomi TV Box S, vue de trois quarts) =================
+     Carte jumelle de la Hue Sync Box, mais INDÉPENDANTE : sa propre copie de la logique, de la CSS et du dessin ; seul l'outillage
+     commun (withFork, define, customCard, T…) est partagé. Même sémantique : switch = prise (coupée → Off), entity = switch d'état
+     de la box (on → On, off → Standby), 10 s de « Démarrage » (LED violette) après le passage de la prise de coupée à allumée. */
+  const CSS_TVBOX = `
+/* voyant en façade : éteint sombre, rouge en veille, violet pendant les 10 s de démarrage, blanc allumé */
+.k-tv_box .tb-led { fill: none; stroke: #2a2f35; stroke-width: 1.7; stroke-linecap: round; transition: stroke .4s; }
+.k-tv_box .tb-halo { opacity: 0; transition: opacity .4s; }
+.k-tv_box.st-standby .tb-led { stroke: #ff3b30; filter: drop-shadow(0 0 1.6px #ff3b30); }
+.k-tv_box.st-hue_boot .tb-led { stroke: #b46bff; filter: drop-shadow(0 0 2px #b46bff); animation: ac-pulse 1.6s ease-in-out infinite; }
+.k-tv_box.st-powered .tb-led { stroke: #fff; filter: drop-shadow(0 0 2px #fff); }
+.k-tv_box.st-powered .tb-halo { opacity: .55; }`;
+
+  // Xiaomi TV Box S : galet noir mat très plat, « carré arrondi » à grands coins, bord biseauté, voyant blanc au centre de la face avant.
+  // Dessin vectoriel d'après deux photos du produit (devant, dessus) ; aucun logo, aucune image embarquée.
+  const TVBOX_SVG = (() => {
+    const f = (n) => (Math.round(n * 10) / 10).toString();
+    // polygone fermé à coins arrondis (courbes quadratiques) : r = longueur d'arrondi le long de chaque arête
+    const roundPoly = (pts, r) => {
+      const n = pts.length; let d = "";
+      for (let i = 0; i < n; i++) {
+        const p0 = pts[(i + n - 1) % n], p1 = pts[i], p2 = pts[(i + 1) % n];
+        const v1 = [p0[0] - p1[0], p0[1] - p1[1]], v2 = [p2[0] - p1[0], p2[1] - p1[1]];
+        const l1 = Math.hypot(v1[0], v1[1]), l2 = Math.hypot(v2[0], v2[1]), k1 = Math.min(r, l1 / 2) / l1, k2 = Math.min(r, l2 / 2) / l2;
+        d += `${i ? "L" : "M"}${f(p1[0] + v1[0] * k1)} ${f(p1[1] + v1[1] * k1)}Q${f(p1[0])} ${f(p1[1])} ${f(p1[0] + v2[0] * k2)} ${f(p1[1] + v2[1] * k2)}`;
+      }
+      return d + "Z";
+    };
+    const H = 8, R = 24; // épaisseur et arrondi des coins (galet très plat, coins très arrondis)
+    const top = [[8, 64], [60, 42], [112, 64], [60, 86]]; // gauche, fond, droite, avant (vue de trois quarts, ~2,4 fois plus large que haut)
+    const at = (dy) => roundPoly(top.map((p) => [p[0], p[1] + dy]), R);
+    // épaisseur : copies empilées de la forme, de bas en haut (le dégradé horizontal éclaire la gauche, assombrit la droite)
+    const stack = Array.from({ length: H }, (_, i) => `<path d="${at(H - i)}" fill="url(#fktbside)"/>`).join("");
+    const inner = roundPoly([[18, 64], [60, 46], [102, 64], [60, 82]], R - 4);
+    const led = [23.6, 74.6]; // au tiers de l'arête avant gauche (comme la photo), à mi-épaisseur
+    return `
+<defs>
+<radialGradient id="fktbsh"><stop offset="0" stop-color="#000" stop-opacity=".38"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+<linearGradient id="fktbside" gradientUnits="userSpaceOnUse" x1="8" y1="0" x2="112" y2="0"><stop offset="0" stop-color="#2d2f32"/><stop offset=".55" stop-color="#17181a"/><stop offset="1" stop-color="#070708"/></linearGradient>
+<linearGradient id="fktbtop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b3d40"/><stop offset=".45" stop-color="#232426"/><stop offset="1" stop-color="#131415"/></linearGradient>
+<radialGradient id="fktbled"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>
+<g transform="translate(0 -2.4)">
+<ellipse cx="60" cy="87.1" rx="54" ry="3.6" fill="url(#fktbsh)"/>
+<g class="tb-box">
+  ${stack}
+  <path d="${at(0)}" fill="url(#fktbtop)" stroke="#4b525b" stroke-opacity=".75" stroke-width=".7" stroke-linejoin="round"/>
+  <path d="${inner}" fill="none" stroke="#fff" stroke-opacity=".10" stroke-width=".8"/>
+  <path d="M26 58Q42 50 58 47" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="2" stroke-linecap="round"/>
+  <circle class="tb-halo" cx="${led[0]}" cy="${led[1]}" r="6" fill="url(#fktbled)"/>
+  <path class="tb-led" d="M${f(led[0] - 2.2)} ${f(led[1] - 0.9)}L${f(led[0] + 2.2)} ${f(led[1] + 0.9)}"/>
+</g>
+</g>`;
+  })();
+
+  // switch = prise connectée (coupée → Off) ; entity = switch d'état de la box (on → On, off → Standby) ; sans entity, la puissance de
+  // la prise décide (threshold, 3 W par défaut) ; 10 s de « Démarrage » après le passage de la prise de coupée à allumée.
+  define("appliance-tv-box-forked-card", BASE_GEN, (P) => class extends withFork(P, {
+    sleepOn: ["powered"], css: CSS_TVBOX, fields: ["sleep", "button"],
+    labels: { entity: "f_entity_hue", switch: "f_switch_hue", button: "f_button_hue", sleep: "f_sleep" },
+  }) {
+    static getStubConfig(hass) {
+      const cfg = super.getStubConfig(hass) || {};
+      const ids = Object.keys((hass && hass.states) || {});
+      if (!cfg.switch) { const sw = ids.find((i) => i.startsWith("switch.") && /tv_?box|shield|freebox|xiaomi/.test(i)); if (sw) cfg.switch = sw; }
+      return cfg;
+    }
+    // button: entity → le bouton on/off de la base pilote le switch d'état (copie de config : la base ne connaît que `switch`)
+    setConfig(config) {
+      this._fc = config;
+      super.setConfig(config && config.button === "entity" && config.entity ? { ...config, switch: config.entity } : config);
+    }
+    _forkBuilt(root) {
+      const svg = root.querySelector(".illus svg");
+      if (svg) svg.innerHTML = TVBOX_SVG;
+    }
+    _compute() {
+      const m = super._compute(), c = this._cfg(), hass = this._hass, S = (id) => (id ? hass.states[id] : undefined);
+      const sw = S(c.switch), main = S(c.entity), pw = S(c.power);
+      let watts = null;
+      if (pw && !BAD.includes(low(pw))) {
+        const v = parseFloat(String(pw.state).replace(",", "."));
+        if (Number.isFinite(v)) watts = String(pw.attributes && pw.attributes.unit_of_measurement || "").toLowerCase() === "kw" ? v * 1000 : v;
+      }
+      const thr = Number(c.threshold ?? 3), plugOff = !!sw && low(sw) === "off";
+      if (plugOff) m.status = "off";
+      else if (main && !BAD.includes(low(main))) m.status = low(main) === "on" ? "powered" : "standby";
+      else if (!c.entity && watts !== null) m.status = watts > thr ? "powered" : "standby";
+      else m.status = "unavailable";
+      // démarrage : 10 s après le passage de la prise de coupée à allumée (LED violette), quel que soit l'état du switch d'état
+      if (plugOff) { this._tbWasOff = true; this._tbBootUntil = 0; }
+      else if (this._tbWasOff && sw && !BAD.includes(low(sw))) {
+        this._tbWasOff = false; this._tbBootUntil = Date.now() + 10000;
+        clearTimeout(this._tbBootT); this._tbBootT = setTimeout(() => { if (this._hass) this._render(this._compute()); }, 10100);
+      }
+      if (!plugOff && this._tbBootUntil && Date.now() < this._tbBootUntil) m.status = "hue_boot";
+      return m;
+    }
+    _forkRender(m, wrap, root) {
+      const c = this._cfg(), hass = this._hass;
+      wrap.classList.remove("k-generic");
+      wrap.classList.add("k-tv_box");
+      const nm = root.querySelector(".name");
+      if (nm && !c.name) nm.textContent = tt(hass, "tv_box");
+      if (m.status === "hue_boot") { const t = root.querySelector(".status span:nth-child(2)"); if (t) t.textContent = tt(hass, "hue_boot"); }
+    }
+  }, "Appliance – TV box (forked)", "TV box: plug + status switch, LED states, sleep button (same options as the Hue Sync Box card).",
+    { en: "TV box (forked)", fr: "Box TV (forked)", de: "TV-Box (forked)" });
 })();
