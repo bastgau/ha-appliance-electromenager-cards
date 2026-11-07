@@ -99,7 +99,7 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
 {const slp=(c)=>c.sr.querySelector('button.slp'), pwr=(c)=>c.sr.querySelector('button.toggle:not(.slp)'), U={unit_of_measurement:'W',device_class:'power'};
  const tv=(w,extra={},st=[mk('button.sl','unknown')])=>card('tv-forked',{switch:'switch.p',power:'sensor.w',sleep:'button.sl',...extra},[mk('switch.p','on'),mk('sensor.w',w,U),...st]);
  let c=tv(120); ok('sleep tv on: button shown, before the power button',!!slp(c)&&!!pwr(c)&&!!(slp(c).compareDocumentPosition(pwr(c))&Node.DOCUMENT_POSITION_FOLLOWING),c.sr.getElementById('actions').innerHTML.slice(0,200));
- ok('sleep: icon mdi:sleep-off and translated label',slp(c).querySelector('ha-icon').getAttribute('icon')==='mdi:sleep-off'&&slp(c).title==='Sommeil',slp(c).outerHTML.slice(0,160));
+ ok('sleep (TV forked): icon mdi:television-play and translated label',slp(c).querySelector('ha-icon').getAttribute('icon')==='mdi:television-play'&&slp(c).title==='Sommeil',slp(c).outerHTML.slice(0,160));
  slp(c).click(); ok('sleep with a button entity: button.press',JSON.stringify(c.h.calls)===JSON.stringify([['button','press',{entity_id:'button.sl'}]]),JSON.stringify(c.h.calls));
  c=tv(120); pwr(c).click(); ok('sleep: the power button still toggles the plug',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.p'}]]),JSON.stringify(c.h.calls));
  c=tv(120,{sleep:'switch.sl'},[mk('switch.sl','on')]); slp(c).click(); ok('sleep with a switch entity: toggle, button keeps the neutral style',JSON.stringify(c.h.calls)===JSON.stringify([['switch','toggle',{entity_id:'switch.sl'}]])&&!slp(c).classList.contains('on'),JSON.stringify(c.h.calls));
@@ -151,6 +151,39 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
  c=card('tv-box-forked',{switch:'switch.plug',power:'sensor.p'},[mk('switch.plug','on'),mk('sensor.p',8,W)]); ok('tv-box no status switch: power > threshold -> powered',has(c,'st-powered'),c.wrap.className);
  c=card('tv-box-forked',{switch:'switch.plug',power:'sensor.p',threshold:10},[mk('switch.plug','on'),mk('sensor.p',8,W)]); ok('tv-box no status switch: custom threshold -> standby',has(c,'st-standby'),c.wrap.className);
  c=card('tv-box-forked',{switch:'switch.plug',power:'sensor.p'},[mk('switch.plug','off'),mk('sensor.p',8,W)]); ok('tv-box no status switch: plug off -> off',has(c,'st-off'),c.wrap.className);
+}
+
+// TV forked : bouton anti-veille (option keep_awake), à presser quand la notification de mise en veille s'affiche ; TV allumée seulement
+{const kaw=(c)=>c.sr.querySelector('button.kaw'), slp=(c)=>c.sr.querySelector('button.slp'), pwr=(c)=>c.sr.querySelector('button.toggle:not(.slp):not(.kaw)'), U={unit_of_measurement:'W',device_class:'power'};
+ const tv=(w,extra={},st=[mk('button.sl','unknown'),mk('button.ka','unknown')],lang)=>card('tv-forked',{switch:'switch.p',power:'sensor.w',sleep:'button.sl',keep_awake:'button.ka',...extra},[mk('switch.p','on'),mk('sensor.w',w,U),...st],lang);
+ const calls=(c)=>JSON.stringify(c.h.calls), before=(a,b)=>!!(a.compareDocumentPosition(b)&Node.DOCUMENT_POSITION_FOLLOWING);
+ let c=tv(120);
+ ok('keep-awake: shown when the TV is on, with its own icon mdi:timer-off-outline and label',!!kaw(c)&&kaw(c).querySelector('ha-icon').getAttribute('icon')==='mdi:timer-off-outline'&&kaw(c).title==='Rester allumé',kaw(c)&&kaw(c).outerHTML.slice(0,150));
+ ok('keep-awake: neutral style (same as the power button when off), never lit',kaw(c).classList.contains('toggle')&&!kaw(c).classList.contains('on'),kaw(c).className);
+ ok('keep-awake: order on screen is keep-awake, sleep, power',before(kaw(c),slp(c))&&before(slp(c),pwr(c)),c.sr.getElementById('actions').innerHTML.replace(/<ha-icon[^>]*><\/ha-icon>/g,'').slice(0,260));
+ ok('keep-awake: the sleep button of the TV uses mdi:television-play (two distinct icons)',slp(c).querySelector('ha-icon').getAttribute('icon')==='mdi:television-play'&&slp(c).querySelector('ha-icon').getAttribute('icon')!==kaw(c).querySelector('ha-icon').getAttribute('icon'),'');
+ kaw(c).click(); ok('keep-awake with a button entity: button.press, and only that entity',calls(c)===JSON.stringify([['button','press',{entity_id:'button.ka'}]]),calls(c));
+ c=tv(120); slp(c).click(); ok('keep-awake: the sleep button still presses only the sleep entity',calls(c)===JSON.stringify([['button','press',{entity_id:'button.sl'}]]),calls(c));
+ c=tv(120); pwr(c).click(); ok('keep-awake: the power button still toggles the plug',calls(c)===JSON.stringify([['switch','toggle',{entity_id:'switch.p'}]]),calls(c));
+ c=tv(120,{keep_awake:'input_button.ka'},[mk('button.sl','unknown'),mk('input_button.ka','unknown')]); kaw(c).click(); ok('keep-awake with an input_button: press',calls(c)===JSON.stringify([['input_button','press',{entity_id:'input_button.ka'}]]),calls(c));
+ c=tv(120,{keep_awake:'script.ka'},[mk('button.sl','unknown'),mk('script.ka','off')]); kaw(c).click(); ok('keep-awake with a script: script.turn_on',calls(c)===JSON.stringify([['script','turn_on',{entity_id:'script.ka'}]]),calls(c));
+ c=tv(120,{keep_awake:'switch.ka'},[mk('button.sl','unknown'),mk('switch.ka','off')]); kaw(c).click(); ok('keep-awake with a switch: toggle',calls(c)===JSON.stringify([['switch','toggle',{entity_id:'switch.ka'}]]),calls(c));
+ c=tv(0.1); ok('keep-awake: hidden when the TV is off',!kaw(c)&&!slp(c),c.wrap.className);
+ c=tv(0.5); ok('keep-awake: hidden when the TV is in standby',has(c,'st-standby')&&!kaw(c),c.wrap.className);
+ c=card('tv-forked',{switch:'switch.p',power:'sensor.w',sleep:'button.sl'},[mk('switch.p','on'),mk('sensor.w',120,U),mk('button.sl','unknown')]); ok('keep-awake: not configured -> no button, sleep unchanged',!kaw(c)&&!!slp(c),'');
+ c=tv(120,{},[mk('button.sl','unknown')]); ok('keep-awake: entity missing in HA -> no button, sleep still shown',!kaw(c)&&!!slp(c),'');
+ c=tv(120,{},[mk('button.sl','unknown'),mk('button.ka','unavailable')]); ok('keep-awake: entity unavailable -> button disabled',!!kaw(c)&&kaw(c).disabled,'');
+ c=card('tv-forked',{switch:'switch.p',power:'sensor.w',keep_awake:'button.ka'},[mk('switch.p','on'),mk('sensor.w',120,U),mk('button.ka','unknown')]); ok('keep-awake: works without the sleep option, power stays on the right',!!kaw(c)&&!slp(c)&&before(kaw(c),pwr(c)),'');
+ c=tv(120,{labels:{keep_awake_btn:'Reste'}}); ok('keep-awake: custom label',kaw(c).title==='Reste',kaw(c).title);
+ c=tv(120,{},undefined,'en'); ok('keep-awake: english label',kaw(c).title==='Keep awake',kaw(c).title);
+ c=tv(120); ok('keep-awake: its entity is watched (listed in _ids, so a state change re-renders)',c.el._ids().includes('button.ka'),c.el._ids().join(','));
+ {const f=customElements.get('appliance-tv-forked-card').getConfigForm(), n=f.schema.map(s=>s.name), k=f.schema.find(s=>s.name==='keep_awake');
+  ok('keep-awake: editor field with button / input_button / switch / input_boolean / script and a translated label',n.includes('keep_awake')&&n.indexOf('keep_awake')>n.indexOf('sleep')&&['button','input_button','switch','input_boolean','script'].every(d=>k.selector.entity.domain.includes(d))&&/anti-veille/.test(f.computeLabel({name:'keep_awake'})),n.join(','));}
+ // les autres cartes du fork ne changent pas : icône sleep-off et pas de bouton anti-veille, même si l'option est donnée
+ const o={sleep:'button.sl',keep_awake:'button.ka'}, st2=(extra)=>[mk('switch.p','on'),mk('switch.s','on'),mk('button.sl','unknown'),mk('button.ka','unknown'),...extra];
+ for(const [tag,cfg,st] of [['hue-sync-forked',{switch:'switch.p',entity:'switch.s',...o},st2([])],['tv-box-forked',{switch:'switch.p',entity:'switch.s',...o},st2([])],['av-receiver-forked',{entity:'media_player.a',switch:'switch.p',...o},[mk('media_player.a','playing'),mk('switch.p','on'),mk('button.sl','unknown'),mk('button.ka','unknown')]]]){
+  const x=card(tag,cfg,st);
+  ok(`${tag}: sleep icon unchanged (mdi:sleep-off) and no keep-awake button`,!!slp(x)&&slp(x).querySelector('ha-icon').getAttribute('icon')==='mdi:sleep-off'&&!kaw(x),tag);}
 }
 
 // TV box : bouton sommeil (même comportement que la Hue : visible quand la box est « allumée », à gauche du bouton power)
