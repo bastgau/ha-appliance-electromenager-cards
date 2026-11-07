@@ -280,7 +280,7 @@
 
   /* Fabrique : ajoute à une carte d'origine le bouton sommeil, l'élargissement de la liste d'entités surveillées, le style
      injecté et les champs de l'éditeur. opts : sleepOn (statuts « allumé »), fields (champs ajoutés à l'éditeur),
-     labels ({champ: clé de T}), css, sleepIcon (icône du bouton sleep, mdi:sleep-off par défaut), buttons (boutons d'action
+     labels ({champ: clé de T}), css, sleepIcon (icône du bouton sleep, mdi:auto-mode par défaut), buttons (boutons d'action
      supplémentaires [{ key, icon, labelKey, cls }], à gauche du bouton sleep, mêmes règles de visibilité). */
   const withFork = (Parent, opts) => class extends Parent {
     static get _fork() { return opts; }
@@ -345,7 +345,7 @@
       const slp = c.sleep && opts.sleepOn.includes(m.status) ? hass.states[c.sleep] : null;
       if (slp) {
         const label = c.labels && c.labels.sleep_btn ? String(c.labels.sleep_btn) : tt(hass, "sleep_btn");
-        actions.insertAdjacentHTML("afterbegin", `<button class="toggle slp" title="${esc(label)}" aria-label="${esc(label)}" ${slp.state === "unavailable" ? "disabled" : ""}><ha-icon icon="${opts.sleepIcon || "mdi:sleep-off"}"></ha-icon></button>`);
+        actions.insertAdjacentHTML("afterbegin", `<button class="toggle slp" title="${esc(label)}" aria-label="${esc(label)}" ${slp.state === "unavailable" ? "disabled" : ""}><ha-icon icon="${opts.sleepIcon || "mdi:auto-mode"}"></ha-icon></button>`);
         actions.querySelector("button.slp").onclick = (ev) => { ev.stopPropagation(); this._sleep(); };
       }
       // boutons d'action supplémentaires (opts.buttons) : insérés à gauche du bouton sleep, mêmes règles de visibilité
@@ -392,8 +392,7 @@
   define("appliance-tv-forked-card", BASE_TV, (P) => class extends withFork(P, {
     sleepOn: ["screen_on"], css: CSS_TV, fields: ["ambilight", "ambilight_level", "sleep", "keep_awake"],
     labels: { ambilight: "f_ambilight", ambilight_level: "f_ambilight_level", sleep: "f_sleep", keep_awake: "f_keep_awake" },
-    // sleep button: auto-mode icon ; keep-awake button (press when the TV sleep notification shows): sleep-off icon
-    sleepIcon: "mdi:auto-mode",
+    // sleep button: default auto-mode icon ; keep-awake button (press when the TV sleep notification shows): sleep-off icon
     buttons: [{ key: "keep_awake", icon: "mdi:sleep-off", labelKey: "keep_awake_btn", cls: "kaw" }],
   }) {
     // halo : groupe SVG inséré une fois, derrière le dessin de la TV

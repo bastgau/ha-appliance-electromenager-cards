@@ -179,11 +179,11 @@ const has=(c,cls)=>c.wrap.classList.contains(cls);
  c=tv(120); ok('keep-awake: its entity is watched (listed in _ids, so a state change re-renders)',c.el._ids().includes('button.ka'),c.el._ids().join(','));
  {const f=customElements.get('appliance-tv-forked-card').getConfigForm(), n=f.schema.map(s=>s.name), k=f.schema.find(s=>s.name==='keep_awake');
   ok('keep-awake: editor field with button / input_button / switch / input_boolean / script and a translated label',n.includes('keep_awake')&&n.indexOf('keep_awake')>n.indexOf('sleep')&&['button','input_button','switch','input_boolean','script'].every(d=>k.selector.entity.domain.includes(d))&&/anti-veille/.test(f.computeLabel({name:'keep_awake'})),n.join(','));}
- // les autres cartes du fork ne changent pas : icône sleep-off et pas de bouton anti-veille, même si l'option est donnée
+ // les autres cartes du fork ne changent pas : icône auto-mode et pas de bouton anti-veille, même si l'option est donnée
  const o={sleep:'button.sl',keep_awake:'button.ka'}, st2=(extra)=>[mk('switch.p','on'),mk('switch.s','on'),mk('button.sl','unknown'),mk('button.ka','unknown'),...extra];
  for(const [tag,cfg,st] of [['hue-sync-forked',{switch:'switch.p',entity:'switch.s',...o},st2([])],['tv-box-forked',{switch:'switch.p',entity:'switch.s',...o},st2([])],['av-receiver-forked',{entity:'media_player.a',switch:'switch.p',...o},[mk('media_player.a','playing'),mk('switch.p','on'),mk('button.sl','unknown'),mk('button.ka','unknown')]]]){
   const x=card(tag,cfg,st);
-  ok(`${tag}: sleep icon unchanged (mdi:sleep-off) and no keep-awake button`,!!slp(x)&&slp(x).querySelector('ha-icon').getAttribute('icon')==='mdi:sleep-off'&&!kaw(x),tag);}
+  ok(`${tag}: sleep icon mdi:auto-mode and no keep-awake button`,!!slp(x)&&slp(x).querySelector('ha-icon').getAttribute('icon')==='mdi:auto-mode'&&!kaw(x),tag);}
 }
 
 // TV box : bouton sommeil (même comportement que la Hue : visible quand la box est « allumée », à gauche du bouton power)

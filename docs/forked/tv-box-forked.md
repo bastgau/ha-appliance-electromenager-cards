@@ -34,7 +34,7 @@ energy: sensor.tv_box_plug_energy
 | `switch` | Smart plug switch: off → *Off*. It is also the on/off button, unless `button: entity`. |
 | `entity` | Switch reflecting the box status: on → *On*, off → *Standby*. |
 | `button` | Which of the two switches the on/off button toggles (and whose state it shows): `switch` (the plug, default) or `entity` (the box status switch). |
-| `sleep` | A `button` / `input_button` (pressed) or `switch` / `input_boolean` (toggled). A `mdi:sleep-off` button appears to the left of the power button while the box is **On**; hidden when it is off, in standby or when the entity does not exist; disabled while the entity is unavailable. Label: `labels.sleep_btn`. |
+| `sleep` | A `button` / `input_button` (pressed) or `switch` / `input_boolean` (toggled). A `mdi:auto-mode` button appears to the left of the power button while the box is **On**; hidden when it is off, in standby or when the entity does not exist; disabled while the entity is unavailable. Label: `labels.sleep_btn`. |
 | `power` | Plug power: shown as a tile, and used for the status only when `entity` is not set. |
 | `threshold` | On above this power (W), when `entity` is not set. Default 3. |
 | `show_power` / `show_energy` / `show_cost` / `show_toggle` | Checkboxes in the visual editor. |

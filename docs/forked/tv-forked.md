@@ -33,4 +33,4 @@ sleep: button.tv_sleep
 keep_awake: button.tv_keep_awake     # or a script / switch
 ```
 
-The `sleep` icon is `mdi:auto-mode` on this card only; the AV receiver, Hue Sync Box and TV box cards keep `mdi:sleep-off` for their `sleep` button.
+All forked cards use `mdi:auto-mode` for the `sleep` button; only the keep-awake button of this card uses `mdi:sleep-off`.
